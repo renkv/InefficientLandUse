@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.land.modular.landinfo.mapper.LandInfoDao">
+
+    <resultMap type="com.land.modular.landinfo.entity.LandInfo" id="LandInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="INTEGER"/>
+        <result property="createUserName" column="create_user_name" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
+        <result property="updateUserName" column="update_user_name" jdbcType="VARCHAR"/>
+        <result property="landType" column="land_type" jdbcType="VARCHAR"/>
+        <result property="category" column="category" jdbcType="VARCHAR"/>
+        <result property="ownership" column="ownership" jdbcType="VARCHAR"/>
+        <result property="planCompliance" column="plan_compliance" jdbcType="VARCHAR"/>
+        <result property="useStrength" column="use_strength" jdbcType="VARCHAR"/>
+        <result property="benefit" column="benefit" jdbcType="VARCHAR"/>
+        <result property="desire" column="desire" jdbcType="VARCHAR"/>
+        <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+        <result property="landArea" column="land_area" jdbcType="VARCHAR"/>
+        <result property="landName" column="land_name" jdbcType="VARCHAR"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+        <result property="landNo" column="land_no" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="landCode" column="land_code" jdbcType="VARCHAR"/>
+        <result property="areaInfo" column="area_info" jdbcType="VARCHAR"/>
+        <result property="areaFileName" column="area_file_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, create_user AS createUser, create_user_name AS createUserName,
+        dept_id AS deptId, dept_name AS departName, create_time AS createTime,
+        update_user AS updateUser, update_user_name AS updateUserName, update_time AS updateTime,
+         land_type as landType, category, ownership, plan_compliance as planCompliance,
+         use_strength as useStrength, benefit, desire, is_delete as isDelete, land_area as landArea,land_name as landName,
+         land_no as landNo,remark,land_code as landCode,area_info as areaInfo, area_file_name as areaFileName
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultType="com.land.modular.landinfo.entity.LandInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from land_low_use.land_info
+        where  id= #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LandInfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from land_low_use.land_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="LandInfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from land_low_use.land_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createUser != null">
+                and create_user = #{createUser}
+            </if>
+            <if test="createUserName != null and createUserName != ''">
+                and create_user_name = #{createUserName}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUser != null">
+                and update_user = #{updateUser}
+            </if>
+            <if test="updateUserName != null and updateUserName != ''">
+                and update_user_name = #{updateUserName}
+            </if>
+            <if test="landType != null and landType != ''">
+                and land_type = #{landType}
+            </if>
+            <if test="category != null and category != ''">
+                and category = #{category}
+            </if>
+            <if test="ownership != null and ownership != ''">
+                and ownership = #{ownership}
+            </if>
+            <if test="planCompliance != null and planCompliance != ''">
+                and plan_compliance = #{planCompliance}
+            </if>
+            <if test="useStrength != null and useStrength != ''">
+                and use_strength = #{useStrength}
+            </if>
+            <if test="benefit != null and benefit != ''">
+                and benefit = #{benefit}
+            </if>
+            <if test="desire != null and desire != ''">
+                and desire = #{desire}
+            </if>
+            <if test="isDelete != null">
+                and is_delete = #{isDelete}
+            </if>
+            <if test="landArea != null and landArea != ''">
+                and land_area = #{landArea}
+            </if>
+        </where>
+    </select>
+    <select id="selectListByPage" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from land_low_use.land_info
+        where is_delete=0
+        <if test="main.category != null and main.category != ''">
+            and category = #{main.category}
+        </if>
+        <if test="main.deptId != null and main.deptId != 0">
+            and (dept_id = #{main.deptId} or create_user in ( select user_id from sys_user where dept_id =#{main.deptId}))
+        </if>
+        <!--<if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+            and (create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>-->
+        <if test="beginTime != null and beginTime != ''">
+            and create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        order by create_time desc
+    </select>
+    <select id="selectByList" resultType="com.land.modular.landinfo.entity.LandInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from land_low_use.land_info
+        where is_delete=0
+        <if test="main.category != null and main.category != ''">
+            and category = #{main.category}
+        </if>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into land_low_use.land_info(id, create_time, create_user, create_user_name, update_time, update_user, update_user_name, land_type,
+        category, ownership, plan_compliance, use_strength, benefit, desire, is_delete, land_area,land_name,dept_id,dept_name,land_no,land_code,
+        remark,area_info,area_file_name)
+        values (#{id}, #{createTime}, #{createUser}, #{createUserName}, #{updateTime}, #{updateUser}, #{updateUserName}, #{landType}, #{category},
+        #{ownership}, #{planCompliance}, #{useStrength}, #{benefit}, #{desire}, #{isDelete}, #{landArea}, #{landName}, #{deptId}, #{deptName}, #{landNo},
+         #{landCode}, #{remark}, #{areaInfo}, #{areaFileName})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into land_low_use.land_info(id, create_time, create_user, create_user_name, update_time, update_user,
+        update_user_name, land_type, category, ownership, plan_compliance, use_strength, benefit, desire, is_delete,
+        land_area)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id}, #{entity.createTime}, #{entity.createUser}, #{entity.createUserName}, #{entity.updateTime},
+            #{entity.updateUser}, #{entity.updateUserName}, #{entity.landType}, #{entity.category}, #{entity.ownership},
+            #{entity.planCompliance}, #{entity.useStrength}, #{entity.benefit}, #{entity.desire}, #{entity.isDelete},
+            #{entity.landArea})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into land_low_use.land_info(id, create_time, create_user, create_user_name, update_time, update_user,
+        update_user_name, land_type, category, ownership, plan_compliance, use_strength, benefit, desire, is_delete,
+        land_area)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id}, #{entity.createTime}, #{entity.createUser}, #{entity.createUserName}, #{entity.updateTime},
+            #{entity.updateUser}, #{entity.updateUserName}, #{entity.landType}, #{entity.category}, #{entity.ownership},
+            #{entity.planCompliance}, #{entity.useStrength}, #{entity.benefit}, #{entity.desire}, #{entity.isDelete},
+            #{entity.landArea})
+        </foreach>
+        on duplicate key update
+        id = values(id) , create_time = values(create_time) , create_user = values(create_user) , create_user_name =
+        values(create_user_name) , update_time = values(update_time) , update_user = values(update_user) ,
+        update_user_name = values(update_user_name) , land_type = values(land_type) , category = values(category) ,
+        ownership = values(ownership) , plan_compliance = values(plan_compliance) , use_strength = values(use_strength)
+        , benefit = values(benefit) , desire = values(desire) , is_delete = values(is_delete) , land_area =
+        values(land_area)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update land_low_use.land_info
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="createUserName != null and createUserName != ''">
+                create_user_name = #{createUserName},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+            <if test="updateUserName != null and updateUserName != ''">
+                update_user_name = #{updateUserName},
+            </if>
+            <if test="landType != null and landType != ''">
+                land_type = #{landType},
+            </if>
+            <if test="category != null and category != ''">
+                category = #{category},
+            </if>
+            <if test="ownership != null and ownership != ''">
+                ownership = #{ownership},
+            </if>
+            <if test="planCompliance != null and planCompliance != ''">
+                plan_compliance = #{planCompliance},
+            </if>
+            <if test="useStrength != null and useStrength != ''">
+                use_strength = #{useStrength},
+            </if>
+            <if test="benefit != null and benefit != ''">
+                benefit = #{benefit},
+            </if>
+            <if test="desire != null and desire != ''">
+                desire = #{desire},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete},
+            </if>
+            <if test="landArea != null and landArea != ''">
+                land_area = #{landArea},
+            </if>
+        </set>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from land_low_use.land_info
+    </delete>
+
+</mapper>
+

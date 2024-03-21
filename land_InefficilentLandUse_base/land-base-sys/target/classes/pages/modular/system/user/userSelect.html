@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="bg-white">
+@/**
+@ * 本页面所用的模板变量
+@ *
+@ * treeUrl : 加载树的url
+@ * fromName : 需要设置的显示名称
+@ * fromId : 需要设置的隐藏id
+@ **/
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>${constants.getSystemName()}</title>
+    <meta name="description" content="${constants.getSystemName()}">
+    <meta name="author" content="stylefeng">
+
+    <!--其他插件css-->
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link href="${ctxPath}/assets/expand/plugins/ztree/zTreeStyle.css?v=${constants.getReleaseVersion()}" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div id="deptForm" class="layui-fluid">
+    <div class="layui-row" style="margin-top:15px;height:400px;background: #f2f7f8;padding: 20px;overflow-y: scroll;">
+        <div class="ui-layout-west">
+            <div class="layui-fluid">
+                <div class="layui-row">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <div class="layui-form toolbar">
+                                    <input id="defaultPassword" class="layui-input" type="hidden" value="${constants.getDefaultPassword()}"/>
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <input id="name" class="layui-input" type="text" placeholder="${lang.get("TIPS_NAME_PHONE","账号/姓名/手机号")}"/>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>${lang.get("BTN_SEARCH","搜索")}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="layui-table" id="userTable" lay-filter="userTable"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui-layout-center">
+            <div class="layui-fluid">
+                <div class="layui-row">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <table class="layui-table" id="userSelectedTable" lay-filter="userSelectedTable"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="background: #CFD4D5;padding: 10px;">
+        <div style="text-align: center;">
+            <button class="layui-btn layui-btn-sm" id="saveButton">保存</button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        </div>
+    </div>
+</div>
+</body>
+
+
+@/* 加入contextPath属性和session超时的配置 */
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+
+<script type="text/javascript" src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/expand/plugins/ztree/jquery.ztree.all.min.js?v=${constants.getReleaseVersion()}"></script>
+
+<script type="text/javascript">
+    layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 'tree', 'util'], function () {
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var $ZTree = layui.ztree;
+        var $ax = layui.ax;
+        var laydate = layui.laydate;
+        var admin = layui.admin;
+        var func = layui.func;
+        var tree = layui.tree;
+        var util = layui.util;
+
+        /**
+         * 系统管理--用户管理
+         */
+        var MgrUser = {
+            index: parent.layer.getFrameIndex(window.name),
+            tableId: "userTable",    //表格id
+            condition: {
+                name: "",
+                deptId: "",
+                timeLimit: ""
+            }
+        };
+
+        /**
+         * 初始化表格的列
+         */
+        MgrUser.initColumn = function () {
+
+            //获取多语言
+            var langs = layui.data('system').lang;
+
+            return [[
+                {type: 'checkbox'},
+                {field: 'userId', hide: true, sort: true, title: '用户id'},
+                {field: 'account', align: "center", sort: true, title: langs.FIELD_ACCOUNT},
+                {field: 'name', align: "center", sort: true, title: langs.FIELD_NAME},
+                {field: 'deptName', align: "center", sort: true, title: langs.FIELD_DEPT}
+            ]];
+        };
+
+
+        /**
+         * 点击查询按钮
+         */
+        MgrUser.search = function () {
+            var queryData = {};
+            queryData['name'] = $("#name").val();
+            table.reload(MgrUser.tableId, {
+                where: queryData, page: {curr: 1}
+            });
+        };
+
+
+        // 渲染表格
+        var tableResult = table.render({
+            elem: '#' + MgrUser.tableId,
+            url: Feng.ctxPath + '/mgr/selectList',
+            page: true,
+            height: "full-98",
+            cellMinWidth: 100,
+            cols: MgrUser.initColumn()
+        });
+
+        //渲染时间选择框
+        laydate.render({
+            elem: '#timeLimit',
+            range: true,
+            max: Feng.currentDate()
+        });
+        // 搜索按钮点击事件
+        $('#btnSearch').click(function () {
+            MgrUser.search();
+        });
+        // 工具条点击事件
+        table.on('tool(' + MgrUser.tableId + ')', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'edit') {
+                MgrUser.onEditUser(data);
+            } else if (layEvent === 'delete') {
+                MgrUser.onDeleteUser(data);
+            } else if (layEvent === 'roleAssign') {
+                MgrUser.roleAssign(data);
+            } else if (layEvent === 'reset') {
+                MgrUser.resetPassword(data);
+            }
+        });
+        $("#saveButton").bind("click", function () {
+            var selectData = layui.table.checkStatus('userTable').data;
+            console.log(selectData);
+            var ids = [];
+            var names = [];
+            $(selectData).each(function (i, o) {//o即为表格中一行的数据
+                ids.push(o.userId);
+                names.push(o.name);
+            });
+            if (ids.length < 1) {
+                layer.msg('无选中项');
+                return false;
+            }
+            ids = ids.join(",");
+            names = names.join(",");
+            ${formName} = names;
+            ${formId} = ids;
+            parent.layer.close(MgrUser.index);
+        });
+
+
+
+    });
+
+    $(function () {
+        var panehHidden = false;
+        if ($(this).width() < 769) {
+            panehHidden = true;
+        }
+        $('#myContiner').layout({initClosed: panehHidden, west__size: 260});
+    });
+
+</script>
+
+</body>
+
+</html>

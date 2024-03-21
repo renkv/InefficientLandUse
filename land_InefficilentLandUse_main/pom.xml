@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>land-low-use</artifactId>
+        <groupId>com.land</groupId>
+        <version>1.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>InefficilentLandUse</artifactId>
+    <packaging>jar</packaging>
+    <dependencies>
+
+        <!-- guns-vip基础框架 -->
+        <dependency>
+            <groupId>com.land</groupId>
+            <artifactId>land-base-sys</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!-- excel高级导出 -->
+        <dependency>
+            <groupId>com.land</groupId>
+            <artifactId>land-base-excel</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!-- 代码生成器 -->
+        <dependency>
+            <groupId>com.land</groupId>
+            <artifactId>land-base-generator</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!-- 数据源容器 -->
+        <dependency>
+            <groupId>com.land</groupId>
+            <artifactId>land-base-dbctn</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!-- oauth2认证 -->
+        <dependency>
+            <groupId>com.land</groupId>
+            <artifactId>land-base-oauth2</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--Base64-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.11</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-asian -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-asian</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
+        <!--excel导入导出-->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.1.8.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>kernel-core</artifactId>
+        </dependency>
+        <!-- ArcGis -->
+        <!--<dependency>
+            <groupId>com.esri</groupId>
+            <artifactId>arcgis-java-runtime</artifactId>
+            <version>100.8.0</version>
+        </dependency>-->
+        <!--ArcGIS Runtime SDK jar dependency -->
+        <!--<dependency>
+            <groupId>com.esri.arcgisruntime</groupId>
+            <artifactId>arcgis-java</artifactId>
+            <version>100.8.0</version>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>com.esri</groupId>
+            <artifactId>ArcGIS_Runtime_Java</artifactId>
+            <version>10.2.4</version>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>com.esri</groupId>
+            <artifactId>ArcGIS_Runtime_Java_Toolkit</artifactId>
+            <version>10.2.4</version>
+        </dependency>-->
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <fork>true</fork><!-- 如果没有该项配置，肯呢个devtools不会起作用，即应用不会restart -->
+                </configuration>
+            </plugin>
+            <!--<plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.26.1</version>
+                <configuration>
+                    <dockerHost>unix:///var/run/docker.sock</dockerHost>
+                    <images>
+                        <image>
+                            <name>snexus.stylefeng.cn:6001/guns-api:${docker.img.version}</name>
+                            <build>
+                                <from>java:8</from>
+                                <assembly>
+                                    <descriptor>docker-assembly.xml</descriptor>
+                                </assembly>
+                                <cmd>
+                                    <shell>java -jar -Xms512m -Xmx512m -Xss1024K -XX:MetaspaceSize=256m
+                                        -XX:MaxMetaspaceSize=256m /maven/${project.artifactId}.jar
+                                    </shell>
+                                </cmd>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>-->
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.land</groupId>
+        <artifactId>land-low-use</artifactId>
+        <version>1.1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>land_InefficilentLandUse_base</artifactId>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>land-base</module>
+        <module>land-base-auth</module>
+        <module>land-base-timers</module>
+        <module>land-base-sys</module>
+        <module>land-base-excel</module>
+        <module>land-base-generator</module>
+        <module>land-base-dbctn</module>
+        <module>land-base-oauth2</module>
+    </modules>
+</project>

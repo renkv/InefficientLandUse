@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.land.modular.weekwork.mapper.WeekWorkDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.land.modular.weekwork.entity.WeekWorkDetail">
+        <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+        <result column="create_user_name" property="createUserName" />
+        <result column="update_user" property="updateUser" />
+        <result column="update_user_name" property="updateUserName" />
+        <result column="update_time" property="updateTime" />
+        <result column="serial_no" property="serialNo" />
+        <result column="implement_user" property="implementUser" />
+        <result column="task_name" property="taskName" />
+        <result column="assign_time" property="assignTime" />
+        <result column="plan_finish_time" property="planFinishTime" />
+        <result column="actual_progress" property="actualProgress" />
+        <result column="leader" property="leader" />
+        <result column="supervision" property="supervision" />
+        <result column="supervise_time" property="superviseTime" />
+        <result column="main_id" property="mainId" />
+        <result column="instruction" property="instruction" />
+        <result column="instruction_time" property="instructionTime" />
+
+
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, create_user AS createUser, create_user_name AS createUserName,create_time AS createTime,
+        update_user AS updateUser, update_user_name AS updateUserName, update_time AS updateTime,
+        serial_no as serialNo,implement_user as implementUser,task_name as taskName,assign_time as assignTime,plan_finish_time as planFinishTime,
+        actual_progress as actualProgress,leader as leader,supervision,supervise_time as superviseTime ,main_id as mainId,
+        status AS status,remark AS remark, instruction as instruction,instruction_time as instructionTime
+    </sql>
+    <delete id="deleteByMainId">
+        delete from week_work_detail where main_id = #{mainId}
+    </delete>
+    <select id="getDetailListById" resultType="com.land.modular.weekwork.entity.WeekWorkDetail">
+        select
+        <include refid="Base_Column_List"/>
+        from week_work_detail
+        where main_id = #{mainId}
+        order by status asc,serial_no asc
+    </select>
+
+</mapper>

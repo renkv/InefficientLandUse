@@ -1,0 +1,91 @@
+@layout("/common/_form.html",{js:["/assets/easyUploader/easyUploader.jq.js","/assets/landinfo/landinfoAdd.js"],css:["/assets/easyUploader/main.css"]}){
+
+<form class="layui-form" id="fileShareForm" lay-filter="fileShareForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">项目编号</label>
+                            <div class="layui-input-block">
+                                <input id="landCode" name="landCode" type="text" value="${info.landCode}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">项目名称</label>
+                            <div class="layui-input-block">
+                                <input id="landName" name="landName" type="text" value="${info.landName}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">地块类型</label>
+                            <div class="layui-input-block">
+                                <input id="landType" name="landType" type="text" value="${info.landType}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">权属</label>
+                            <div class="layui-input-block">
+                                <input id="ownership" name="ownership" type="text" value="${info.ownership}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">规划符合性</label>
+                            <div class="layui-input-block">
+                                <input id="planCompliance" name="planCompliance"  type="text" value="${info.planCompliance}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">利用强度</label>
+                            <div class="layui-input-block">
+                                <input id="useStrength" name="useStrength"  type="text" value="${info.useStrength}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">用地效益</label>
+                            <div class="layui-input-block">
+                                <input id="benefit" name="benefit" type="text" value="${info.benefit}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">权利人意愿</label>
+                            <div class="layui-input-block">
+                                <input id="desire" name="desire" type="text" value="${info.desire}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">地块面积</label>
+                            <div class="layui-input-block">
+                                <input id="landArea" name="landArea" type="text" value="${info.landArea}" readonly
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-block">
+                                <textarea name="remark" id="remark" class="layui-textarea">${info.remark}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

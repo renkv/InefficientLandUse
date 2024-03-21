@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.land.modular.file.mapper.FileShareInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.land.modular.file.entity.FileShareInfo">
+        <id column="share_id" property="shareId" />
+        <result column="create_user" property="createUser" />
+        <result column="create_user_name" property="createUserName" />
+        <result column="share_title" property="shareTitle" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user" property="updateUser" />
+        <result column="update_user_name" property="updateUserName" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_delete" property="isDelete" />
+        <result column="remark" property="remark" />
+        <result column="business_key" property="businessKey" />
+        <result column="receive_user" property="receiveUser" />
+        <result column="receive_user_name" property="receiveUserName" />
+        <result column="share_no" property="shareNo" />
+        <result column="share_type" property="shareType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        share_id AS shareId, create_user AS createUser, create_user_name AS createUserName,
+        share_title AS shareTitle, create_time AS createTime, update_user AS updateUser,
+        update_user_name AS updateUserName, update_time AS updateTime, is_delete AS isDelete,
+        remark AS remark, business_key AS businessKey, receive_user AS receiveUser, receive_user_name AS receiveUserName,
+        share_no as shareNo,share_type as shareType
+    </sql>
+
+    <select id="selectShareList" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from file_share_info
+        where is_delete != '1'
+        <if test="info.shareTitle != null and info.shareTitle != ''">
+            and share_title like CONCAT('%',#{info.shareTitle},'%')
+        </if>
+        <if test="info.shareNo != null and info.shareNo != ''">
+            and share_no like CONCAT('%',#{info.shareNo},'%')
+        </if>
+        <if test="info.shareType != null and info.shareType != ''">
+            and share_type like CONCAT('%',#{info.shareType},'%')
+        </if>
+        <if test="userId != null and userId != ''">
+            and create_user = #{userId}
+        </if>
+        <!--
+        <if test="deptId != null and deptId != 0">
+            and (dept_id = #{deptId} or dept_id in ( select dept_id from sys_dept where pids like CONCAT('%$[', #{deptId}, '$]%') escape '$' ))
+        </if>-->
+        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+            and (create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+    </select>
+
+    <select id="getDetailById" resultType="com.land.modular.file.vo.FileShareInfoVo">
+        select
+        <include refid="Base_Column_List"/>
+        from file_share_info
+        where share_id = #{shareId}
+    </select>
+
+</mapper>

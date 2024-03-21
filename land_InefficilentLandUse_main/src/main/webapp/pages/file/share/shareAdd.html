@@ -1,0 +1,83 @@
+@layout("/common/_form.html",{js:["/assets/easyUploader/easyUploader.jq.js","/assets/file/share/fileShareAdd.js"],css:["/assets/easyUploader/main.css"]}){
+
+<form class="layui-form" id="fileShareForm" lay-filter="fileShareForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input id="shareId" name="shareId" type="hidden"/>
+                    <input id="businessKey" name="businessKey" type="hidden" value="${businessKey}"/>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">编号<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="shareNo" name="shareNo" placeholder="请输入编号" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">标题<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="shareTitle" name="shareTitle" placeholder="请输入标题" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">类型<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="shareType" name="shareType" placeholder="请输入类型" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">接收人员<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="receiveUser" name="receiveUser" type="hidden">
+                                <input id="receiveUserName" name="receiveUserName" placeholder="请输入接收人员" type="text"
+                                       class="layui-input" lay-verify="required" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-block">
+                                <textarea name="remark" id="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <div class="layui-input-block">
+                                <!--div id="uploader"></div>-->
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                                    <div class="layui-upload-list">
+                                        <table class="layui-table">
+                                            <thead>
+                                            <tr><th>文件名</th>
+                                                <th>大小</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr></thead>
+                                            <tbody id="demoList">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

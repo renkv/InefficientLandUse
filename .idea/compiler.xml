@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="land-base" />
+        <module name="land-base-dbctn" />
+        <module name="land-base-sys" />
+        <module name="land-base-excel" />
+        <module name="land-base-timers" />
+        <module name="land-base-generator" />
+        <module name="InefficilentLandUse" />
+        <module name="land_InefficilentLandUse_main" />
+        <module name="land-base-auth" />
+        <module name="land-base-oauth2" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="InefficilentLandUse" options="-parameters" />
+      <module name="land-base" options="-parameters" />
+      <module name="land-base-auth" options="-parameters" />
+      <module name="land-base-dbctn" options="-parameters" />
+      <module name="land-base-excel" options="-parameters" />
+      <module name="land-base-generator" options="-parameters" />
+      <module name="land-base-oauth2" options="-parameters" />
+      <module name="land-base-sys" options="-parameters" />
+      <module name="land-base-timers" options="-parameters" />
+    </option>
+  </component>
+</project>

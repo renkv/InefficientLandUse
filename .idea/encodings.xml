@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/land-base-auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/land-base-dbctn/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/land-base-excel/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/land-base-generator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/land-base-oauth2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/land-base-sys/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/land-base-timers/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/land-base/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_base/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_main/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/land_InefficilentLandUse_main/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

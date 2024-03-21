@@ -1,0 +1,155 @@
+@layout("/common/_container.html",{js:["/assets/weekwork/main/weekWorkAdd.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">新增部门任务进度安排</span>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <div class="layui-row">
+                        <div class="layui-col-md4 layui-col-md-offset4" style="text-align: center;width: 500px;">
+                            <div class="layui-card-header" style="font-weight:bolder;font-size: 18px;">部门任务进度安排（${deptName}）</div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline">
+                            <button id="jxBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>进行中项目添加</button>
+                            <button id="ztBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>暂停中项目添加</button>
+                            <button id="gjjBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>跟进中项目添加</button>
+                            <button id="ywnBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>已完成项目添加</button>
+                            <button id="jhgjBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>计划跟进中项目添加</button>
+                            <button id="pxBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>培训添加</button>
+                            <button id="hyBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>会议添加</button>
+                        </div>
+                    </div>
+                    <table id="tab11" class="layui-table" style="display: none">
+                        <thead>
+                        <tr style="background-color:white">
+                            <th rowspan="2" style="text-align: center">序号</th>
+                            <th rowspan="2" style="text-align: center">任务名称</th>
+                            <th rowspan="2" style="text-align: center">项目落实人</th>
+                            <th rowspan="2" style="text-align: center">任务下达时间</th>
+                            <th rowspan="2" style="text-align: center">计划完成时间</th>
+                            <th rowspan="2" style="text-align: center">实际进度</th>
+                            <th colspan="3" style="text-align: center">主管领导</th>
+                            <!--<th rowspan="2" style="text-align: center">备注</th>-->
+                            <th rowspan="2" style="text-align: center">操作</th>
+                        </tr>
+                        <tr style="background-color:white">
+                            <th style="text-align: center">签字</th>
+                            <th style="text-align: center">督导情况</th>
+                            <th style="text-align: center">督导时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="text" class="layui-input" readonly name="serialNo" size="3" value="1"></td>
+                            <td><input type="text" class="layui-input" name="taskName"></td>
+                            <td><input type="text" class="layui-input" name="implementUser"></td>
+                            <td><input type="text" class="layui-input" id="assignTime" name="assignTime"></td>
+                            <td><input type="text" class="layui-input" id="planFinishTime" name="planFinishTime"></td>
+                            <td><input type="text" class="layui-input" name="actualProgress"></td>
+                            <td><input type="text" class="layui-input" name="leader"></td>
+                            <td><textarea class="layui-textarea" id="supervision" name="supervision"></textarea></td>
+                            <td><input type="text" class="layui-input" id="superviseTime" name="superviseTime"></td>
+                            <!--<td><input type="text" class="layui-input" name="remark"></td>-->
+                            <td>
+                                <input type="button" class="layui-btn" name="Button1" id="Button1" value="删除">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="layui-table" id="weekWorkIngTable" lay-filter="weekWorkIngTable">
+                        <thead>
+                            <tr style="background-color:white">
+                                <th rowspan="2" style="text-align: center">序号</th>
+                                <th rowspan="2" style="text-align: center">任务名称</th>
+                                <th rowspan="2" style="text-align: center">项目落实人</th>
+                                <th rowspan="2" style="text-align: center">任务下达时间</th>
+                                <th rowspan="2" style="text-align: center">计划完成时间</th>
+                                <th rowspan="2" style="text-align: center">实际进度</th>
+                                <th colspan="3" style="text-align: center">主管领导</th>
+                                <!--<th rowspan="2" style="text-align: center">备注</th>-->
+                                <th rowspan="2" style="text-align: center">操作</th>
+                            </tr>
+                            <tr style="background-color:white">
+                                <th style="text-align: center">签字</th>
+                                <th style="text-align: center">督导情况</th>
+                                <th style="text-align: center">督导时间</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center" colspan="10">进行中项目</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jxTbody">
+                        </tbody>
+                    </table>
+                    <table class="layui-table" id="weekWorkStopTable" lay-filter="weekWorkStopTable">
+                        <thead>
+                            <tr>
+                                <th lay-data="{align:'center'}" style="text-align: center" colspan="10">暂停中项目</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table class="layui-table" id="weekWorkGJTable" lay-filter="weekWorkGJTable">
+                        <thead>
+                            <tr>
+                                <th lay-data="{align:'center'}" style="text-align: center" colspan="10">跟进中项目</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table class="layui-table" id="weekWorkFinishTable" lay-filter="weekWorkFinishTable">
+                        <thead>
+                            <tr>
+                                <th lay-data="{align:'center'}" style="text-align: center" colspan="10">已完成项目</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table class="layui-table" id="weekWorkJHGJTable" lay-filter="weekWorkJHGJTable">
+                        <thead>
+                            <tr>
+                                <th lay-data="{align:'center'}" style="text-align: center" colspan="10">计划跟进中项目</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table class="layui-table" id="weekWorkPXTable" lay-filter="weekWorkPXTable">
+                        <thead>
+                        <tr>
+                            <th lay-data="{align:'center'}" style="text-align: center" colspan="10">培训</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table class="layui-table" id="weekWorkHYTable" lay-filter="weekWorkHYTable">
+                        <thead>
+                        <tr>
+                            <th lay-data="{align:'center'}" style="text-align: center" colspan="10">会议</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table class="layui-table" id="weekWorkRemarkTable" lay-filter="weekWorkRemarkTable">
+                        <tbody>
+                            <tr>
+                                <td lay-data="{align:'center'}" style="text-align: center" colspan="11"><input type="text" class="layui-textarea" name="remark"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group-bottom text-center">
+    <button class="layui-btn" lay-filter="btnSubmit" lay-submit id="btnSubmit">&emsp;提交&emsp;</button>
+    <button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;取消&emsp;</button>
+</div>
+@}
