@@ -2,4 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.land.modular.landinfo.mapper.LandDetailDao">
 
+    <resultMap type="com.land.modular.landinfo.entity.LandDetailInfo" id="LandInfoMap">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="INTEGER"/>
+        <result property="createUserName" column="create_user_name" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
+        <result property="updateUserName" column="update_user_name" jdbcType="VARCHAR"/>
+        <result property="xmc" column="xmc" jdbcType="VARCHAR"/>
+        <result property="pqbh" column="pqbh" jdbcType="VARCHAR"/>
+        <result property="xmmc" column="xmmc" jdbcType="VARCHAR"/>
+        <result property="xzmc" column="xzmc" jdbcType="BIGINT"/>
+        <result property="dkbh" column="dkbh" jdbcType="VARCHAR"/>
+        <result property="dkmj" column="dkmj" jdbcType="DOUBLE"/>
+        <result property="dldm" column="dldm" jdbcType="VARCHAR"/>
+        <result property="dlmc" column="dlmc" jdbcType="VARCHAR"/>
+        <result property="xldm" column="xldm" jdbcType="CHAR"/>
+        <result property="xlmc" column="xlmc" jdbcType="VARCHAR"/>
+        <result property="xzyt" column="xzyt" jdbcType="VARCHAR"/>
+        <result property="xzrjl" column="xzrjl" jdbcType="DOUBLE"/>
+        <result property="xzjzmd" column="xzjzmd" jdbcType="INTEGER"/>
+        <result property="ghyt" column="ghyt" jdbcType="CHAR"/>
+        <result property="ghrjl" column="ghrjl" jdbcType="VARCHAR"/>
+        <result property="ghjzmd" column="ghjzmd" jdbcType="BIGINT"/>
+        <result property="kfql" column="kfql" jdbcType="DOUBLE"/>
+        <result property="zkfsx" column="zkfsx" jdbcType="VARCHAR"/>
+        <result property="pqmj" column="pqmj" jdbcType="DOUBLE"/>
+        <result property="zb" column="zb" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+      id ,XMC ,PQBH ,XMMC ,XZDM ,XZMC ,DKBH ,DKMJ,DLDM ,DLMC,XLDM ,XLMC ,XZYT ,XZRJL ,XZJZMD ,GHYT ,GHRJL ,
+	GHJZMD ,KFQL ,ZKFSX,PQMJ ,ZB  ,create_user as createUser,create_user_name as createUserName,
+	create_time as createTime,update_user as updateUser,update_user_name as updateUserName ,update_time as updateTime
+    </sql>
+    <select id="selectListByPage" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from land_low_use.land_detail_info
+        where 1=1
+        <if test="beginTime != null and beginTime != ''">
+            and create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        order by create_time desc
+    </select>
 </mapper>
