@@ -33,8 +33,9 @@
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-      id ,XMC ,PQBH ,XMMC ,XZDM ,XZMC ,DKBH ,DKMJ,DLDM ,DLMC,XLDM ,XLMC ,XZYT ,XZRJL ,XZJZMD ,GHYT ,GHRJL ,
-	GHJZMD ,KFQL ,ZKFSX,PQMJ ,ZB  ,create_user as createUser,create_user_name as createUserName,
+      id ,XMC as xmc ,PQBH as pqbh,XMMC as xmmc,XZDM as xzdm,XZMC as xzmc,DKBH as dkbh,DKMJ as dkmj,DLDM as dldm,DLMC as dlmc,XLDM as xldm,XLMC xlmc,XZYT xzyt,
+      XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,
+	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,
 	create_time as createTime,update_user as updateUser,update_user_name as updateUserName ,update_time as updateTime
     </sql>
     <select id="selectListByPage" resultType="java.util.Map">

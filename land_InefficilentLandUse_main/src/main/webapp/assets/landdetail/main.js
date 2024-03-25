@@ -207,7 +207,7 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
     //执行实例
     var uploadInst = upload.render({
         elem: '#btnImp'
-        , url: '/weekWork/uploadExcel'
+        , url: '/landdetail/uploadExcel'
         ,accept: 'file'
         , done: function (res) {
             if (res.code==500){
