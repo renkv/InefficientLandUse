@@ -1,0 +1,124 @@
+{
+  "displayFieldName" : "",
+  "fieldAliases" : {
+    "FID" : "FID",
+    "NAME" : "NAME",
+    "PHONE" : "PHONE",
+    "PERSON" : "PERSON",
+    "ROUTETIME" : "ROUTETIME",
+    "INSDATE" : "INSDATE"
+  },
+  "geometryType" : "esriGeometryPoint",
+  "spatialReference" : {
+    "wkid" : 4326
+  },
+  "fields" : [
+    {
+      "name" : "FID",
+      "type" : "esriFieldTypeOID",
+      "alias" : "FID"
+    },
+    {
+      "name" : "NAME",
+      "type" : "esriFieldTypeString",
+      "alias" : "NAME",
+      "length" : 100
+    },
+    {
+      "name" : "PHONE",
+      "type" : "esriFieldTypeString",
+      "alias" : "PHONE",
+      "length" : 50
+    },
+    {
+      "name" : "PERSON",
+      "type" : "esriFieldTypeString",
+      "alias" : "PERSON",
+      "length" : 50
+    },
+    {
+      "name" : "ROUTETIME",
+      "type" : "esriFieldTypeString",
+      "alias" : "ROUTETIME",
+      "length" : 50
+    },
+    {
+      "name" : "INSDATE",
+      "type" : "esriFieldTypeString",
+      "alias" : "INSDATE",
+      "length" : 50
+    }
+  ],
+  "features" : [
+    {
+      "attributes" : {
+        "FID" : 0,
+        "NAME" : "阀门1",
+        "PHONE" : "13413626548",
+        "PERSON" : "张三",
+        "ROUTETIME" : "2019/4/8",
+        "INSDATE" : "2018/9/22"
+      },
+      "geometry" : {
+        "x" : 112.08922167618755,
+        "y" : 28.155732114431771
+      }
+    },
+    {
+      "attributes" : {
+        "FID" : 1,
+        "NAME" : "阀门2",
+        "PHONE" : "13415326548",
+        "PERSON" : "李四",
+        "ROUTETIME" : "2019/4/8",
+        "INSDATE" : "2018/9/22"
+      },
+      "geometry" : {
+        "x" : 112.16124991221533,
+        "y" : 28.155057746490161
+      }
+    },
+    {
+      "attributes" : {
+        "FID" : 2,
+        "NAME" : "阀门3",
+        "PHONE" : "13411326548",
+        "PERSON" : "王虎",
+        "ROUTETIME" : "2019/4/8",
+        "INSDATE" : "2018/9/22"
+      },
+      "geometry" : {
+        "x" : 112.48397082878883,
+        "y" : 28.187786459809935
+      }
+    },
+    {
+      "attributes" : {
+        "FID" : 3,
+        "NAME" : "阀门4",
+        "PHONE" : "13413326542",
+        "PERSON" : "李旭",
+        "ROUTETIME" : "2019/4/8",
+        "INSDATE" : "2018/9/22"
+      },
+      "geometry" : {
+        "x" : 112.55871848555999,
+        "y" : 28.232619305095881
+      }
+    },
+    {
+      "attributes" : {
+        "FID" : 4,
+        "NAME" : "阀门5",
+        "PHONE" : "13413326544",
+        "PERSON" : "李涛",
+        "ROUTETIME" : "2019/4/8",
+        "INSDATE" : "2018/9/22"
+      },
+      "geometry" : {
+        "x" : 112.60431097443518,
+        "y" : 28.281043741855051
+      }
+    }
+  ]
+}

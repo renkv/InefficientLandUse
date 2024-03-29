@@ -1,8 +1,11 @@
 package com.land.modular.landinfo.vo;
 
+import com.land.sys.modular.system.entity.FileInfo;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class LandDetailInfoVo {
     private Long id;
@@ -71,4 +74,10 @@ public class LandDetailInfoVo {
     //片区面积
     private Double pqmj;
     private String zb;
+    private String remark;
+    private String businessKey;
+    /**
+     * 文件信息
+     */
+    private List<FileInfo> fileInfoList;
 }

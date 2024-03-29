@@ -1,38 +1,47 @@
 package com.land.modular.landinfo.controller;
 
+import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.base.consts.ConstantsContext;
+import com.land.base.log.BussinessLog;
 import com.land.base.pojo.page.LayuiPageFactory;
+import com.land.modular.file.vo.FileShareInfoVo;
+import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.landinfo.entity.LandInfo;
 import com.land.modular.landinfo.service.LandDetailService;
 import com.land.modular.landinfo.vo.LandDetailExcelParam;
 import com.land.modular.landinfo.vo.LandDetailInfoVo;
-import com.land.modular.weekwork.vo.WeekWorkDetailExcelParam;
+import com.land.sys.core.constant.dictmap.DeptDict;
+import com.land.sys.core.listener.ConfigListener;
 import com.land.sys.modular.system.warpper.UserWrapper;
+import com.land.utils.JsonFileUtil;
+import com.land.utils.ZipUtil;
+import org.beetl.ext.simulate.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 低效用地详细地块信息
  */
 @Controller
 @RequestMapping("landdetail")
-public class LondDetailInfoController {
+public class LondDetailInfoController extends BaseController{
     private String PREFIX = "/landdetail";
     @Autowired
     private LandDetailService landDetailService;
@@ -41,6 +50,104 @@ public class LondDetailInfoController {
     public String main(String category, Model model) {
         model.addAttribute("category",category);
         return PREFIX + "/main.html";
+    }
+    //低效规划TB
+    @RequestMapping("/lowuseghMap")
+    public String lowuseghMap(String category, Model model) {
+        model.addAttribute("category",category);
+        return  PREFIX + "/map.html";
+    }
+    //行政区图层
+    @RequestMapping("/xzqMap")
+    public String xzqMap(String category, Model model) {
+        model.addAttribute("category",category);
+        return  PREFIX + "/map2.html";
+    }
+    //城镇开发边界图层
+    @RequestMapping("/czkfbjMap")
+    public String czkfbjMap(String category, Model model) {
+        model.addAttribute("category",category);
+        return  PREFIX + "/czkfbjMap.html";
+    }
+    //低效乡镇图斑
+    @RequestMapping("/dxxztbMap")
+    public String dxxztbMap(String category, Model model) {
+        model.addAttribute("category",category);
+        return  PREFIX + "/dxxztbMap.html";
+    }
+
+    @RequestMapping("/showOnMap")
+    public String showOnMap(String key, String path,String value,String xmmc,Model model,HttpServletRequest request) {
+        model.addAttribute("key",key);
+        model.addAttribute("path",path);
+        model.addAttribute("value",value);
+        model.addAttribute("xmmc",xmmc);
+        File file = new File("E:\\desktop\\低效用地数据\\dxghtb.zip");
+        JSONObject jsonObject = ZipUtil.shpToGeoJsonByKey(file,key,value);
+        JsonFileUtil.crateJson(jsonObject,value);
+        //return  PREFIX + "/map.html";
+        return  PREFIX + "/showMap.html";
+    }
+
+    @RequestMapping("/demo1")
+    public String demo1(String category, Model model) {
+        model.addAttribute("category",category);
+        return  "/demos/map.html";
+    }
+
+    /**
+     * 跳转新增页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("/add")
+    public String add( Model model) {
+        String businessKey = UUID.randomUUID().toString();
+        model.addAttribute("businessKey",businessKey);
+        return PREFIX + "/landDetailAdd.html";
+    }
+    /**
+     * 编辑页面
+     */
+    @RequestMapping("/edit")
+    public String edit (@RequestParam("id") Long id,Model model) {
+        LandDetailInfoVo vo = landDetailService.getDetailById(id);
+        model.addAttribute("vo",vo);
+        model.addAttribute("ctxPath", ConfigListener.getConf().get("contextPath"));
+        return PREFIX + "/detailEdit.html";
+    }
+    /**
+     * 详情页面
+     */
+    @RequestMapping("/detail")
+    public String detail(@RequestParam("id") Long id,Model model) {
+        LandDetailInfoVo vo = landDetailService.getDetailById(id);
+        model.addAttribute("vo",vo);
+        model.addAttribute("ctxPath",ConfigListener.getConf().get("contextPath"));
+        return PREFIX + "/landDetail.html";
+    }
+
+    /**
+     * 保存
+     * @param landDetail
+     * @return
+     */
+    @BussinessLog(value = "保存低效用地项目信息", key = "simpleName", dict = DeptDict.class)
+    @RequestMapping(value = "/saveLandDetail")
+    @ResponseBody
+    public ResponseData saveLandDetail(@Valid LandDetailInfo landDetail) {
+        this.landDetailService.saveLandDetail(landDetail);
+        return SUCCESS_TIP;
+    }
+
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public  ResponseData delete(String ids){
+        boolean isDel = landDetailService.delete(ids);
+        /*if(!isDel){
+            return ResponseData.error("只能删除当前周的数据！");
+        }*/
+        return SUCCESS_TIP;
     }
 
     /**
@@ -114,4 +221,36 @@ public class LondDetailInfoController {
             return ResponseData.error(e.getMessage());
         }
     }
+
+    /**
+     * 数据导出
+     * @param response
+     * @param createUserName
+     * @param deptName
+     * @param category
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/exportToExcel")
+    @ResponseBody
+    public String exportToExcel(HttpServletResponse response, @RequestParam(required = false) String createUserName, @RequestParam(required = false) String deptName,
+
+                                @RequestParam(required = false) String category,  @RequestParam(required = false) String timeLimit)throws Exception {
+
+        //拼接查询条件
+        String beginTime = "";
+        String endTime = "";
+
+        if (ToolUtil.isNotEmpty(timeLimit)) {
+            String[] split = timeLimit.split(" - ");
+            beginTime = split[0];
+            endTime = split[1];
+        }
+        LandInfo main = new LandInfo();
+        main.setCategory(category);
+        main.setCreateUserName(createUserName);
+        main.setDeptName(deptName);
+        return landDetailService.exportToExcel(response,main,beginTime, endTime);
+    }
+
 }

@@ -30,13 +30,15 @@
         <result property="zkfsx" column="zkfsx" jdbcType="VARCHAR"/>
         <result property="pqmj" column="pqmj" jdbcType="DOUBLE"/>
         <result property="zb" column="zb" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="businessKey" column="business_key" jdbcType="VARCHAR"/>
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
       id ,XMC as xmc ,PQBH as pqbh,XMMC as xmmc,XZDM as xzdm,XZMC as xzmc,DKBH as dkbh,DKMJ as dkmj,DLDM as dldm,DLMC as dlmc,XLDM as xldm,XLMC xlmc,XZYT xzyt,
       XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,
 	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,
-	create_time as createTime,update_user as updateUser,update_user_name as updateUserName ,update_time as updateTime
+	create_time as createTime,update_user as updateUser,update_user_name as updateUserName ,update_time as updateTime,remark,business_key as businessKey
     </sql>
     <select id="selectListByPage" resultType="java.util.Map">
         select
@@ -50,5 +52,24 @@
             and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
         </if>
         order by create_time desc
+    </select>
+    <select id="selectByList" resultType="com.land.modular.landinfo.entity.LandDetailInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from land_low_use.land_detail_info
+        where 1=1
+        <if test="beginTime != null and beginTime != ''">
+            and create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        order by create_time desc
+    </select>
+    <select id="getDetailById" resultType="com.land.modular.landinfo.vo.LandDetailInfoVo">
+        select
+        <include refid="Base_Column_List"/>
+        from land_detail_info
+        where id = #{id}
     </select>
 </mapper>

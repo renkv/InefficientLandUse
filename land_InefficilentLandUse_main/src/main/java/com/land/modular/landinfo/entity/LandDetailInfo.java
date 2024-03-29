@@ -102,4 +102,12 @@ public class LandDetailInfo {
     //坐标
     @TableField(value = "zb")
     private String zb;
+    //备注
+    @TableField(value = "remark")
+    private String remark;
+    /**
+     * 业务key
+     */
+    @TableField(value = "business_key")
+    private String businessKey;
 }

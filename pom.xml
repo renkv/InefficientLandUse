@@ -44,6 +44,7 @@
     <batik.version>1.7</batik.version>
     <docker.img.version>latest</docker.img.version>
     <kernel.version>2.2.12</kernel.version>
+    <geotool.version>2.2.12</geotool.version>
   </properties>
 
   <dependencyManagement>

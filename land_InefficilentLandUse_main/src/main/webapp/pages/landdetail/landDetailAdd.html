@@ -1,0 +1,210 @@
+@layout("/common/_form.html",{js:["/assets/easyUploader/easyUploader.jq.js","/assets/landdetail/landdetailAdd.js"],css:["/assets/easyUploader/main.css"]}){
+
+<form class="layui-form" id="fileShareForm" lay-filter="fileShareForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input id="id" name="id" type="hidden"/>
+                    <input id="areaFileName" name="areaFileName" type="hidden"/>
+                    <input id="areaInfo" name="areaInfo" type="hidden"/>
+                    <input id="businessKey" name="businessKey" type="hidden" value="${businessKey}"/>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">区县名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xmc" name="xmc" placeholder="请输入区县名称" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">片区编号<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="pqbh" name="pqbh" placeholder="请输入片区编号" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">项目名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xmmc" name="xmmc" placeholder="请输入项目名称" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">乡镇代码<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzdm" name="xzdm" placeholder="请输入乡镇代码" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">乡镇名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzmc" name="xzmc" placeholder="请输入乡镇名称" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块编号<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dkbh" name="dkbh" placeholder="请输入地块编码" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块面积<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dkmj" name="dkmj" placeholder="请输入地块面积" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">大类代码<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dldm" name="dldm" placeholder="请输入大类代码" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">大类名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dlmc" name="dlmc" placeholder="请输入大类名称" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">小类代码<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xldm" name="xldm" placeholder="请输入小类代码" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">小类名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xlmc" name="xlmc" placeholder="请输入小类名称" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">现状用途<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzyt" name="xzyt" placeholder="请输入现状用途" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">现状容积率<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzrjl" name="xzrjl" placeholder="请输入现状容积率" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">现状建筑密度<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzjzmd" name="xzjzmd" placeholder="请输入现状建筑密度" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">规划用途<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="ghyt" name="ghyt" placeholder="请输入规划用途" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">规划容积率<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="ghrjl" name="ghrjl" placeholder="请输入规划容积率" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">规划建筑密度<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="ghjzmd" name="ghjzmd" placeholder="请输入规划建筑密度" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">开发潜力<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="kfql" name="kfql" placeholder="请输入开发潜力" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">再开发时序<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="zkfsx" name="zkfsx" placeholder="请输入再开发时序" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">片区面积<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="pqmj" name="pqmj" laceholder="请输入片区面积" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块坐标</label>
+                            <div class="layui-input-block">
+                                <!--<input id="landArea" name="landArea" placeholder="" type="text" readonly lay-verify="required"
+                                       class="layui-input"/>-->
+                                <button type="button" id="areaBtn" class="layui-btn">上传txt文件</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-block">
+                                <textarea name="remark" id="remark" placeholder="请输入备注内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">附件</label>
+                            <div class="layui-input-block">
+                                <!--div id="uploader"></div>-->
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                                    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+                                    <div class="layui-upload-list">
+                                        <table class="layui-table">
+                                            <thead>
+                                            <tr><th>文件名</th>
+                                                <th>大小</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr></thead>
+                                            <tbody id="demoList">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

@@ -1,0 +1,4 @@
+E:\代码\arcgis api for js入门开发系列\定制版本在线地图+标注\BaseMap\bin\BaseMap.dll
+E:\代码\arcgis api for js入门开发系列\定制版本在线地图+标注\BaseMap\bin\BaseMap.pdb
+E:\代码\arcgis api for js入门开发系列\定制版本在线地图+标注\BaseMap\obj\Debug\BaseMap.dll
+E:\代码\arcgis api for js入门开发系列\定制版本在线地图+标注\BaseMap\obj\Debug\BaseMap.pdb

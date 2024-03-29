@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <title>地图Shp</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.28/esri/css/esri.css">
+    <style>
+      html, body, #map {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .esriPopup .titlePane {
+        background-color: #409ece;
+      }
+      .esriPopup .titleButton.maximize {
+        display: none;
+      }
+    </style>
+    <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+    <!--shp.min.js文件-->
+    <script type="text/javascript" src="js/main/shp.min.js"></script>
+    <script src="https://js.arcgis.com/3.28/"></script>
+    <script type="text/javascript" src="js/main/map.js"></script>
+
+    <script>
+          var dojoConfig = {
+            has: {
+              "esri-featurelayer-webgl": 1
+            }
+          };
+    </script>
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <div style="position:absolute;top:10px;right:300px;" id="famen">
+        <input type="checkbox" style="width:15px;height:15px;vertical-align:middle;margin:auto;" checked />
+        <label style="font-weight: normal;vertical-align: middle;margin: auto;">阀门</label>
+    </div>
+    <div style="position:absolute;top:10px;right:215px;" id="jiancezhan">
+        <input type="checkbox" style="width:15px;height:15px;vertical-align:middle;margin:auto;" checked />
+        <label style="font-weight: normal;vertical-align: middle;margin: auto;">监测站</label>
+    </div>
+  </body>
+</html>

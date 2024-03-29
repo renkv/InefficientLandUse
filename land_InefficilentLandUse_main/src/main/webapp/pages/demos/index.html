@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+    <head>
+        <title>js-shapefile-to-geojson Demo Page</title>
+
+	    <link rel="stylesheet" href="https://js.arcgis.com/3.46/esri/css/esri.css">
+		<!--<link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">-->
+		<style>
+			html, body, #map {
+				padding: 0;
+				margin: 0;
+				height: 100%;
+			}
+		</style>
+        <script src="/assets/jsshapefiletogeojson/stream.js"></script>
+        <script src="/assets/jsshapefiletogeojson/shapefile.js"></script>
+        <script src="/assets/jsshapefiletogeojson/dbf.js"></script>
+		<script src="https://js.arcgis.com/3.23/"></script>
+		<!-- Terraformer reference -->
+		<script src="/assets/jsshapefiletogeojson/vendor/terraformer/terraformer.min.js"></script>
+		<script src="/assets/jsshapefiletogeojson/vendor/terraformer-arcgis-parser/terraformer-arcgis-parser.min.js"></script>
+        <script type="text/javascript">
+            /*require([
+                "esri/Map",
+                //"esri/layers/Shapefile",
+                "/assets/jsshapefiletogeojson/src/geojsonlayer.js",
+                "esri/views/MapView",
+                "dojo/domReady!"
+            ], function(Map,GeoJsonLayer,  MapView) {
+                // 创建一个新的Map实例
+                var map = new Map({
+                    basemap: "topo-vector"
+                });
+
+                // 创建Shapefile图层
+               /!* var shapefile = new Shapefile({
+                    url: "/assets/jsshapefiletogeojson/testdata/XZQ.shp" // 替换为你的.shp文件的URL
+                });*!/
+                var shapefile = new Shapefile({
+                    shp: "/assets/jsshapefiletogeojson/testdata/XZQ.shp",
+                    dbf: "/assets/jsshapefiletogeojson/testdata/XZQ.dbf"});
+
+                    // 将Shapefile图层添加到Map中
+                map.add(shapefile);
+
+                // 创建MapView实例
+                var view = new MapView({
+                    container: "map", // 视图的DOM容器
+                    map: map,
+                    center: [-120, 40], // 初始中心点坐标（经度，纬度）
+                    zoom: 4 // 初始缩放级别
+                });
+
+                // 当Shapefile加载完成后，定位到它
+                shapefile.when(function() {
+                    // 计算Shapefile图层的范围
+                    var extent = shapefile.extent;
+
+                    // 使用计算出来的范围来更新视图
+                    view.goTo({ extent: extent });
+                });
+            });*/
+			require([
+				"esri/map","/assets/jsshapefiletogeojson/src/geojsonlayer.js","dojo/domReady!"
+			],function(Map,GeoJsonLayer){
+debugger;
+                var starttime = +new Date
+				/*var map = new Map("map",{
+					basemap:"osm",
+					center:[120.0244,23.01]
+				});*/
+                var map = new Map("map",{
+                    basemap: "topo-vector",center: [-120, 40]
+                });
+                var shapefile = new Shapefile({
+                    shp: "/assets/jsshapefiletogeojson/testdata/world.shp",
+                    dbf: "/assets/jsshapefiletogeojson/testdata/world.dbf"
+                }, function(data){
+					var URL = window.URL || window.webkitURL || window.mozURL || window.msURL,
+					url = URL.createObjectURL(new Blob([JSON.stringify(data.geojson)], {type: "application/json"}));
+					console.log(url);
+					var geoJsonLayer = new GeoJsonLayer({
+							url: url
+						});
+					// Zoom to layer
+					geoJsonLayer.on("update-end", function (e) {
+						map.setExtent(e.target.extent.expand(1.2));
+					});
+					// Add to map
+					map.addLayer(geoJsonLayer);
+                    console.log("took",new Date - starttime,"milliseconds");
+                })
+
+			})
+        </script>
+    </head>
+    <body>
+		<div id="map"></div>
+    </body>
+</html>
+

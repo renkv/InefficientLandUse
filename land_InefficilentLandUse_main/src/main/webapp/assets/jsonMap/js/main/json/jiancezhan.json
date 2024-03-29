@@ -1,0 +1,124 @@
+{
+  "displayFieldName" : "",
+  "fieldAliases" : {
+    "FID" : "FID",
+    "NAME" : "NAME",
+    "ADDRESS" : "ADDRESS",
+    "PERSON" : "PERSON",
+    "PHONE" : "PHONE",
+    "TIME" : "TIME"
+  },
+  "geometryType" : "esriGeometryPoint",
+  "spatialReference" : {
+    "wkid" : 4326
+  },
+  "fields" : [
+    {
+      "name" : "FID",
+      "type" : "esriFieldTypeOID",
+      "alias" : "FID"
+    },
+    {
+      "name" : "NAME",
+      "type" : "esriFieldTypeString",
+      "alias" : "NAME",
+      "length" : 100
+    },
+    {
+      "name" : "ADDRESS",
+      "type" : "esriFieldTypeString",
+      "alias" : "ADDRESS",
+      "length" : 50
+    },
+    {
+      "name" : "PERSON",
+      "type" : "esriFieldTypeString",
+      "alias" : "PERSON",
+      "length" : 50
+    },
+    {
+      "name" : "PHONE",
+      "type" : "esriFieldTypeString",
+      "alias" : "PHONE",
+      "length" : 50
+    },
+    {
+      "name" : "TIME",
+      "type" : "esriFieldTypeString",
+      "alias" : "TIME",
+      "length" : 50
+    }
+  ],
+  "features" : [
+    {
+      "attributes" : {
+        "FID" : 0,
+        "NAME" : "监测站1",
+        "ADDRESS" : "xxx路地址1",
+        "PERSON" : "张三",
+        "PHONE" : "13662354785",
+        "TIME" : "2019/4/7"
+      },
+      "geometry" : {
+        "x" : 112.09355283329751,
+        "y" : 28.170722217506132
+      }
+    },
+    {
+      "attributes" : {
+        "FID" : 1,
+        "NAME" : "监测站2",
+        "ADDRESS" : "xxx路地址2",
+        "PERSON" : "赵明",
+        "PHONE" : "13662354785",
+        "TIME" : "2019/4/7"
+      },
+      "geometry" : {
+        "x" : 112.10649115251672,
+        "y" : 28.187824593485537
+      }
+    },
+    {
+      "attributes" : {
+        "FID" : 2,
+        "NAME" : "监测站3",
+        "ADDRESS" : "xxx路地址3",
+        "PERSON" : "杨虎",
+        "PHONE" : "13662354785",
+        "TIME" : "2019/4/7"
+      },
+      "geometry" : {
+        "x" : 112.14024975553694,
+        "y" : 28.173399111137691
+      }
+    },
+    {
+      "attributes" : {
+        "FID" : 3,
+        "NAME" : "监测站4",
+        "ADDRESS" : "xxx路地址4",
+        "PERSON" : "马涛",
+        "PHONE" : "13662354785",
+        "TIME" : "2019/4/7"
+      },
+      "geometry" : {
+        "x" : 112.15824442939353,
+        "y" : 28.18827074242413
+      }
+    },
+    {
+      "attributes" : {
+        "FID" : 4,
+        "NAME" : "监测站5",
+        "ADDRESS" : "xxx路地址5",
+        "PERSON" : "小兰",
+        "PHONE" : "13662354785",
+        "TIME" : "2019/4/7"
+      },
+      "geometry" : {
+        "x" : 112.1930440466038,
+        "y" : 28.189460472927045
+      }
+    }
+  ]
+}
