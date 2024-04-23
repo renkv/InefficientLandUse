@@ -216,8 +216,10 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
     @Transactional(rollbackFor = Exception.class)
     public LandDetailInfoVo getDetailById(Long id) {
         LandDetailInfoVo vo = this.baseMapper.getDetailById(id);
-        List<FileInfo> fileInfoList = fileInfoService.getListByBusinessKey(vo.getBusinessKey());
-        vo.setFileInfoList(fileInfoList);
+        if(vo.getBusinessKey() != null){
+            List<FileInfo> fileInfoList = fileInfoService.getListByBusinessKey(vo.getBusinessKey());
+            vo.setFileInfoList(fileInfoList);
+        }
         return vo;
     }
 }

@@ -31,7 +31,11 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
                 },
           /*  {field: 'xzdm', sort: false,align: 'center', title: '乡镇代码'},*/
             {field: 'xzmc', sort: false,align: 'center', fixed: 'left',title: '乡镇名称'},
-            {field: 'dkbh', sort: false,align: 'center', title: '地块编号'},
+            {field: 'dkbh', sort: false,align: 'center', title: '地块编号',templet:function (d){
+                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showMap">' + d.dkbh+ '</a></div>';
+                    return html;
+                }
+                },
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
         /*    {field: 'dldm', sort: false,align: 'center', title: '大类代码'},*/
             {field: 'dlmc', sort: false,align: 'center', title: '大类名称'},
@@ -81,6 +85,8 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
                     //table.reload(shareFileTInfo.tableId);
                 }
             });
+        }else if(layEvent === 'showMap'){
+            window.open(Feng.ctxPath+"/landdetail/showOnMap?value="+data.dkbh+"&key=DKBH&xmmc="+data.xmmc);
         }
     });
     /*// 工具条点击事件
