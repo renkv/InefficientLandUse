@@ -14,12 +14,45 @@
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
+                                        <select name="city" lay-verify="required">
+                                            <option value="">请选择区县</option>
+                                            <option value="130100">石家庄市</option>
+                                            <option value="130102">长安区</option>
+                                            <option value="130104">桥西区</option>
+                                            <option value="130105">新华区</option>
+                                            <option value="130107">井陉矿区</option>
+                                            <option value="130108">裕华区</option>
+                                            <option value="130109">藁城区</option>
+                                            <option value="130110">鹿泉区</option>
+                                            <option value="130111">栾城区</option>
+                                            <option value="130121">井陉县</option>
+                                            <option value="130123">正定县</option>
+                                            <option value="130125">行唐县</option>
+                                            <option value="130126">灵寿县</option>
+                                            <option value="130127">高邑县</option>
+                                            <option value="130128">深泽县</option>
+                                            <option value="130129">赞皇县</option>
+                                            <option value="130130">无极县</option>
+                                            <option value="130131">平山县</option>
+                                            <option value="130132">元氏县</option>
+                                            <option value="130133">赵县</option>
+                                            <option value="130184">新乐市</option>
+                                            <option value="130183">晋州市</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <input id="xmmc" class="layui-input" type="text" placeholder="项目名称"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <input id="status" class="layui-input" type="text" placeholder="地块状态"/>
+                                    </div>
+                                    <!--<div class="layui-inline">
                                         <input id="createUserName" class="layui-input" type="text" placeholder="创建人"/>
                                         <input id="category" type="hidden" class="layui-input" value="${category}"/>
                                     </div>
                                     <div class="layui-inline">
                                         <input id="deptName" class="layui-input" type="text" placeholder="部门"/>
-                                    </div>
+                                    </div>-->
                                     <div class="layui-inline">
                                         <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
                                     </div>
@@ -28,7 +61,7 @@
                                         <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>新增</button>
                                         <button id="btnDel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67e;</i>删除</button>
                                         <button id="btnEdt" class="layui-btn icon-btn"><i class="layui-icon">&#xe642;</i>修改</button>
-                                        <button id="btnDet" class="layui-btn icon-btn"><i class="layui-icon">&#xe705;</i>查看详情</button>
+                                       <!-- <button id="btnDet" class="layui-btn icon-btn"><i class="layui-icon">&#xe705;</i>查看详情</button>-->
                                         <button id="btnMap" class="layui-btn icon-btn"><i class="layui-icon">&#xe715;</i>查看地图</button>
                                         <button id="btnOut" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
                                         <button id="btnImp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67c;</i>导入</button>

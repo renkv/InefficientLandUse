@@ -6,6 +6,7 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
     var func = layui.func;
     var laydate = layui.laydate;
     var upload = layui.upload;
+    var tips;
 
     /**
      * 文件发送管理
@@ -19,18 +20,22 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
      */
     detailMainTable.initColumn = function () {
         return [[
-            {type: 'checkbox'},
-            {field: 'id', hide: true,align: 'center', title: 'ID'},
-            {field: 'xmc', sort: false,align: 'center', title: '县名称'},
-            {field: 'pqbh', sort: false,align: 'center', title: '片区编号'},
-            {field: 'xmmc', sort: false,align: 'center', title: '项目名称'},
-            {field: 'xzdm', sort: false,align: 'center', title: '乡镇代码'},
-            {field: 'xzmc', sort: false,align: 'center', title: '乡镇名称'},
+            {fixed: 'left',type: 'checkbox'},
+            {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
+            {field: 'xmc', sort: false,align: 'center', fixed: 'left',title: '县名称'},
+          /*  {field: 'pqbh', sort: false,align: 'center', title: '片区编号'},*/
+            {field: 'xmmc', sort: false,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
+                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.xmmc+ '</a></div>';
+                    return html;
+                }
+                },
+          /*  {field: 'xzdm', sort: false,align: 'center', title: '乡镇代码'},*/
+            {field: 'xzmc', sort: false,align: 'center', fixed: 'left',title: '乡镇名称'},
             {field: 'dkbh', sort: false,align: 'center', title: '地块编号'},
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
-            {field: 'dldm', sort: false,align: 'center', title: '大类代码'},
+        /*    {field: 'dldm', sort: false,align: 'center', title: '大类代码'},*/
             {field: 'dlmc', sort: false,align: 'center', title: '大类名称'},
-            {field: 'xldm', sort: false, align: 'center',title: '小类代码'},
+    /*        {field: 'xldm', sort: false, align: 'center',title: '小类代码'},*/
             {field: 'xlmc', sort: false, align: 'center',title: '小类名称'},
             {field: 'xzyt', sort: false, align: 'center',title: '现状用途'},
             {field: 'xzrjl', sort: false, align: 'center',title: '现状容积率'},
@@ -62,6 +67,21 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
         elem: '#timeLimit',
         range: true,
         max: Feng.currentDate()
+    });
+    table.on('tool(detailMainTable)', function (obj) {
+        var data = obj.data;//获取监听点击当前行的所有信息[object，object]
+        var layEvent = obj.event;
+        if (layEvent === 'showRec') {
+            func.open({
+                height: 1000,
+                title: '详情',
+                content: Feng.ctxPath + '/landdetail/detail?id=' + data.id,
+                tableId: detailMainTable.tableId,
+                endCallback: function () {
+                    //table.reload(shareFileTInfo.tableId);
+                }
+            });
+        }
     });
     /*// 工具条点击事件
     table.on('tool(' + detailMainTable.tableId + ')', function (obj) {
