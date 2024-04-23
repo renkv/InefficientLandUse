@@ -45,36 +45,37 @@ public class LondDetailInfoController extends BaseController{
     private String PREFIX = "/landdetail";
     @Autowired
     private LandDetailService landDetailService;
-    //低效用地详细地块信息首页
+    //所有低效用地详细地块信息首页
     @RequestMapping("/main")
     public String main(String category, Model model) {
         model.addAttribute("category",category);
         return PREFIX + "/main.html";
     }
+    //低效城镇
+    @RequestMapping("/towns")
+    public String towns(String category, Model model) {
+        model.addAttribute("category",category);
+        return PREFIX + "/towns.html";
+    }
+    //低效产业管理
+    @RequestMapping("/industries")
+    public String industries(String category, Model model) {
+        model.addAttribute("category",category);
+        return PREFIX + "/industries.html";
+    }
+    //低效村庄
+    @RequestMapping("/villages")
+    public String villages(String category, Model model) {
+        model.addAttribute("category",category);
+        return PREFIX + "/villages.html";
+    }
     //低效规划TB
-    @RequestMapping("/lowuseghMap")
-    public String lowuseghMap(String category, Model model) {
+    @RequestMapping("/lowuseMap")
+    public String lowuseMap(String category, Model model) {
         model.addAttribute("category",category);
         return  PREFIX + "/map.html";
     }
-    //行政区图层
-    @RequestMapping("/xzqMap")
-    public String xzqMap(String category, Model model) {
-        model.addAttribute("category",category);
-        return  PREFIX + "/map2.html";
-    }
-    //城镇开发边界图层
-    @RequestMapping("/czkfbjMap")
-    public String czkfbjMap(String category, Model model) {
-        model.addAttribute("category",category);
-        return  PREFIX + "/czkfbjMap.html";
-    }
-    //低效乡镇图斑
-    @RequestMapping("/dxxztbMap")
-    public String dxxztbMap(String category, Model model) {
-        model.addAttribute("category",category);
-        return  PREFIX + "/dxxztbMap.html";
-    }
+
 
     @RequestMapping("/showOnMap")
     public String showOnMap(String key, String path,String value,String xmmc,Model model,HttpServletRequest request) {
