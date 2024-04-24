@@ -2,6 +2,7 @@ com\land\sys\modular\rest\entity\RestOperationLog.class
 com\land\sys\core\constant\DefaultAvatar.class
 com\land\sys\core\constant\dictmap\DictMap.class
 com\land\sys\modular\system\entity\Dept.class
+com\land\sys\core\util\Base64Util.class
 com\land\sys\modular\rest\entity\RestPosition.class
 com\land\sys\modular\rest\factory\MenuFactory.class
 com\land\sys\modular\system\controller\MenuController.class
@@ -42,6 +43,7 @@ com\land\sys\modular\rest\entity\RestFileInfo.class
 com\land\sys\modular\rest\model\MenuTreeNode.class
 com\land\sys\modular\system\factory\LayuiTreeFactory.class
 com\land\sys\modular\system\entity\UserPos.class
+com\land\sys\modular\system\service\DictService.class
 com\land\sys\modular\system\service\RelationService.class
 com\land\sys\core\constant\state\BizLogType.class
 com\land\sys\modular\rest\service\RestRelationService.class
@@ -76,6 +78,7 @@ com\land\sys\core\util\FileDownload.class
 com\land\sys\core\constant\cache\Cache.class
 com\land\sys\modular\system\controller\UeditorController.class
 com\land\sys\core\auth\util\TokenUtil.class
+com\land\sys\modular\system\entity\User.class
 com\land\sys\core\util\Contrast.class
 com\land\sys\modular\system\controller\LoginController.class
 com\land\sys\modular\system\warpper\MenuWrapper.class
@@ -98,6 +101,7 @@ com\land\sys\modular\consts\mapper\SysConfigMapper.class
 com\land\sys\modular\system\entity\Role.class
 com\land\sys\modular\system\mapper\UserPosMapper.class
 com\land\sys\modular\system\entity\Relation.class
+com\land\sys\modular\system\entity\Menu.class
 com\land\sys\modular\system\model\result\DictResult.class
 com\land\sys\core\constant\factory\ConstantFactory.class
 com\land\sys\modular\rest\mapper\RestNoticeMapper.class
@@ -148,10 +152,12 @@ com\land\sys\modular\system\service\PositionService.class
 com\land\sys\core\auth\LoginContextSpringSecutiryImpl.class
 com\land\sys\modular\rest\entity\RestRole.class
 com\land\sys\modular\rest\controller\RestUserMgrController.class
+com\land\sys\modular\system\mapper\UserMapper.class
 com\land\sys\core\constant\dictmap\UserDict.class
 com\land\sys\core\util\DecimalUtil.class
 com\land\sys\modular\system\controller\TranInfoController.class
 com\land\sys\modular\system\controller\KaptchaController.class
+com\land\sys\core\auth\cache\SessionManager.class
 com\land\sys\modular\system\model\UeditorFileResult.class
 com\land\sys\modular\system\service\MenuService.class
 com\land\sys\modular\consts\model\params\SysConfigParam.class
@@ -162,11 +168,13 @@ com\land\sys\modular\rest\service\impl\RestUserPosServiceImpl.class
 com\land\sys\core\constant\state\LogType.class
 com\land\sys\modular\system\model\UserDto.class
 com\land\sys\modular\system\controller\LoginLogController.class
+com\land\sys\core\auth\AuthServiceImpl.class
 com\land\sys\core\util\UeditorUtil.class
 com\land\sys\core\constant\dictmap\factory\DictFieldWarpperFactory.class
 com\land\sys\modular\system\model\result\UserPosResult.class
 com\land\sys\modular\rest\mapper\RestUserPosMapper.class
 com\land\sys\modular\consts\init\SysConfigInit.class
+com\land\sys\modular\system\mapper\MenuMapper.class
 com\land\sys\modular\system\controller\SystemController.class
 com\land\sys\modular\system\controller\PositionController.class
 com\land\sys\core\util\DefaultImages.class
@@ -180,6 +188,7 @@ com\land\sys\modular\system\warpper\NoticeWrapper.class
 com\land\sys\modular\rest\mapper\RestDictMapper.class
 com\land\sys\core\constant\dictmap\NoticeMap.class
 com\land\sys\core\exception\page\GlobalController.class
+com\land\sys\modular\system\entity\Dict.class
 com\land\sys\modular\consts\controller\SysConfigController.class
 com\land\sys\modular\system\service\impl\PositionServiceImpl.class
 com\land\sys\core\auth\entrypoint\JwtAuthenticationEntryPoint.class
@@ -199,4 +208,5 @@ com\land\sys\modular\system\service\OperationLogService.class
 com\land\sys\modular\system\warpper\LogWrapper.class
 com\land\sys\modular\system\warpper\DeptWrapper.class
 com\land\sys\modular\system\model\result\PositionResult.class
+com\land\sys\modular\system\mapper\DictMapper.class
 com\land\sys\core\properties\BeetlProperties.class

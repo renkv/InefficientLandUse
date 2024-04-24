@@ -14,7 +14,7 @@
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <select name="city" lay-verify="required">
+                                        <select id="xdm" name="xdm" lay-verify="required">
                                             <option value="">请选择区县</option>
                                             <option value="130100">石家庄市</option>
                                             <option value="130102">长安区</option>
@@ -41,10 +41,11 @@
                                         </select>
                                     </div>
                                     <div class="layui-inline">
-                                        <input id="xmmc" class="layui-input" type="text" placeholder="项目名称"/>
+                                        <input id="xmmc" name="xmmc" class="layui-input" type="text" placeholder="项目名称"/>
+                                        <input id="category" type="hidden" class="layui-input" value=""/>
                                     </div>
                                     <div class="layui-inline">
-                                        <input id="status" class="layui-input" type="text" placeholder="地块状态"/>
+                                        <input id="landStatus" name="landStatus" class="layui-input" type="text" placeholder="地块状态"/>
                                     </div>
                                     <!--<div class="layui-inline">
                                         <input id="createUserName" class="layui-input" type="text" placeholder="创建人"/>

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.land.sys.modular.system.entity.FileInfo;
 import lombok.Data;
 
+import javax.persistence.Basic;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -134,6 +136,49 @@ public class LandDetailInfoVo {
      * 规划比例
      */
     private Double ghbl;
+    private String zbq;
+
+    private String qymc;
+
+    private String bdcqzsh;
+
+    private Timestamp crsj;
+
+    private String htrjl;
+
+    private String httzqd;
+
+    private String htmjss;
+
+    private String hydm;
+
+    private String hymc;
+
+    private Double rjljsz;
+
+    private String dkrjl;
+
+    private Double rjlfz;
+
+    private Double tzqdjs;
+
+    private String dktzqd;
+
+    private Double tzqdfz;
+
+    private Double ssccljs;
+
+    private String dkssccl;
+
+    private Double dksscclfz;
+
+    private Double bmysfz;
+
+    private Double zfysfz;
+
+    private Double zhdf;
+
+    private String xdm;
     /**
      * 文件信息
      */

@@ -6,9 +6,9 @@
 
   <parent>
     <groupId>com.land</groupId>
-    <artifactId>land-low-use</artifactId>
+    <artifactId>land_low_use</artifactId>
     <version>1.1.0</version>
-    <!--<relativePath>../pom.xml</relativePath>-->
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>land-base-generator</artifactId>

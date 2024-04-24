@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import java.sql.Timestamp;
 import java.util.Date;
 @Data
@@ -257,5 +258,9 @@ public class LandDetailInfo {
     @Basic
     @TableField(value = "zhdf")
     private Double zhdf;
+    @Basic
+    @TableField(value = "xdm")
+    private String xdm;
+
 
 }

@@ -60,13 +60,13 @@ public class LondDetailInfoController extends BaseController{
     //低效产业管理
     @RequestMapping("/industries")
     public String industries(String category, Model model) {
-        model.addAttribute("category",category);
+        model.addAttribute("category","industries");
         return PREFIX + "/industries.html";
     }
     //低效村庄
     @RequestMapping("/villages")
     public String villages(String category, Model model) {
-        model.addAttribute("category",category);
+        model.addAttribute("category","villages");
         return PREFIX + "/villages.html";
     }
     //低效规划TB
@@ -161,8 +161,8 @@ public class LondDetailInfoController extends BaseController{
      */
     @RequestMapping("/selectList")
     @ResponseBody
-    public Object selectList(@RequestParam(required = false) String createUserName, @RequestParam(required = false) String deptName,
-                             @RequestParam(required = false) String category,
+    public Object selectList(@RequestParam(required = false) String createUserName,
+                             @RequestParam(required = false) String category,@RequestParam(required = false) String xdm,@RequestParam(required = false) String xmmc,
                              @RequestParam(required = false) String timeLimit) {
 
         //拼接查询条件
@@ -175,6 +175,9 @@ public class LondDetailInfoController extends BaseController{
             endTime = split[1];
         }
         LandDetailInfoVo vo = new LandDetailInfoVo();
+        vo.setXmmc(xmmc);
+        vo.setXdm(xdm);
+        vo.setLandStatus("");
         vo.setCategory(category);
         vo.setCreateUserName(createUserName);
         //main.setDeptName(deptName);

@@ -35,13 +35,38 @@
         <result property="landCode" column="land_code" jdbcType="VARCHAR"/>
         <result property="landStatus" column="land_status" jdbcType="VARCHAR"/>
         <result property="category" column="category" jdbcType="VARCHAR"/>
+
+        <result property="zbq" column="zbq" jdbcType="VARCHAR"/>
+        <result property="qymc" column="qymc" jdbcType="VARCHAR"/>
+        <result property="bdcqzsh" column="bdcqzsh" jdbcType="VARCHAR"/>
+        <result property="crsj" column="crsj" jdbcType="VARCHAR"/>
+        <result property="htrjl" column="htrjl" jdbcType="VARCHAR"/>
+        <result property="httzqd" column="httzqd" jdbcType="VARCHAR"/>
+        <result property="htmjss" column="htmjss" jdbcType="VARCHAR"/>
+        <result property="hydm" column="hydm" jdbcType="VARCHAR"/>
+        <result property="hymc" column="hymc" jdbcType="VARCHAR"/>
+        <result property="rjljsz" column="rjljsz" jdbcType="VARCHAR"/>
+        <result property="dkrjl" column="dkrjl" jdbcType="VARCHAR"/>
+        <result property="rjlfz" column="rjlfz" jdbcType="VARCHAR"/>
+        <result property="tzqdfz" column="tzqdfz" jdbcType="DOUBLE"/>
+        <result property="tzqdjs" column="tzqdjs" jdbcType="DOUBLE"/>
+        <result property="dktzqd" column="dktzqd" jdbcType="VARCHAR"/>
+        <result property="ssccljs" column="ssccljs" jdbcType="DOUBLE"/>
+        <result property="dkssccl" column="dkssccl" jdbcType="VARCHAR"/>
+        <result property="dksscclfz" column="dksscclfz" jdbcType="DOUBLE"/>
+        <result property="bmysfz" column="bmysfz" jdbcType="DOUBLE"/>
+        <result property="zfysfz" column="zfysfz" jdbcType="DOUBLE"/>
+        <result property="zhdf" column="zhdf" jdbcType="DOUBLE"/>
+        <result property="xdm" column="xdm" jdbcType="VARCHAR"/>
+
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
       id ,XMC as xmc ,PQBH as pqbh,XMMC as xmmc,XZDM as xzdm,XZMC as xzmc,DKBH as dkbh,DKMJ as dkmj,DLDM as dldm,DLMC as dlmc,XLDM as xldm,XLMC xlmc,XZYT xzyt,
       XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,
 	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,category as category,land_code as landCode,
-	land_status as landStatus,
+	land_status as landStatus,zbq,qymc,bdcqzsh,crsj,htrjl,httzqd,htmjss,hydm,hymc,rjljsz,dkrjl,rjlfz,tzqdfz,tzqdjs,dktzqd,ssccljs,dkssccl,dksscclfz,bmysfz,
+	zfysfz,zhdf,xdm,
 	create_time as createTime,update_user as updateUser,update_user_name as updateUserName ,update_time as updateTime,remark,business_key as businessKey
     </sql>
     <select id="selectListByPage" resultType="java.util.Map">
@@ -55,8 +80,14 @@
         <if test="endTime != null and endTime != ''">
             and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
         </if>
-        <if test="vo.category != null and o.category != ''">
+        <if test="vo.category != null and vo.category != ''">
             and category = #{vo.category}
+        </if>
+        <if test="vo.xdm != null and vo.xdm != ''">
+            and xdm = #{vo.xdm}
+        </if>
+        <if test="vo.xmmc != null and vo.xmmc != ''">
+            and xmmc like CONCAT('%',#{vo.xmmc},'%')
         </if>
         order by create_time desc
     </select>
@@ -65,6 +96,15 @@
         <include refid="Base_Column_List"/>
         from land_low_use.land_detail_info
         where 1=1
+        <if test="vo.category != null and vo.category != ''">
+            and category = #{vo.category}
+        </if>
+        <if test="vo.xdm != null and vo.xdm != ''">
+            and xdm = #{vo.xdm}
+        </if>
+        <if test="vo.xmmc != null and vo.xmmc != ''">
+            and xmmc like CONCAT('%',#{vo.xmmc},'%')
+        </if>
         <if test="beginTime != null and beginTime != ''">
             and create_time >= CONCAT(#{beginTime},' 00:00:00')
         </if>
