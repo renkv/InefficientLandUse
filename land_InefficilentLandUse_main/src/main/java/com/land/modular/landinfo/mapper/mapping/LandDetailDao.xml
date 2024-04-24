@@ -32,12 +32,16 @@
         <result property="zb" column="zb" jdbcType="VARCHAR"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="businessKey" column="business_key" jdbcType="VARCHAR"/>
+        <result property="landCode" column="land_code" jdbcType="VARCHAR"/>
+        <result property="landStatus" column="land_status" jdbcType="VARCHAR"/>
+        <result property="category" column="category" jdbcType="VARCHAR"/>
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
       id ,XMC as xmc ,PQBH as pqbh,XMMC as xmmc,XZDM as xzdm,XZMC as xzmc,DKBH as dkbh,DKMJ as dkmj,DLDM as dldm,DLMC as dlmc,XLDM as xldm,XLMC xlmc,XZYT xzyt,
       XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,
-	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,
+	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,category as category,land_code as landCode,
+	land_status as landStatus,
 	create_time as createTime,update_user as updateUser,update_user_name as updateUserName ,update_time as updateTime,remark,business_key as businessKey
     </sql>
     <select id="selectListByPage" resultType="java.util.Map">
@@ -50,6 +54,9 @@
         </if>
         <if test="endTime != null and endTime != ''">
             and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        <if test="vo.category != null and o.category != ''">
+            and category = #{vo.category}
         </if>
         order by create_time desc
     </select>

@@ -3,6 +3,8 @@ package com.land.modular.landinfo.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
+import javax.persistence.Basic;
+import java.sql.Timestamp;
 import java.util.Date;
 @Data
 @TableName("land_detail_info")
@@ -105,9 +107,155 @@ public class LandDetailInfo {
     //备注
     @TableField(value = "remark")
     private String remark;
+    //低效用地类型
+    @TableField(value = "category")
+    private String category;
     /**
      * 业务key
      */
     @TableField(value = "business_key")
     private String businessKey;
+    /**
+     * 编码
+     */
+    @TableField(value = "land_code")
+    private String landCode;
+    /**
+     * 状态
+     */
+    @TableField(value = "land_status")
+    private String landStatus;
+    /**
+     * 规划规模面积
+     */
+    @TableField(value = "ghgmmj")
+    private Double ghgmmj;
+    /**
+     * 规划规模比例
+     */
+    @TableField(value = "ghgmbl")
+    private Double ghgmbl;
+    /**
+     * 容积率
+     */
+    @TableField(value = "rjl")
+    private Double rjl;
+    /**
+     * 现状规模面积
+     */
+    @TableField(value = "xzgmmj")
+    private Double xzgmmj;
+    /**
+     * 现状规模比例
+     */
+    @TableField(value = "xzgmbl")
+    private Double xzgmbl;
+    /**
+     * 可实现潜力
+     */
+    @TableField(value = "ksxql")
+    private Double ksxql;
+    /**
+     * 现状面积
+     */
+    @TableField(value = "xzmj")
+    private Double xzmj;
+    /**
+     * 现状比例
+     */
+    @TableField(value = "xzbl")
+    private Double xzbl;
+    /**
+     * 现状地均固定资产投资
+     */
+    @TableField(value = "xzdjgdzctz")
+    private Double xzdjgdzctz;
+    /**
+     * 现状单位GDP产出
+     */
+    @TableField(value = "xzdwGDPcc")
+    private Double xzdwgdpPcc;
+    /**
+     * 规划地均固定资产投资
+     */
+    @TableField(value = "ghdjgdzctz")
+    private Double ghdjgdzctz;
+    /**
+     * 规划单位GDP产出
+     */
+    @TableField(value = "ghdwgdpPcc")
+    private Double ghdwgdpPcc;
+    /**
+     * 规划面积
+     */
+    @TableField(value = "ghmj")
+    private Double ghmj;
+    /**
+     * 规划比例
+     */
+    @TableField(value = "ghbl")
+    private Double ghbl;
+    @TableField(value = "zbq")
+    private String zbq;
+    @Basic
+    @TableField(value = "qymc")
+    private String qymc;
+    @Basic
+    @TableField(value = "bdcqzsh")
+    private String bdcqzsh;
+    @Basic
+    @TableField(value = "crsj")
+    private Timestamp crsj;
+    @Basic
+    @TableField(value = "htrjl")
+    private String htrjl;
+    @Basic
+    @TableField(value = "httzqd")
+    private String httzqd;
+    @Basic
+    @TableField(value = "htmjss")
+    private String htmjss;
+    @Basic
+    @TableField(value = "hydm")
+    private String hydm;
+    @Basic
+    @TableField(value = "hymc")
+    private String hymc;
+    @Basic
+    @TableField(value = "rjljsz")
+    private Double rjljsz;
+    @Basic
+    @TableField(value = "dkrjl")
+    private String dkrjl;
+    @Basic
+    @TableField(value = "rjlfz")
+    private Double rjlfz;
+    @Basic
+    @TableField(value = "tzqdjs")
+    private Double tzqdjs;
+    @Basic
+    @TableField(value = "dktzqd")
+    private String dktzqd;
+    @Basic
+    @TableField(value = "tzqdfz")
+    private Double tzqdfz;
+    @Basic
+    @TableField(value = "ssccljs")
+    private Double ssccljs;
+    @Basic
+    @TableField(value = "dkssccl")
+    private String dkssccl;
+    @Basic
+    @TableField(value = "dksscclfz")
+    private Double dksscclfz;
+    @Basic
+    @TableField(value = "bmysfz")
+    private Double bmysfz;
+    @Basic
+    @TableField(value = "zfysfz")
+    private Double zfysfz;
+    @Basic
+    @TableField(value = "zhdf")
+    private Double zhdf;
+
 }

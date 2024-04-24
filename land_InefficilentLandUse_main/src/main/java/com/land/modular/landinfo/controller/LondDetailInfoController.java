@@ -54,7 +54,7 @@ public class LondDetailInfoController extends BaseController{
     //低效城镇
     @RequestMapping("/towns")
     public String towns(String category, Model model) {
-        model.addAttribute("category",category);
+        model.addAttribute("category","towns");
         return PREFIX + "/towns.html";
     }
     //低效产业管理
@@ -175,7 +175,7 @@ public class LondDetailInfoController extends BaseController{
             endTime = split[1];
         }
         LandDetailInfoVo vo = new LandDetailInfoVo();
-       // main.setCategory(category);
+        vo.setCategory(category);
         vo.setCreateUserName(createUserName);
         //main.setDeptName(deptName);
         Page<Map<String, Object>> list = landDetailService.selectList(vo, beginTime, endTime);

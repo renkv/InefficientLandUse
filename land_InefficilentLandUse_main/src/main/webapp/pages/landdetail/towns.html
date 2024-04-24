@@ -1,6 +1,6 @@
-@layout("/common/_container.html",{js:["/assets/landdetail/main.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+@layout("/common/_container.html",{js:["/assets/landdetail/towns.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
 <div class="layui-body-header">
-    <span class="layui-body-header-title">低效用地</span>
+    <span class="layui-body-header-title">低效城镇用地</span>
 </div>
 
 <div id="myContiner" style="height: 100%">
@@ -42,6 +42,7 @@
                                     </div>
                                     <div class="layui-inline">
                                         <input id="xmmc" class="layui-input" type="text" placeholder="项目名称"/>
+                                        <input id="category" type="hidden" class="layui-input" value="${category}"/>
                                     </div>
                                     <div class="layui-inline">
                                         <input id="status" class="layui-input" type="text" placeholder="地块状态"/>
@@ -58,11 +59,11 @@
                                     </div>
                                     <div class="layui-inline">
                                         <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                        <!--<button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>新增</button>
+                                        <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>新增</button>
                                         <button id="btnDel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67e;</i>删除</button>
-                                        <button id="btnEdt" class="layui-btn icon-btn"><i class="layui-icon">&#xe642;</i>修改</button>-->
-                                       <!-- <button id="btnDet" class="layui-btn icon-btn"><i class="layui-icon">&#xe705;</i>查看详情</button>-->
-                                      <!--  <button id="btnMap" class="layui-btn icon-btn"><i class="layui-icon">&#xe715;</i>查看地图</button>-->
+                                        <button id="btnEdt" class="layui-btn icon-btn"><i class="layui-icon">&#xe642;</i>修改</button>
+                                        <!-- <button id="btnDet" class="layui-btn icon-btn"><i class="layui-icon">&#xe705;</i>查看详情</button>-->
+                                        <!--  <button id="btnMap" class="layui-btn icon-btn"><i class="layui-icon">&#xe715;</i>查看地图</button>-->
                                         <button id="btnOut" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
                                         <button id="btnImp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67c;</i>导入</button>
                                         <a href="/assets/weekwork/main/dxmude.xlsx" class="layui-btn icon-btn"><i class="layui-icon">&#xe601;</i>下载模板</a>

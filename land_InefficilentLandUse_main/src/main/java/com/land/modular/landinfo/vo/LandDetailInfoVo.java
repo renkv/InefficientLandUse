@@ -1,5 +1,6 @@
 package com.land.modular.landinfo.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.land.sys.modular.system.entity.FileInfo;
 import lombok.Data;
 
@@ -76,6 +77,63 @@ public class LandDetailInfoVo {
     private String zb;
     private String remark;
     private String businessKey;
+    //低效用地类型
+    private String category;
+    @TableField(value = "land_code")
+    private String landCode;
+    /**
+     * 状态
+     */
+    @TableField(value = "land_status")
+    private String landStatus;
+    /**
+     * 规模面积
+     */
+    private Double gmmj;
+    /**
+     * 规模比例
+     */
+    private Double gmbl;
+    /**
+     * 容积率
+     */
+    private Double rjl;
+    /**
+     * 现状规模面积
+     */
+    private Double xzgmmj;
+    /**
+     * 现状规模比例
+     */
+    private Double xzgmbl;
+    /**
+     * 可实现潜力
+     */
+    private Double ksxql;
+    /**
+     * 现状面积
+     */
+    private Double xzmj;
+    /**
+     * 现状比例
+     */
+    private Double xzbl;
+    /**
+     * 现状地均固定资产投资
+     */
+    private Double xzdjgdzctz;
+    /**
+     * 现状单位GDP产出
+     */
+    private Double xzdwgdpPcc;
+    /**
+     * 规划面积
+     */
+    private Double ghmj;
+    /**
+     * 规划比例
+     */
+    private Double ghbl;
     /**
      * 文件信息
      */
