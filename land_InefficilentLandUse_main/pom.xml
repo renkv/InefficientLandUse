@@ -138,6 +138,12 @@
             <artifactId>gt-opengis</artifactId>
             <version>22-RC</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.1</version>
+        </dependency>
      <!--   <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-data</artifactId>

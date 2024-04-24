@@ -26,6 +26,7 @@ import com.land.sys.modular.system.entity.User;
 import com.land.sys.modular.system.service.DeptService;
 import com.land.sys.modular.system.service.FileInfoService;
 import com.land.sys.modular.system.service.UserService;
+import com.land.utils.PinyinUtil;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,7 +178,21 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
         }
         User user = userService.getById(currentUser.getId());
         if(StringUtils.isEmpty(landDetail.getId())){
-            //String nowDate = DateUtil.format(new Date(),"yyyyMMddHHmmss");
+            int nowYear = DateUtil.year(new Date());
+            String landCode = "";
+            //根据区县跟年份获取当前最大编号
+            LandDetailInfo info = this.baseMapper.getByYearAndQx(nowYear,landDetail.getXdm());
+            if(info != null){
+                String numStr = info.getLandCode().substring(info.getLandCode().length() - 3);
+                int code = Integer.valueOf(numStr) + 1;
+                landCode = PinyinUtil.getPinYinHeadChar(landDetail.getXmc()) + nowYear + code;
+                landDetail.setLandCode(landCode);
+            }
+            if(!StringUtils.isEmpty(landDetail.getXmc())){
+                landCode = PinyinUtil.getPinYinHeadChar(landDetail.getXmc()) + nowYear + "001";
+                landDetail.setLandCode(landCode);
+            }
+            landDetail.setYear(nowYear);
             landDetail.setCreateUser(currentUser.getId());
             landDetail.setCreateUserName(user.getName());
             landDetail.setCreateTime(new Date());
@@ -186,7 +201,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             landDetail.setUpdateUserName(user.getName());
             landDetail.setUpdateTime(new Date());
         }
-        this.saveOrUpdate(landDetail );
+        this.saveOrUpdate(landDetail);
     }
 
     /**

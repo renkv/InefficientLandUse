@@ -102,9 +102,12 @@ public class LondDetailInfoController extends BaseController{
      * @return
      */
     @RequestMapping("/add")
-    public String add( Model model) {
+    public String add(@RequestParam String category, Model model) {
         String businessKey = UUID.randomUUID().toString();
         model.addAttribute("businessKey",businessKey);
+        if(category.equals("towns")){
+            return PREFIX + "/townsAdd.html";
+        }
         return PREFIX + "/landDetailAdd.html";
     }
     /**
@@ -125,6 +128,9 @@ public class LondDetailInfoController extends BaseController{
         LandDetailInfoVo vo = landDetailService.getDetailById(id);
         model.addAttribute("vo",vo);
         model.addAttribute("ctxPath",ConfigListener.getConf().get("contextPath"));
+        if(vo.getCategory().equals("towns")){
+            return PREFIX + "/townsDetail.html";
+        }
         return PREFIX + "/landDetail.html";
     }
 
@@ -145,16 +151,12 @@ public class LondDetailInfoController extends BaseController{
     @ResponseBody
     public  ResponseData delete(String ids){
         boolean isDel = landDetailService.delete(ids);
-        /*if(!isDel){
-            return ResponseData.error("只能删除当前周的数据！");
-        }*/
         return SUCCESS_TIP;
     }
 
     /**
      * 查询列表
      * @param createUserName
-     * @param deptName
      * @param category
      * @param timeLimit
      * @return

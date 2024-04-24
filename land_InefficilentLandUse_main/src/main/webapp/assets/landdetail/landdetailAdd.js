@@ -6,6 +6,57 @@ layui.use(['layer','upload', 'form', 'admin', 'ax'], function () {
     var admin = layui.admin;
     var layer = layui.layer;
     var upload = layui.upload;
+    var category;
+
+    var activeDlSelect = function () {
+        debugger;
+        //初始化大类
+        $("#dldm").html('<option value="">请选择大类</option>');
+        var ajax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=LAND_TYPE", function (data) {
+            category = data.data;
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    $("#dldm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+            form.render();
+
+        }, function (data) {
+        });
+        ajax.start();
+    };
+    activeDlSelect();
+
+    form.on('select(dldmSelect)',function (data){
+        var value = data.value;
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#dlmc").val(text);
+        if(value === ""){
+            $("#xldm").html('<option value="">请选择小类</option>');
+        }else if(category.length >= 0){
+            for (var i = 0; i < category.length; i++) {
+                var name = category[i].name;
+                var code = category[i].code;
+                if(code != value && code.includes(value)){
+                    $("#xldm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+            form.render();
+        }
+    });
+    form.on('select(xldmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#xlmc").val(text);
+    });
+    form.on('select(xdmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#xmc").val(text);
+    });
     //执行实例
     var uploadInst = upload.render({
         elem: '#areaBtn'

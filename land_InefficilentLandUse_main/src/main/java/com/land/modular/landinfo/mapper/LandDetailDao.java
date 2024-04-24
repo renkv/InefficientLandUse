@@ -17,4 +17,6 @@ public interface LandDetailDao extends BaseMapper<LandDetailInfo> {
     List<LandDetailInfo> selectByList(@Param("vo")LandInfo main, @Param("beginTime")String beginTime, @Param("endTime")String endTime);
 
     LandDetailInfoVo getDetailById(@Param("id")Long id);
+
+    LandDetailInfo getByYearAndQx(@Param("year")int nowYear, @Param("xdm")String xdm);
 }

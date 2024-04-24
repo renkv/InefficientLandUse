@@ -261,6 +261,9 @@ public class LandDetailInfo {
     @Basic
     @TableField(value = "xdm")
     private String xdm;
+    @Basic
+    @TableField(value = "year")
+    private Integer year;
 
 
 }

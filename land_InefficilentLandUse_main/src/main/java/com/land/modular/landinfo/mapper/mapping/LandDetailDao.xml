@@ -58,6 +58,7 @@
         <result property="zfysfz" column="zfysfz" jdbcType="DOUBLE"/>
         <result property="zhdf" column="zhdf" jdbcType="DOUBLE"/>
         <result property="xdm" column="xdm" jdbcType="VARCHAR"/>
+        <result property="year" column="year" jdbcType="INTEGER"/>
 
     </resultMap>
     <!-- 通用查询结果列 -->
@@ -66,7 +67,7 @@
       XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,
 	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,category as category,land_code as landCode,
 	land_status as landStatus,zbq,qymc,bdcqzsh,crsj,htrjl,httzqd,htmjss,hydm,hymc,rjljsz,dkrjl,rjlfz,tzqdfz,tzqdjs,dktzqd,ssccljs,dkssccl,dksscclfz,bmysfz,
-	zfysfz,zhdf,xdm,
+	zfysfz,zhdf,xdm,year,
 	create_time as createTime,update_user as updateUser,update_user_name as updateUserName ,update_time as updateTime,remark,business_key as businessKey
     </sql>
     <select id="selectListByPage" resultType="java.util.Map">
@@ -118,5 +119,14 @@
         <include refid="Base_Column_List"/>
         from land_detail_info
         where id = #{id}
+    </select>
+
+    <select id="getByYearAndQx" resultMap="LandInfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from land_detail_info
+        where year = #{year}
+        and xdm = #{xdm}
+        order by create_time desc
     </select>
 </mapper>

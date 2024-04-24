@@ -28,6 +28,7 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         return [[
             {fixed: 'left',type: 'checkbox'},
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
+            {field: 'landCode', align: 'center',fixed: 'left', title: '编码'},
             {field: 'xmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '县名称'},
             {field: 'pqbh', sort: false,align: 'center',merge:true,fixed: 'left', title: '片区编号'},
             {field: 'xmmc', sort: false,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
@@ -36,7 +37,7 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
                 }
                 },
           /*  {field: 'xzdm', sort: false,align: 'center', title: '乡镇代码'},*/
-            {field: 'xzmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '乡镇名称'},
+          /*  {field: 'xzmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '乡镇名称'},*/
             {field: 'dkbh', sort: false,align: 'center', title: '地块编号',templet:function (d){
                     var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showMap">' + d.dkbh+ '</a></div>';
                     return html;
@@ -118,7 +119,6 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
      */
     detailMainTable.search = function () {
         var queryData = {};
-        debugger;
         queryData['timeLimit'] = $('#timeLimit').val();
         queryData['xdm'] = '';
         queryData['xmmc'] = $('#xmmc').val();
