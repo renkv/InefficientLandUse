@@ -184,8 +184,8 @@ public class LandDetailInfo {
     /**
      * 规划单位GDP产出
      */
-    @TableField(value = "ghdwgdpPcc")
-    private Double ghdwgdpPcc;
+    @TableField(value = "ghdwgdpcc")
+    private Double ghdwgdpcc;
     /**
      * 规划面积
      */

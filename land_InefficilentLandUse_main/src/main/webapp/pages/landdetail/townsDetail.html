@@ -173,7 +173,7 @@
                         <div class="layui-inline layui-col-md12">
                             <label class="layui-form-label">备注</label>
                             <div class="layui-input-block">
-                                <textarea name="remark" id="remark" readonly value="${vo.remark}" class="layui-textarea"></textarea>
+                                <textarea name="remark" id="remark" readonly class="layui-textarea">${vo.remark}</textarea>
                             </div>
                         </div>
                     </div>
@@ -188,12 +188,10 @@
                                             <thead>
                                             <tr><th>文件名</th>
                                                 <th>大小</th>
-                                                <th>状态</th>
-                                                <th>操作</th>
                                             </tr></thead>
                                             <tbody id="demoList">
                                             @if(tool.isNotEmpty(vo.fileInfoList)){
-                                            @for(item in shareInfo.fileInfoList){
+                                            @for(item in vo.fileInfoList){
                                             <tr>
                                                 <td><a href="${ctxPath}/system/downLoadFile?fileId=${item.fileId}" download="${ctxPath}/system/downLoadFile?fileId=${item.fileId}">${item.fileName}</a></td>
                                                 <td>${item.fileSizeKb}KB</td>

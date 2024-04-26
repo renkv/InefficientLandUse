@@ -185,11 +185,13 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             if(info != null){
                 String numStr = info.getLandCode().substring(info.getLandCode().length() - 3);
                 int code = Integer.valueOf(numStr) + 1;
-                landCode = PinyinUtil.getPinYinHeadChar(landDetail.getXmc()) + nowYear + code;
+                landCode = PinyinUtil.getPinYinHeadChar(landDetail.getXmc()) + nowYear + String.format("%03d",code);
                 landDetail.setLandCode(landCode);
-            }
-            if(!StringUtils.isEmpty(landDetail.getXmc())){
+            }else if(!StringUtils.isEmpty(landDetail.getXmc())){
                 landCode = PinyinUtil.getPinYinHeadChar(landDetail.getXmc()) + nowYear + "001";
+                landDetail.setLandCode(landCode);
+            }else{
+                landCode = "SJZ" + nowYear + "001";
                 landDetail.setLandCode(landCode);
             }
             landDetail.setYear(nowYear);

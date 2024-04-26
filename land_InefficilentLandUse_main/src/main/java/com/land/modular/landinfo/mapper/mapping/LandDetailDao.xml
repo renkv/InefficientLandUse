@@ -121,12 +121,12 @@
         where id = #{id}
     </select>
 
-    <select id="getByYearAndQx" resultMap="LandInfoMap">
+    <select id="getByYearAndQx" resultType="com.land.modular.landinfo.entity.LandDetailInfo">
         select
         <include refid="Base_Column_List"/>
         from land_detail_info
         where year = #{year}
         and xdm = #{xdm}
-        order by create_time desc
+        order by create_time desc limit 1
     </select>
 </mapper>

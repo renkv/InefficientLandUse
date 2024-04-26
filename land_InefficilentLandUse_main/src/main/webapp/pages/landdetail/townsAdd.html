@@ -67,7 +67,7 @@
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">地块面积<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
-                                <input id="dkmj" name="dkmj" placeholder="请输入地块面积" type="text" lay-verify="required"
+                                <input id="dkmj" name="dkmj" placeholder="请输入地块面积" onkeyup="numLimit(this.value,6)" type="text" lay-verify="required"
                                        class="layui-input"/>
                             </div>
                         </div>

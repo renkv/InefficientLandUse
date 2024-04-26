@@ -118,6 +118,9 @@ public class LondDetailInfoController extends BaseController{
         LandDetailInfoVo vo = landDetailService.getDetailById(id);
         model.addAttribute("vo",vo);
         model.addAttribute("ctxPath", ConfigListener.getConf().get("contextPath"));
+        if(vo.getCategory().equals("towns")){
+            return PREFIX + "/townsEdit.html";
+        }
         return PREFIX + "/detailEdit.html";
     }
     /**
