@@ -180,7 +180,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
         if(StringUtils.isEmpty(landDetail.getId())){
             int nowYear = DateUtil.year(new Date());
             String landCode = "";
-            //根据区县跟年份获取当前最大编号
+            //根据区县跟年份获取当前最大编号周期
             LandDetailInfo info = this.baseMapper.getByYearAndQx(nowYear,landDetail.getXdm());
             if(info != null){
                 String numStr = info.getLandCode().substring(info.getLandCode().length() - 3);

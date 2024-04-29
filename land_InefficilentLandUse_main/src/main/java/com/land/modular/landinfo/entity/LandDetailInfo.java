@@ -265,5 +265,57 @@ public class LandDetailInfo {
     @TableField(value = "year")
     private Integer year;
 
+    @Basic
+    @Column(name = "cbhs", nullable = true, length = 20)
+    private String cbhs;
+    @Basic
+    @Column(name = "xyqd", nullable = true, length = 20)
+    private String xyqd;
+    @Basic
+    @Column(name = "tdgy", nullable = true, length = 20)
+    private String tdgy;
+    @Basic
+    @Column(name = "ghtjbg", nullable = true, length = 20)
+    private String ghtjbg;
+    @Basic
+    @Column(name = "ghgcsp", nullable = true, length = 20)
+    private String ghgcsp;
+    @Basic
+    @Column(name = "cxrd", nullable = true, length = 20)
+    private String cxrd;
+    @Basic
+    @Column(name = "tsfabz", nullable = true, length = 20)
+    private String tsfabz;
+    @Basic
+    @Column(name = "tsfzss", nullable = true, length = 20)
+    private String tsfzss;
+    @Basic
+    @Column(name = "tscxzm", nullable = true, length = 20)
+    private String tscxzm;
+    @Basic
+    @Column(name = "xmlx", nullable = true, length = 20)
+    private String xmlx;
+    @Basic
+    @Column(name = "xmsg", nullable = true, length = 20)
+    private String xmsg;
+    @Basic
+    @Column(name = "xmys", nullable = true, length = 20)
+    private String xmys;
+    @Basic
+    @Column(name = "xmzbsy", nullable = true, length = 20)
+    private String xmzbsy;
+    @Basic
+    @Column(name = "jbqk", nullable = true, length = 20)
+    private String jbqk;
+    @Basic
+    @Column(name = "dktj", nullable = true, length = 20)
+    private String dktj;
+    @Basic
+    @Column(name = "sczkfjz", nullable = true, length = 1000)
+    private String sczkfjz;
+    @Basic
+    @Column(name = "sc_status", nullable = true, length = 20)
+    private String scStatus;
+
 
 }

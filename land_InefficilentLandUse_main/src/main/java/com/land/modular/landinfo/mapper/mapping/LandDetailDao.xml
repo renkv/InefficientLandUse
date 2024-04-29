@@ -59,6 +59,24 @@
         <result property="zhdf" column="zhdf" jdbcType="DOUBLE"/>
         <result property="xdm" column="xdm" jdbcType="VARCHAR"/>
         <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="cbhs" column="cbhs" jdbcType="VARCHAR"/>
+        <result property="xyqd" column="xyqd" jdbcType="VARCHAR"/>
+        <result property="tdgy" column="tdgy" jdbcType="VARCHAR"/>
+        <result property="ghtjbg" column="ghtjbg" jdbcType="VARCHAR"/>
+        <result property="ghgcsp" column="ghgcsp" jdbcType="VARCHAR"/>
+        <result property="cxrd" column="cxrd" jdbcType="VARCHAR"/>
+        <result property="tsfabz" column="tsfabz" jdbcType="VARCHAR"/>
+        <result property="tsfzss" column="tsfzss" jdbcType="VARCHAR"/>
+        <result property="tscxzm" column="tscxzm" jdbcType="VARCHAR"/>
+        <result property="xmlx" column="xmlx" jdbcType="VARCHAR"/>
+        <result property="xmsg" column="xmsg" jdbcType="VARCHAR"/>
+        <result property="xmys" column="xmys" jdbcType="VARCHAR"/>
+        <result property="xmzbsy" column="xmzbsy" jdbcType="VARCHAR"/>
+        <result property="jbqk" column="jbqk" jdbcType="VARCHAR"/>
+        <result property="dktj" column="dktj" jdbcType="VARCHAR"/>
+        <result property="sczkfjz" column="sczkfjz" jdbcType="VARCHAR"/>
+        <result property="scStatus" column="sc_status" jdbcType="VARCHAR"/>
+
 
     </resultMap>
     <!-- 通用查询结果列 -->
@@ -67,7 +85,7 @@
       XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,
 	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,category as category,land_code as landCode,
 	land_status as landStatus,zbq,qymc,bdcqzsh,crsj,htrjl,httzqd,htmjss,hydm,hymc,rjljsz,dkrjl,rjlfz,tzqdfz,tzqdjs,dktzqd,ssccljs,dkssccl,dksscclfz,bmysfz,
-	zfysfz,zhdf,xdm,year,
+	zfysfz,zhdf,xdm,year,cbhs,xyqd,ghtjbg,cxrd,tsfabz,tscxzm,xmlx,xmsg,xmys,xmzbsy,jbqk,dktj,sczkfjz,sc_status as scStatus,
 	create_time as createTime,update_user as updateUser,update_user_name as updateUserName ,update_time as updateTime,remark,business_key as businessKey
     </sql>
     <select id="selectListByPage" resultType="java.util.Map">
@@ -89,6 +107,9 @@
         </if>
         <if test="vo.xmmc != null and vo.xmmc != ''">
             and xmmc like CONCAT('%',#{vo.xmmc},'%')
+        </if>
+        <if test="vo.landStatus != null and vo.landStatus != ''">
+            and land_status = #{vo.landStatus}
         </if>
         order by create_time desc
     </select>
