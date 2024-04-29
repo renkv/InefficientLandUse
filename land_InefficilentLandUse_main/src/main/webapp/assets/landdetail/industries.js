@@ -1,4 +1,8 @@
-layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
+layui.config({
+}).extend({
+    tableMerge: 'tableMerge'
+});
+layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
@@ -6,6 +10,7 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
     var func = layui.func;
     var laydate = layui.laydate;
     var upload = layui.upload;
+    var tableMerge = layui.tableMerge;
     var tips;
 
     /**
@@ -22,14 +27,13 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
         return [[
             {fixed: 'left',type: 'checkbox'},
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
-            {field: 'xmc', sort: false,align: 'center', fixed: 'left',title: '县名称'},
-            {field: 'pqbh', sort: false,align: 'center',fixed: 'left', title: '片区编号'},
-            {field: 'xmmc', sort: false,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
+            {field: 'xmc', sort: false,merge:true,align: 'center', fixed: 'left',title: '县名称'},
+            {field: 'pqbh', sort: false,merge:true,align: 'center',fixed: 'left', title: '片区编号'},
+            {field: 'xmmc', sort: false,merge:true,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
                     var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.xmmc+ '</a></div>';
                     return html;
                 }
             },
-            {field: 'xzmc', sort: false,align: 'center', fixed: 'left',title: '乡镇名称'},
             {field: 'dkbh', sort: false,align: 'center', title: '地块编号',templet:function (d){
                     var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showMap">' + d.dkbh+ '</a></div>';
                     return html;
@@ -69,7 +73,10 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
         page: true,
         height: "full-158",
         cellMinWidth: 100,
-        cols: detailMainTable.initColumn()
+        cols: detailMainTable.initColumn(),
+        done:function (){
+            tableMerge.render(this)
+        }
     });
     //渲染时间选择框
     laydate.render({
@@ -112,11 +119,11 @@ layui.use(['table', 'admin','laydate', 'ax', 'func','upload'], function () {
      */
     detailMainTable.search = function () {
         var queryData = {};
-
-        queryData['createUserName'] = $('#createUserName').val();
-        queryData['deptName'] = $('#deptName').val();
         queryData['timeLimit'] = $('#timeLimit').val();
-
+        queryData['xmmc'] = $('#xmmc').val();
+        queryData['landStatus'] = $('#landStatus').val();
+        var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
+        queryData['xdm'] = value;
         table.reload(detailMainTable.tableId, {
             where: queryData, page: {curr: 1}
         });

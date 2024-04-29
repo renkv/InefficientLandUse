@@ -142,7 +142,6 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
     detailMainTable.search = function () {
         var queryData = {};
         queryData['timeLimit'] = $('#timeLimit').val();
-        queryData['xdm'] = '';
         queryData['xmmc'] = $('#xmmc').val();
         queryData['landStatus'] = $('#landStatus').val();
         var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
