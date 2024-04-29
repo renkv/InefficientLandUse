@@ -5,6 +5,9 @@ import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.hutool.core.date.DateUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.exception.enums.CoreExceptionEnum;
+import cn.stylefeng.roses.kernel.model.response.ErrorResponseData;
+import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import cn.stylefeng.roses.kernel.model.response.SuccessResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.land.auth.context.LoginContextHolder;
@@ -12,8 +15,10 @@ import com.land.auth.model.LoginUser;
 import com.land.base.consts.ConstantsContext;
 import com.land.base.pojo.page.LayuiPageFactory;
 import com.land.modular.landinfo.entity.LandDetailInfo;
+import com.land.modular.landinfo.entity.LandDetailInfoHis;
 import com.land.modular.landinfo.entity.LandInfo;
 import com.land.modular.landinfo.mapper.LandDetailDao;
+import com.land.modular.landinfo.service.LandDetailHisService;
 import com.land.modular.landinfo.service.LandDetailService;
 import com.land.modular.landinfo.vo.LandDetailExcelParam;
 import com.land.modular.landinfo.vo.LandDetailInfoVo;
@@ -50,6 +55,8 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
     private DeptService deptService;
     @Autowired
     private FileInfoService fileInfoService;
+    @Autowired
+    private LandDetailHisService landDetailHisService;
     /**
      * 根据条件查询列表数据
      * @param vo
@@ -238,5 +245,61 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             vo.setFileInfoList(fileInfoList);
         }
         return vo;
+    }
+
+    /**
+     * 保存处置信息
+     * @param landDetail
+     * @param disType
+     * @return
+     */
+    @Transactional
+    @Override
+    public ResponseData saveLandDis(LandDetailInfo landDetail, String disType) {
+        LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        if (currentUser == null) {
+            throw new ServiceException(CoreExceptionEnum.NO_CURRENT_USER);
+        }
+        User user = userService.getById(currentUser.getId());
+        if(!StringUtils.isEmpty(landDetail.getId())){
+            LandDetailInfo detailInfo = this.baseMapper.selectById(landDetail.getId());
+            LandDetailInfoHis his = new LandDetailInfoHis();
+            BeanUtils.copyProperties(detailInfo,his);
+            his.setOldId(detailInfo.getId());
+            his.setId(null);
+            his.setOpStatus("操作前");
+            his.setOpUser(user.getUserId());
+            his.setOpUserName(user.getName());
+            his.setOpTime(new Date());
+            //操作前
+            landDetailHisService.saveHis(his);
+            if("storage".equals(disType)){
+                detailInfo.setLandStatus(disType);
+                detailInfo.setZkfsx(landDetail.getZkfsx());
+                detailInfo.setScStatus(landDetail.getScStatus());
+                detailInfo.setCbhs(landDetail.getCbhs());
+                detailInfo.setXyqd(landDetail.getXyqd());
+                detailInfo.setTdgy(landDetail.getTdgy());
+                detailInfo.setSczkfjz(landDetail.getSczkfjz());
+            }
+            detailInfo.setUpdateUser(currentUser.getId());
+            detailInfo.setUpdateUserName(user.getName());
+            detailInfo.setUpdateTime(new Date());
+            this.saveOrUpdate(detailInfo);
+            LandDetailInfoHis hisAfter = new LandDetailInfoHis();
+            BeanUtils.copyProperties(detailInfo,hisAfter);
+            hisAfter.setOldId(detailInfo.getId());
+            hisAfter.setId(null);
+            hisAfter.setOpStatus("操作后");
+            hisAfter.setOpUser(user.getUserId());
+            hisAfter.setOpUserName(user.getName());
+            hisAfter.setOpTime(new Date());
+            //操作后
+            landDetailHisService.saveHis(his);
+        }else {
+            return new ErrorResponseData("未查询到要处置土地项");
+        }
+
+        return new SuccessResponseData();
     }
 }

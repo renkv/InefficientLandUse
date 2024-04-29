@@ -5,6 +5,7 @@ import com.land.sys.modular.system.entity.FileInfo;
 import lombok.Data;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -81,12 +82,12 @@ public class LandDetailInfoVo {
     private String businessKey;
     //低效用地类型
     private String category;
-    @TableField(value = "land_code")
+
     private String landCode;
     /**
      * 状态
      */
-    @TableField(value = "land_status")
+
     private String landStatus;
     /**
      * 规模面积
@@ -179,6 +180,43 @@ public class LandDetailInfoVo {
     private Double zhdf;
 
     private String xdm;
+    private Integer year;
+
+
+    private String cbhs;
+
+    private String xyqd;
+
+    private String tdgy;
+
+    private String ghtjbg;
+
+    private String ghgcsp;
+
+    private String cxrd;
+
+    private String tsfabz;
+
+    private String tsfzss;
+
+    private String tscxzm;
+
+    private String xmlx;
+
+    private String xmsg;
+
+    private String xmys;
+
+    private String xmzbsy;
+
+    private String jbqk;
+
+    private String dktj;
+
+    private String sczkfjz;
+
+    private String scStatus;
+
     /**
      * 文件信息
      */

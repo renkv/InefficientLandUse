@@ -247,7 +247,6 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
             layer.msg('请选择一条数据');
             return false;
         }
-        debugger;
         detailMainTable.jumpEditPage(checkStatus.data[0]);
     });
     //btnDet 详情按钮点击事件

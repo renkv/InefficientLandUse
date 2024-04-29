@@ -1,5 +1,6 @@
 package com.land.modular.landinfo.service;
 
+import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.landinfo.entity.LandInfo;
@@ -21,4 +22,6 @@ public interface LandDetailService {
     boolean delete(String ids);
 
     LandDetailInfoVo getDetailById(Long id);
+
+    ResponseData saveLandDis(LandDetailInfo landDetail, String disType);
 }

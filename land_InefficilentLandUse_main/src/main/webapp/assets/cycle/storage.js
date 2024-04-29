@@ -70,8 +70,19 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         height: "full-158",
         cellMinWidth: 100,
         cols: detailMainTable.initColumn(),
-        done:function (){
+        done:function (res, curr, count){
             tableMerge.render(this)
+            $("[data-field = 'scStatus']").children().each(function () {
+                if ($(this).text() == '1') {
+                    $(this).text("拟收储");
+                } else if ($(this).text() == '2') {
+                    $(this).text("已收储");
+                } else if ($(this).text() == '3') {
+                    $(this).text("待开发");
+                }else if ($(this).text() == '4') {
+                    $(this).text("已开发");
+                }
+            })
         }
     });
     //渲染时间选择框
@@ -87,7 +98,7 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
             func.open({
                 height: 1000,
                 title: '详情',
-                content: Feng.ctxPath + '/landdetail/detail?id=' + data.id,
+                content: Feng.ctxPath + '/cycle/detail?id=' + data.id,
                 tableId: detailMainTable.tableId,
                 endCallback: function () {
                     //table.reload(shareFileTInfo.tableId);
@@ -155,14 +166,15 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
     detailMainTable.openAddPage = function () {
         func.open({
             height: 1000,
-            title: '新增低效用地项目',
-            content: Feng.ctxPath + '/landdetail/add',
+            width:'1500px',
+            title: '新增收储再开发项目',
+            content: Feng.ctxPath + '/cycle/addStorage',
             tableId: detailMainTable.tableId,
             endCallback: function () {
                 table.reload(detailMainTable.tableId);
             }
         });
-        //window.location.href = Feng.ctxPath + '/landInfo/add?category=1'
+        /*window.location.href = Feng.ctxPath + '/cycle/addStorage';*/
     };
     /**
      * 导出按钮
