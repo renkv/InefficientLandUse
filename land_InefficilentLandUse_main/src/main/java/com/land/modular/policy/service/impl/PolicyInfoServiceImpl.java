@@ -15,6 +15,7 @@ import com.land.auth.context.LoginContextHolder;
 import com.land.auth.model.LoginUser;
 import com.land.base.consts.ConstantsContext;
 import com.land.base.pojo.page.LayuiPageFactory;
+import com.land.modular.landinfo.vo.LandDetailInfoVo;
 import com.land.modular.policy.entity.SysPolicyInfoEntity;
 import com.land.modular.policy.mapper.PolicyDao;
 import com.land.modular.policy.service.PolicyInfoService;
@@ -62,19 +63,34 @@ public class PolicyInfoServiceImpl extends ServiceImpl<PolicyDao, SysPolicyInfoE
     @Override
     public ResponseData savePolicy(MultipartFile file, SysPolicyInfoVo vo) {
         SysPolicyInfoEntity entity = new SysPolicyInfoEntity();
+        LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        if(vo.getFileId() != null){
+            entity = this.baseMapper.selectById(vo.getFileId());
+            entity.setUpdateUser(currentUser.getId());
+            entity.setUpdateUserName(currentUser.getName());
+            entity.setUpdateTime(new Date());
+        }else{
+            entity.setCreateUser(currentUser.getId());
+            entity.setCreateUserName(currentUser.getName());
+            entity.setCreateTime(new Date());
+            //生成文件的唯一id
+            String fileId = IdWorker.getIdStr();
+            entity.setFileId(fileId);
+        }
+        entity.setPolicyName(vo.getPolicyName());
+        entity.setPolicyType(vo.getPolicyType());
         if(!file.isEmpty()){
             //获取文件后缀
             String fileSuffix = ToolUtil.getFileSuffix(file.getOriginalFilename());
             String fileSavePath = ConstantsContext.getFileUploadPath();
             String nowDate = DateUtil.formatDate(new Date());
-            fileSavePath = fileSavePath+nowDate+"/";
+            fileSavePath = fileSavePath+nowDate+"\\";
 
             //获取文件原始名称
             String originalFilename = file.getOriginalFilename();
-            //生成文件的唯一id
-            String fileId = IdWorker.getIdStr();
+            String filename = IdWorker.getIdStr();
             //生成文件的最终名称
-            String finalName = fileId + "." + fileSuffix;
+            String finalName = filename+ "." + fileSuffix;
             try {
                 //保存文件到指定目录
                 File newFile = new File(fileSavePath + finalName);
@@ -82,29 +98,26 @@ public class PolicyInfoServiceImpl extends ServiceImpl<PolicyDao, SysPolicyInfoE
                 FileUtil.mkParentDirs(newFile);
                 //保存文件
                 file.transferTo(newFile);
-                LoginUser currentUser = LoginContextHolder.getContext().getUser();
                 //保存文件信息
-                entity.setFileId(fileId);
                 entity.setFileName(originalFilename);
                 entity.setFileSuffix(fileSuffix);
                 entity.setFilePath(fileSavePath + finalName);
                 entity.setFinalName(finalName);
-                entity.setCreateUser(currentUser.getId());
-                entity.setCreateUserName(currentUser.getName());
-                entity.setCreateTime(new Date());
-                entity.setPolicyName(vo.getPolicyName());
-                entity.setPolicyType(vo.getPolicyType());
                 //计算文件大小kb
                 long kb = new BigDecimal(file.getSize())
                         .divide(BigDecimal.valueOf(1024))
                         .setScale(0, BigDecimal.ROUND_HALF_UP).longValue();
                 entity.setFileSizeKb(kb);
-                this.baseMapper.insert(entity);
             } catch (Exception e) {
                 System.out.println("读取文件内容出错");
                 e.printStackTrace();
                 return new ErrorResponseData("读取文件内容出错");
             }
+        }
+        if(vo.getFileId() == null){
+            this.baseMapper.insert(entity);
+        }else{
+            this.baseMapper.updateById(entity);
         }
         return new SuccessResponseData();
     }
@@ -126,5 +139,27 @@ public class PolicyInfoServiceImpl extends ServiceImpl<PolicyDao, SysPolicyInfoE
             this.baseMapper.deleteById(s);
         }
         return true;
+    }
+
+    /**
+     * 根据Id查询数据
+     * @param fileId
+     * @return
+     */
+    @Override
+    public SysPolicyInfoEntity selectById(String fileId) {
+        SysPolicyInfoEntity entity = this.baseMapper.selectById(fileId);
+        return entity;
+    }
+
+    /**
+     * 根据Id获取Vo
+     * @param fileId
+     * @return
+     */
+    @Override
+    public SysPolicyInfoVo getDetailById(Long fileId) {
+        SysPolicyInfoVo vo = this.baseMapper.getDetailById(fileId);
+        return vo;
     }
 }

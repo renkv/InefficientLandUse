@@ -14,10 +14,16 @@
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <input id="xmmc" class="layui-input" type="text" placeholder="文件名称"/>
+                                        <input id="policyName" class="layui-input" type="text" placeholder="政策名称"/>
                                     </div>
                                     <div class="layui-inline">
-                                        <input id="status" class="layui-input" type="text" placeholder="政策类型"/>
+                                        <select id="policyType" name="policyType" lay-verify="required">
+                                            <option value="">请选择类型</option>
+                                            <option value="1">国家级</option>
+                                            <option value="2">省级</option>
+                                            <option value="3">市级</option>
+                                            <option value="4">县级</option>
+                                        </select>
                                     </div>
 
                                     <div class="layui-inline">

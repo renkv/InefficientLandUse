@@ -11,4 +11,6 @@ import java.util.Map;
 
 public interface PolicyDao extends BaseMapper<SysPolicyInfoEntity> {
     Page<Map<String, Object>> selectListByPage(@Param("page")Page page, @Param("vo")SysPolicyInfoVo vo, @Param("beginTime")String beginTime, @Param("endTime")String endTime);
+
+    SysPolicyInfoVo getDetailById(@Param("fileId")Long fileId);
 }

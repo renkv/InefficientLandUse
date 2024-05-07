@@ -19,4 +19,5 @@ public class SysPolicyInfoVo {
     private String policyName;
     private String createUserName;
     private String updateUserName;
+    private String policyTypeName;
 }

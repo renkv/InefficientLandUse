@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${entity.policyName}</title>
+    <script src="/assets/common/pdfjs/build/pdf.js"></script>
+    <script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
+    <style>
+        html,
+        body {
+            padding: 0px;
+            margin: 0px;
+            overflow-x: hidden;
+        }
+        .div-container {
+            //position: relative;
+            width: 1000px; /* 或者其他固定宽度 */
+            height: 800px; /* 或者其他固定高度 */
+            overflow: hidden; /* 防止图片溢出div */
+        }
+
+        .div-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 确保图片覆盖整个div，可以裁剪图片的一些部分 */
+        }
+    </style>
+</head>
+<body>
+<input type="hidden" id="isImg" value="${img}">
+<div id="container">
+    <div class="div-container" id="imgDiv">
+        <img src="" alt="">
+    </div>
+</div>
+<script>
+    var container, pageDiv, pdfDoc;
+    var winWidth = window.innerWidth;
+    function getPDF(url) {
+        var img = $("#isImg").val();
+        if(img === "1"){
+            $("#imgDiv").html('<img src="'+url+'" alt="">');
+        }else{
+            $("#isImg").remove();
+            pdfjsLib.getDocument(url).promise.then((pdf) => {
+                pdfDoc = pdf;
+                container = document.getElementById('container');
+                for (var i = 1; i <= pdf.numPages; i++) {
+                    renderPDF(i);
+                }
+            })
+        }
+    }
+    function renderPDF(num) {
+        pdfDoc.getPage(num).then((page) => {
+            var scale = winWidth / (page.getViewport({ scale: 1 }).width);
+
+            var viewport = page.getViewport({ scale: scale });
+            console.info(viewport);
+            pageDiv = document.createElement('div');
+            pageDiv.setAttribute('id', 'page-' + (page.pageIndex + 1));
+            pageDiv.setAttribute('style', 'position: relative');
+            container.appendChild(pageDiv);
+            var canvas = document.createElement('canvas');
+            pageDiv.appendChild(canvas);
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            var renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+
+            page.render(renderContext);
+        });
+    }
+    getPDF('${path}');
+</script>
+</body>
+
+</html>

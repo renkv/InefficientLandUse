@@ -30,6 +30,7 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
                     return html;
                 }},
             {field: 'fileSizeKb', sort: true, title: '文件大小'},
+            {field: 'filePath', sort: true, title: '文件路径'},
             {field: 'createTime', sort: true, title: '创建时间'},
             {field: 'createUserName',sort: true, title: '创建人'},
             {field: 'updateTime', sort: true, title: '修改时间'},
@@ -37,15 +38,43 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
         ]];
     };
 
+
+    // 渲染表格
+    var tableResult = table.render({
+        elem: '#' + policyMainTable.tableId,
+        url: Feng.ctxPath + '/policy/selectList',
+        page: true,
+        height: "full-158",
+        cellMinWidth: 100,
+        cols: policyMainTable.initColumn(),
+        done:function(res, curr, count){
+            $("[data-field = 'policyType']").children().each(function(){
+                if($(this).text() == '1'){
+                    $(this).text("国家级");
+                }else if($(this).text() == '2'){
+                    $(this).text("省级");
+                }else if($(this).text() == '3'){
+                    $(this).text("市级");
+                }else if($(this).text() == '4'){
+                    $(this).text("县级");
+                }
+            });
+        }
+    });
+    //渲染时间选择框
+    laydate.render({
+        elem: '#timeLimit',
+        range: true,
+        max: Feng.currentDate()
+    });
     /**
      * 点击查询按钮
      */
     policyMainTable.search = function () {
         var queryData = {};
 
-        queryData['shareNo'] = $('#shareNo').val();
-        queryData['shareTitle'] = $('#shareTitle').val();
-        queryData['shareType'] = $('#shareType').val();
+        queryData['policyType'] = $('select[name="policyType"]').next().find('.layui-this').attr('lay-value');
+        queryData['policyName'] = $('#policyName').val();
         queryData['timeLimit'] = $('#timeLimit').val();
 
         table.reload(policyMainTable.tableId, {
@@ -60,14 +89,14 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
             func.open({
                 height: 1000,
                 title: '详情',
-                content: Feng.ctxPath + '/landdetail/detail?id=' + data.id,
-                tableId: detailMainTable.tableId,
+                content: Feng.ctxPath + '/policy/detail?fileId=' + data.fileId,
+                tableId: policyMainTable.tableId,
                 endCallback: function () {
                     //table.reload(shareFileTInfo.tableId);
                 }
             });
         }else if(layEvent === 'showPre'){
-            window.open(Feng.ctxPath+"/landdetail/showOnMap?value="+data.dkbh+"&key=DKBH&xmmc="+data.xmmc);
+            window.open(Feng.ctxPath+"/policy/showPre?fileId="+data.fileId);
         }
     });
 
@@ -95,13 +124,26 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
         func.open({
             height: 800,
             title: '编辑',
-            content: Feng.ctxPath + '/fileShare/edit?shareId=' + data.shareId,
+            content: Feng.ctxPath + '/policy/edit?fileId=' + data.fileId,
             tableId: policyMainTable.tableId,
             endCallback: function () {
                 //table.reload(policyMainTable.tableId);
             }
         });
     };
+    //btnEdt 编辑按钮点击事件
+    $('#btnEdt').click(function () {
+        var checkStatus = table.checkStatus(policyMainTable.tableId);
+        var ids = [];
+        $(checkStatus.data).each(function (i, o) {//o即为表格中一行的数据
+            ids.push(o.id);
+        });
+        if (ids.length < 1) {
+            layer.msg('请选择一条数据');
+            return false;
+        }
+        policyMainTable.jumpEditPage(checkStatus.data[0]);
+    });
     /**
      * 跳转到详情页面
      *
@@ -139,34 +181,7 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
         Feng.confirm("是否删除?", operation);
     };
 
-    // 渲染表格
-    var tableResult = table.render({
-        elem: '#' + policyMainTable.tableId,
-        url: Feng.ctxPath + '/policy/selectList',
-        page: true,
-        height: "full-158",
-        cellMinWidth: 100,
-        cols: policyMainTable.initColumn(),
-        done:function(res, curr, count){
-            $("[data-field = 'policyType']").children().each(function(){
-                if($(this).text() == '1'){
-                    $(this).text("国家级");
-                }else if($(this).text() == '2'){
-                    $(this).text("省级");
-                }else if($(this).text() == '3'){
-                    $(this).text("市级");
-                }else if($(this).text() == '4'){
-                    $(this).text("县级");
-                }
-            });
-        }
-    });
-    //渲染时间选择框
-    laydate.render({
-        elem: '#timeLimit',
-        range: true,
-        max: Feng.currentDate()
-    });
+
 
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {
@@ -213,25 +228,4 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
         });
     });
 
-
-    // 工具条点击事件
-    table.on('tool(' + policyMainTable.tableId + ')', function (obj) {
-        var data = obj.data;
-        var layEvent = obj.event;
-
-        if (layEvent === 'edit') {
-            policyMainTable.jumpEditPage(data);
-        } else if (layEvent === 'delete') {
-            policyMainTable.onDeleteItem(data);
-        }else if (layEvent === 'detail') {
-            policyMainTable.jumpDetailPage(data);
-        }
-    });
 });
-/*$(function () {
-    var panehHidden = false;
-    if ($(this).width() < 769) {
-        panehHidden = true;
-    }
-    $('#myContiner').layout({initClosed: panehHidden, west__size: 260});
-});*/

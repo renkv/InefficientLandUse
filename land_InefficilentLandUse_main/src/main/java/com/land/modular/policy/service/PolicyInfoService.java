@@ -2,6 +2,7 @@ package com.land.modular.policy.service;
 
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.land.modular.policy.entity.SysPolicyInfoEntity;
 import com.land.modular.policy.vo.SysPolicyInfoVo;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,4 +14,8 @@ public interface PolicyInfoService {
     ResponseData savePolicy(MultipartFile file, SysPolicyInfoVo vo);
 
     boolean delete(String ids);
+
+    SysPolicyInfoEntity selectById(String fileId);
+
+    SysPolicyInfoVo getDetailById(Long fileId);
 }

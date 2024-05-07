@@ -46,4 +46,11 @@
         </if>
         order by create_time desc
     </select>
+
+    <select id="getDetailById" resultType="com.land.modular.policy.vo.SysPolicyInfoVo">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_policy_info
+        where file_id = #{fileId}
+    </select>
 </mapper>
