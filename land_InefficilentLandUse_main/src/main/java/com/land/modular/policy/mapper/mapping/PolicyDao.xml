@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.land.modular.policy.mapper.PolicyDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.land.modular.policy.entity.SysPolicyInfoEntity">
+        <id column="file_id" property="fileId" />
+        <result column="file_name" property="fileName" />
+        <result column="file_suffix" property="fileSuffix" />
+        <result column="file_size_kb" property="fileSizeKb" />
+        <result column="final_name" property="finalName" />
+        <result column="file_path" property="filePath" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+        <result column="policy_type" property="policyType" />
+        <result column="policy_name" property="policyName" />
+        <result column="create_user_name" property="createUserName" />
+        <result column="update_user_name" property="updateUserName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        file_id AS fileId, file_name AS "fileName", file_suffix AS "fileSuffix",update_user_name as updateUserName,
+        file_size_kb AS "fileSizeKb", final_name AS "finalName", file_path AS "filePath", create_time AS "createTime",create_user_name as createUserName,
+        update_time AS "updateTime", create_user AS "createUser", update_user AS "updateUser",policy_type as policyType,policy_name as policyName
+    </sql>
+
+    <select id="selectListByPage" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_policy_info
+        where 1=1
+        <if test="beginTime != null and beginTime != ''">
+            and create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        <if test="vo.policyName != null and vo.policyName != ''">
+            and policy_name like CONCAT('%',#{vo.policyName},'%')
+        </if>
+        <if test="vo.policyType != null and vo.policyType != ''">
+            and policy_type = #{vo.policyType}
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="getDetailById" resultType="com.land.modular.policy.vo.SysPolicyInfoVo">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_policy_info
+        where file_id = #{fileId}
+    </select>
+</mapper>

@@ -196,9 +196,13 @@
         </dependency>
 
         <!--    shp文件解析 结束    -->
-
-
-
+        <!--word转PDF-->
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.doc.free</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+        <!--word转PDF结束-->
     </dependencies>
     <repositories>
         <repository>
@@ -214,6 +218,11 @@
             <url>https://repo.osgeo.org/repository/snapshot/</url>
             <snapshots><enabled>true</enabled></snapshots>
             <releases><enabled>false</enabled></releases>
+        </repository>
+        <repository>
+            <id>com.e-iceblue</id>
+            <name>e-iceblue</name>
+            <url>https://repo.e-iceblue.com/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 

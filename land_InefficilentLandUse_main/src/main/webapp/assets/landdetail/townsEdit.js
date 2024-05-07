@@ -58,14 +58,6 @@ layui.use(['layer','upload', 'form', 'formSelects','admin', 'ax'], function () {
         var dldmV = $("#dldmV").val();
         var xldmV = $("#xldmV").val();
         formSelects.value("xdm", xdmV);
-        /*form.render('select', {
-            'select': '#xdm'
-            ,'value': xdmV
-        });
-        form.render('select', {
-            'select': '#dldm'
-            ,'value': dldmV
-        });*/
         if(xldmV != "" && category.length >= 0){
             for (var i = 0; i < category.length; i++) {
                 var name = category[i].name;

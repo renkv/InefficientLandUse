@@ -1,0 +1,38 @@
+@layout("/common/_container.html",{js:["/assets/policy/typePage.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+<div class="layui-body-header">
+    <span class="layui-body-header-title">政策管理</span>
+</div>
+
+<div id="myContiner" style="height: 100%">
+
+    <div class="ui-layout-center">
+        <div class="layui-fluid">
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <input id="policyType" value="${type}" class="layui-input" type="hidden" />
+                                    <div class="layui-inline">
+                                        <input id="policyName" class="layui-input" type="text" placeholder="政策名称"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="layui-table" id="policyMainTable" lay-filter="policyMainTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@}
