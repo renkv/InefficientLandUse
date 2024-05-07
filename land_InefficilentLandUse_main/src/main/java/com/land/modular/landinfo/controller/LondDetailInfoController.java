@@ -107,9 +107,13 @@ public class LondDetailInfoController extends BaseController{
         model.addAttribute("businessKey",businessKey);
         if(category.equals("towns")){
             return PREFIX + "/townsAdd.html";
+        }else if(category.equals("villages"))
+        {
+            return PREFIX + "/villagesAdd.html";
         }
         return PREFIX + "/landDetailAdd.html";
     }
+
     /**
      * 编辑页面
      */
@@ -120,6 +124,9 @@ public class LondDetailInfoController extends BaseController{
         model.addAttribute("ctxPath", ConfigListener.getConf().get("contextPath"));
         if(vo.getCategory().equals("towns")){
             return PREFIX + "/townsEdit.html";
+        }else if(vo.getCategory().equals("villages"))
+        {
+            return PREFIX + "/villagesEdit.html";
         }
         return PREFIX + "/detailEdit.html";
     }
@@ -133,6 +140,9 @@ public class LondDetailInfoController extends BaseController{
         model.addAttribute("ctxPath",ConfigListener.getConf().get("contextPath"));
         if(vo.getCategory().equals("towns")){
             return PREFIX + "/townsDetail.html";
+        }else if(vo.getCategory().equals("villages"))
+        {
+            return PREFIX + "/villagesDetail.html";
         }
         return PREFIX + "/landDetail.html";
     }
