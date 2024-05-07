@@ -9,7 +9,7 @@
                     <input id="areaFileName" name="areaFileName" type="hidden"/>
                     <input id="areaInfo" name="areaInfo" type="hidden"/>
                     <input id="businessKey" name="businessKey" type="hidden" value="${businessKey}"/>
-                    <input id="category" name="category" type="hidden" value="towns"/>
+                    <input id="category" name="category" type="hidden" value="villages"/>
                     <div class="layui-row">
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">区县名称<span style="color: red;">*</span></label>
@@ -54,13 +54,6 @@
                             <label class="layui-form-label">项目名称<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
                                 <input id="xmmc" name="xmmc" placeholder="请输入项目名称" type="text" lay-verify="required"
-                                       class="layui-input"/>
-                            </div>
-                        </div>
-                        <div class="layui-inline layui-col-md6">
-                            <label class="layui-form-label">乡镇名称<span style="color: red;">*</span></label>
-                            <div class="layui-input-block">
-                                <input id="xzmc" name="xzmc" placeholder="请输入乡镇名称" type="text" lay-verify="required"
                                        class="layui-input"/>
                             </div>
                         </div>
@@ -166,30 +159,29 @@
                             </div>
                         </div>
                     </div>
-<!--                    <div class="layui-row">-->
-<!--                        <div class="layui-inline layui-col-md12">-->
-<!--                            <label class="layui-form-label">附件</label>-->
-<!--                            <div class="layui-input-block">-->
-<!--                                &lt;!&ndash;div id="uploader"></div>&ndash;&gt;-->
-<!--                                <div class="layui-upload">-->
-<!--                                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>-->
-<!--                                    <button type="button" class="layui-btn" id="testListAction">开始上传</button>-->
-<!--                                    <div class="layui-upload-list">-->
-<!--                                        <table class="layui-table">-->
-<!--                                            <thead>-->
-<!--                                            <tr><th>文件名</th>-->
-<!--                                                <th>大小</th>-->
-<!--                                                <th>状态</th>-->
-<!--                                                <th>操作</th>-->
-<!--                                            </tr></thead>-->
-<!--                                            <tbody id="demoList">-->
-<!--                                            </tbody>-->
-<!--                                        </table>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">附件</label>
+                            <div class="layui-input-block">
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                                    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+                                    <div class="layui-upload-list">
+                                        <table class="layui-table">
+                                            <thead>
+                                            <tr><th>文件名</th>
+                                                <th>大小</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr></thead>
+                                            <tbody id="demoList">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

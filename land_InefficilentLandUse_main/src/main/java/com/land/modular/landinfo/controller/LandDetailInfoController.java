@@ -41,7 +41,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("landdetail")
-public class LondDetailInfoController extends BaseController{
+public class LandDetailInfoController extends BaseController{
     private String PREFIX = "/landdetail";
     @Autowired
     private LandDetailService landDetailService;

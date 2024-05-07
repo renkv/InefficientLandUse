@@ -26,6 +26,7 @@ layui.use(['table', 'admin','laydate', 'tableMerge','ax', 'func','upload'], func
         return [[
             {fixed: 'left',type: 'checkbox'},
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
+            {field: 'landCode', align: 'center',fixed: 'left', title: '编码'},
             {field: 'xmc', sort: false,merge:true,align: 'center', fixed: 'left',title: '县名称'},
             {field: 'pqbh', sort: false,merge:true,align: 'center',fixed: 'left', title: '片区编号'},
             {field: 'xmmc', sort: false,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
@@ -120,28 +121,17 @@ layui.use(['table', 'admin','laydate', 'tableMerge','ax', 'func','upload'], func
             window.open(Feng.ctxPath+"/landdetail/showOnMap?value="+data.dkbh+"&key=DKBH&xmmc="+data.xmmc);
         }
     });
-    /*// 工具条点击事件
-    table.on('tool(' + detailMainTable.tableId + ')', function (obj) {
-        var data = obj.data;
-        var layEvent = obj.event;
-        if (layEvent === 'edit') {
-            detailMainTable.jumpEditPage(data);
-        }else if (layEvent === 'detail') {
-            detailMainTable.jumpDetailPage(data);
-        }else if(layEvent === 'location'){
-            detailMainTable.jumpLocationPage(data);
-        }
-    });*/
 
     /**
      * 点击查询按钮
      */
     detailMainTable.search = function () {
         var queryData = {};
-
-        queryData['createUserName'] = $('#createUserName').val();
-        queryData['deptName'] = $('#deptName').val();
         queryData['timeLimit'] = $('#timeLimit').val();
+        queryData['xmmc'] = $('#xmmc').val();
+        queryData['landStatus'] = $('#landStatus').val();
+        var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
+        queryData['xdm'] = value;
 
         table.reload(detailMainTable.tableId, {
             where: queryData, page: {curr: 1}
