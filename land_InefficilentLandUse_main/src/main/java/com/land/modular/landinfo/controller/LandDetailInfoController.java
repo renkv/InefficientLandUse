@@ -176,7 +176,7 @@ public class LandDetailInfoController extends BaseController{
      */
     @RequestMapping("/selectList")
     @ResponseBody
-    public Object selectList(@RequestParam(required = false) String createUserName,
+    public Object selectList(@RequestParam(required = false) String createUserName,@RequestParam(required = false) String landCode,
                              @RequestParam(required = false) String category,@RequestParam(required = false) String xdm,@RequestParam(required = false) String xmmc,
                              @RequestParam(required = false) String timeLimit) {
 
@@ -192,9 +192,10 @@ public class LandDetailInfoController extends BaseController{
         LandDetailInfoVo vo = new LandDetailInfoVo();
         vo.setXmmc(xmmc);
         vo.setXdm(xdm);
-        vo.setLandStatus("");
+        //vo.setLandStatus("");
         vo.setCategory(category);
         vo.setCreateUserName(createUserName);
+        vo.setLandCode(landCode);
         //main.setDeptName(deptName);
         Page<Map<String, Object>> list = landDetailService.selectList(vo, beginTime, endTime);
         Page wrapped = new UserWrapper(list).wrap();

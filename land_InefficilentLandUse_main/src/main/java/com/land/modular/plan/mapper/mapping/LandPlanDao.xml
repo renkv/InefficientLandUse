@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.land.modular.plan.mapper.LandPlanDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.land.modular.plan.entity.LandPlanInfoEntity">
+        <id column="id" property="id" />
+        <result column="land_code" property="landCode" />
+        <result column="plan_type" property="planType" />
+        <result column="plan_name" property="planName" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+        <result column="plan_start_time" property="planStartTime" />
+        <result column="plan_end_time" property="planEndTime" />
+        <result column="act_start_time" property="actStartTime" />
+        <result column="act_end_time" property="actEndTime" />
+        <result column="plan_area" property="planArea" />
+        <result column="current_area" property="currentArea" />
+        <result column="rem_area" property="remArea" />
+        <result column="cur_status" property="curStatus" />
+        <result column="cur_progress" property="curProgress" />
+        <result column="reasons" property="reasons" />
+        <result column="reasons_type" property="reasonsType" />
+        <result column="village_name" property="villageName" />
+        <result column="renewal_name" property="renewalName" />
+        <result column="zone_name" property="zoneName" />
+        <result column="plan_unit" property="planUnit" />
+        <result column="act_unit" property="actUnit" />
+        <result column="credit_code" property="creditCode" />
+        <result column="occupy_area" property="occupyArea" />
+        <result column="bus_name" property="busName" />
+        <result column="located" property="located" />
+        <result column="pre_year_tax" property="preYearTax" />
+        <result column="up_year_tax" property="upYearTax" />
+        <result column="is_plan_bus" property="isPlanBus" />
+        <result column="bus_status" property="busStatus" />
+        <result column="remark" property="remark" />
+        <result column="plan_code" property="planCode" />
+        <result column="create_user_name" property="createUserName" />
+        <result column="update_user_name" property="updateUserName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        t.id,t.land_code as landCode,t.plan_type as planType,t.plan_name as planName,plan_code as planCode,
+    t.create_time as createTime,t.update_time as updateTime,t.create_user as createUser,t.update_user as updateUser,
+    t.plan_start_time as planStartTime,t.plan_end_time  as planEndTime,t.create_user_name as createUserName,t.update_user_name as updateUserName,
+    t.act_start_time as actStartTime,t.act_end_time as actEndTime,t.plan_area as planArea,
+    t.current_area as currentArea,t.rem_area as remArea,
+    t.cur_status as curStatus,t.cur_progress as curProgress, t.reasons ,t.reasons_type as reasonsType,
+    t.village_name as villageName,t.renewal_name as renewalName,t.zone_name as zoneName,t.plan_unit as planUnit,
+    t.act_unit as actUnit,t.credit_code as creditCode,t.bus_name as busName,t.occupy_area as occupyArea,
+    t.located ,t.pre_year_tax as preYearTax,t.up_year_tax as upYearTax,t.is_plan_bus as isPlanBus,t.bus_status as busStatus,t.remark
+    </sql>
+    <!-- 查询地块基本信息结果列 -->
+    <sql id="Left_Column_List">
+        d.XMC as xmc ,d.PQBH as pqbh,d.XMMC as xmmc,d.XZDM as xzdm,d.XZMC as xzmc,d.DKBH as dkbh,d.DKMJ as dkmj,d.DLDM as dldm,d.DLMC as dlmc,d.XLDM as xldm,
+        d.XLMC xlmc,d.XZYT xzyt,
+      d.XZRJL xzrjl,d.XZJZMD xzjzmd,d.GHYT ghyt,d.GHRJL ghrjl,
+	d.GHJZMD ghjzmd,d.KFQL kfql,d.ZKFSX zkfsx,d.PQMJ pqmj,d.ZB  zb,d.category as category,
+	d.land_status as landStatus,d.zbq,d.qymc,d.bdcqzsh,d.crsj,d.htrjl,d.httzqd,d.htmjss,d.hydm,d.hymc,d.rjljsz,d.dkrjl,d.rjlfz,d.tzqdfz,d.tzqdjs,d.dktzqd,d.ssccljs,
+	d.dkssccl,d.dksscclfz,d.bmysfz,d.zfysfz,d.zhdf,d.xdm,d.year,d.cbhs,d.tdgy,d.xyqd,d.ghtjbg,d.cxrd,d.tsfabz,d.tscxzm,d.xmlx,d.xmsg,d.xmys,d.xmzbsy,d.jbqk,d.dktj,
+	d.sczkfjz,d.sc_status as scStatus
+    </sql>
+
+    <select id="selectListByPage" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Left_Column_List"/>
+        from land_plan_info t
+        left join land_detail_info d on t.land_code=d.land_code
+        where 1=1
+        <if test="beginTime != null and beginTime != ''">
+            and t.create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and t.create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        <if test="vo.planType != null and vo.planType != ''">
+            and t.plan_type = #{vo.planType}
+        </if>
+        order by t.create_time desc
+    </select>
+
+    <select id="getDetailById" resultType="com.land.modular.plan.vo.LandPlanInfoVo">
+        select
+        <include refid="Base_Column_List"/>
+        from land_plan_info t
+        where t.id = #{id}
+    </select>
+</mapper>

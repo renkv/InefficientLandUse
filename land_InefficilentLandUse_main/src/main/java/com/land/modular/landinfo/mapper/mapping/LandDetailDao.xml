@@ -111,6 +111,9 @@
         <if test="vo.landStatus != null and vo.landStatus != ''">
             and land_status = #{vo.landStatus}
         </if>
+        <if test="vo.landCode != null and vo.landCode != ''">
+            and land_code = #{vo.landCode}
+        </if>
         order by create_time desc
     </select>
     <select id="selectByList" resultType="com.land.modular.landinfo.entity.LandDetailInfo">

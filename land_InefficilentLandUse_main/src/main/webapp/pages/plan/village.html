@@ -1,0 +1,50 @@
+@layout("/common/_container.html",{js:["/assets/plan/village.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+<div class="layui-body-header">
+    <span class="layui-body-header-title">城中村改造</span>
+</div>
+
+<div id="myContiner" style="height: 100%">
+
+    <div class="ui-layout-center">
+        <div class="layui-fluid">
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <input id="policyName" class="layui-input" type="text" placeholder="政策名称"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <select id="policyType" name="policyType" lay-verify="required">
+                                            <option value="">请选择类型</option>
+                                            <option value="1">国家级</option>
+                                            <option value="2">省级</option>
+                                            <option value="3">市级</option>
+                                            <option value="4">县级</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="layui-inline">
+                                        <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                        <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>新增</button>
+                                        <button id="btnDel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67e;</i>删除</button>
+                                        <button id="btnEdt" class="layui-btn icon-btn"><i class="layui-icon">&#xe642;</i>修改</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="layui-table" id="busMainTable" lay-filter="busMainTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@}
