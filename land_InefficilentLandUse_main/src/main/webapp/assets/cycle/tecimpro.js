@@ -47,11 +47,9 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
             {field: 'xzyt', sort: false, align: 'center',title: '现状用途'},
             {field: 'ghyt', sort: false, align: 'center',title: '规划用途'},
             {field: 'zkfsx', sort: false, align: 'center',title: '再开发时序'},
-            {field: 'scStatus', sort: false, align: 'center',title: '收储再开发状态'},
-            {field: 'cbhs', sort: false, align: 'center',title: '成本核算'},
-            {field: 'xyqd', sort: false, align: 'center',title: '协议签订'},
-            {field: 'tdgy', sort: false, align: 'center',title: '土地供应'},
-            {field: 'sczkfjz', sort: false, align: 'center',title: '具体进展情况'},
+            {field: 'tsfabz', sort: false, align: 'center',title: '提升方案编制'},
+            {field: 'tsfass', sort: false, align: 'center',title: '提升方案实施'},
+            {field: 'tscxzm', sort: false, align: 'center',title: '提升成效证明'},
             {field: 'remark', sort: false, align: 'center',title: '备注'},
             {field: 'createUserName', sort: false,align: 'center', title: '创建人名字'},
             {field: 'createTime', sort: false,align: 'center', title: '创建时间'},
@@ -65,14 +63,14 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
     var tableResult = table.render({
         id: detailMainTable.tableId,
         elem: '#' + detailMainTable.tableId,
-        url: Feng.ctxPath + '/cycle/selectListByStatus?status=1',
+        url: Feng.ctxPath + '/cycle/selectListByStatus?status=3',
         page: true,
         height: "full-158",
         cellMinWidth: 100,
         cols: detailMainTable.initColumn(),
         done:function (res, curr, count){
-            tableMerge.render(this)
-            $("[data-field = 'scStatus']").children().each(function () {
+            tableMerge.render(this);
+            /*$("[data-field = 'scStatus']").children().each(function () {
                 if ($(this).text() == '1') {
                     $(this).text("拟收储");
                 } else if ($(this).text() == '2') {
@@ -82,7 +80,7 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
                 }else if ($(this).text() == '4') {
                     $(this).text("已开发");
                 }
-            })
+            })*/
         }
     });
     //渲染时间选择框
@@ -152,8 +150,8 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         func.open({
             height: 1000,
             width:'1500px',
-            title: '新增收储再开发项目',
-            content: Feng.ctxPath + '/cycle/add?landStatus=1',
+            title: '新增自主开发项目',
+            content: Feng.ctxPath + '/cycle/add?landStatus=3',
             tableId: detailMainTable.tableId,
             endCallback: function () {
                 table.reload(detailMainTable.tableId);
@@ -267,8 +265,6 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
             });
             layer.close(index);
         });
-
-
     });
 
 

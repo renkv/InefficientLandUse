@@ -23,5 +23,5 @@ public interface LandDetailService {
 
     LandDetailInfoVo getDetailById(Long id);
 
-    ResponseData saveLandDis(LandDetailInfo landDetail, String disType);
+    ResponseData saveLandDis(LandDetailInfo landDetail);
 }

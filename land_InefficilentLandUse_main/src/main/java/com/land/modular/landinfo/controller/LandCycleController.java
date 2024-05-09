@@ -9,6 +9,7 @@ import com.land.base.pojo.page.LayuiPageFactory;
 import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.landinfo.service.LandDetailService;
 import com.land.modular.landinfo.vo.LandDetailInfoVo;
+import com.land.modular.plan.vo.LandPlanInfoVo;
 import com.land.sys.core.constant.dictmap.DeptDict;
 import com.land.sys.core.listener.ConfigListener;
 import com.land.sys.modular.system.warpper.UserWrapper;
@@ -33,29 +34,81 @@ public class LandCycleController extends BaseController {
     private LandDetailService landDetailService;
     private String PREFIX = "/cycle";
     @RequestMapping("/main")
-    public String main(String category, Model model) {
-        model.addAttribute("category",category);
+    public String main(String landStatus, Model model) {
+        model.addAttribute("landStatus",landStatus);
+        if(landStatus.equals("1")){
+            //收储再开发
+            return PREFIX + "/storage.html";
+        }else if(landStatus.equals("2")){
+            //自主开发
+            return PREFIX + "/autonomic.html";
+        }else if(landStatus.equals("3")){
+            //技术提升
+            return PREFIX + "/tecimpro.html";
+        }else if(landStatus.equals("4")){
+            //复垦耕地
+            return PREFIX + "/reclamation.html";
+        }else if(landStatus.equals("5")){
+            //司法处置或转让
+            return PREFIX + "/justice.html";
+        }
         return PREFIX + "/main.html";
     }
     /**
      * 收储再开发 storage and redev
      */
-    @RequestMapping("/stoAndRedev")
-    public  String stoAndRedev(Model model){
-        model.addAttribute("status","storage");
+    @RequestMapping("/add")
+    public  String add(String landStatus,Model model){
+        model.addAttribute("status",landStatus);
+        if(landStatus.equals("1")){
+            //收储再开发
+            return PREFIX + "/storageAdd.html";
+        }else if(landStatus.equals("2")){
+            //自主开发
+            return PREFIX + "/autonomicAdd.html";
+        }else if(landStatus.equals("3")){
+            //技术提升
+            return PREFIX + "/tecimproAdd.html";
+        }else if(landStatus.equals("4")){
+            //复垦耕地
+            return PREFIX + "/reclamationAdd.html";
+        }else if(landStatus.equals("5")){
+            //司法处置或转让
+            return PREFIX + "/justiceAdd.html";
+        }
         return PREFIX + "/storage.html";
     }
 
     /**
-     * 新增收储再开发项目
+     * 编辑处置
+     * @param id
      * @param model
      * @return
      */
-    @RequestMapping("/addStorage")
-    public  String addStorage(Model model){
-        model.addAttribute("status","storage");
-        return PREFIX + "/addStorage.html";
+    @RequestMapping("/edit")
+    public  String edit(Long id,Model model){
+        LandDetailInfoVo vo = landDetailService.getDetailById(id);
+        model.addAttribute("vo",vo);
+        model.addAttribute("ctxPath", ConfigListener.getConf().get("contextPath"));
+        if(vo.getLandStatus().equals("1")){
+            //收储再开发
+            return PREFIX + "/storageEdit.html";
+        }else if(vo.getLandStatus().equals("2")){
+            //自主开发
+            return PREFIX + "/autonomicEdit.html";
+        }else if(vo.getLandStatus().equals("3")){
+            //技术提升
+            return PREFIX + "/tecimproEdit.html";
+        }else if(vo.getLandStatus().equals("4")){
+            //复垦耕地
+            return PREFIX + "/reclamationEdit.html";
+        }else if(vo.getLandStatus().equals("5")){
+            //司法处置或转让
+            return PREFIX + "/justiceEdit.html";
+        }
+        return PREFIX + "/storage.html";
     }
+
     /**
      * 详情页面
      */
@@ -108,18 +161,24 @@ public class LandCycleController extends BaseController {
         LandDetailInfoVo vo = new LandDetailInfoVo();
         vo.setXmmc(xmmc);
         vo.setXdm(xdm);
-        vo.setLandStatus("");
         vo.setLandStatus(status);
         vo.setCreateUserName(createUserName);
         Page<Map<String, Object>> list = landDetailService.selectList(vo, beginTime, endTime);
         Page wrapped = new UserWrapper(list).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
     }
+
+    /**
+     *
+     * @param landDetail
+     * @param id
+     * @return
+     */
     @BussinessLog(value = "保存低效用地项目处置信息", key = "simpleName", dict = DeptDict.class)
     @RequestMapping(value = "/saveLandDis")
     @ResponseBody
-    public ResponseData saveLandDis(@Valid LandDetailInfo landDetail,@RequestParam(required = false) String disType,@RequestParam(required = true) Long id) {
+    public ResponseData saveLandDis(@Valid LandDetailInfo landDetail,@RequestParam(required = true) Long id) {
         landDetail.setId(id);
-        return landDetailService.saveLandDis(landDetail,disType);
+        return landDetailService.saveLandDis(landDetail);
     }
 }

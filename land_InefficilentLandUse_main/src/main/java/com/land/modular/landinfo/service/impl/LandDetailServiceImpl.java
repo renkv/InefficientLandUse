@@ -31,6 +31,7 @@ import com.land.sys.modular.system.entity.User;
 import com.land.sys.modular.system.service.DeptService;
 import com.land.sys.modular.system.service.FileInfoService;
 import com.land.sys.modular.system.service.UserService;
+import com.land.utils.BeanCopyUtils;
 import com.land.utils.PinyinUtil;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
@@ -255,7 +256,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
      */
     @Transactional
     @Override
-    public ResponseData saveLandDis(LandDetailInfo landDetail, String disType) {
+    public ResponseData saveLandDis(LandDetailInfo landDetail) {
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
         if (currentUser == null) {
             throw new ServiceException(CoreExceptionEnum.NO_CURRENT_USER);
@@ -273,7 +274,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             his.setOpTime(new Date());
             //操作前
             landDetailHisService.saveHis(his);
-            if("storage".equals(disType)){
+            /*if("storage".equals(disType)){
                 detailInfo.setLandStatus(disType);
                 detailInfo.setZkfsx(landDetail.getZkfsx());
                 detailInfo.setScStatus(landDetail.getScStatus());
@@ -281,7 +282,8 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
                 detailInfo.setXyqd(landDetail.getXyqd());
                 detailInfo.setTdgy(landDetail.getTdgy());
                 detailInfo.setSczkfjz(landDetail.getSczkfjz());
-            }
+            }*/
+            BeanCopyUtils.copyNotNullProperties(landDetail,detailInfo);
             detailInfo.setUpdateUser(currentUser.getId());
             detailInfo.setUpdateUserName(user.getName());
             detailInfo.setUpdateTime(new Date());

@@ -82,7 +82,7 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
       id ,XMC as xmc ,PQBH as pqbh,XMMC as xmmc,XZDM as xzdm,XZMC as xzmc,DKBH as dkbh,DKMJ as dkmj,DLDM as dldm,DLMC as dlmc,XLDM as xldm,XLMC xlmc,XZYT xzyt,
-      XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,
+      XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,ghgcsp,
 	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,category as category,land_code as landCode,
 	land_status as landStatus,zbq,qymc,bdcqzsh,crsj,htrjl,httzqd,htmjss,hydm,hymc,rjljsz,dkrjl,rjlfz,tzqdfz,tzqdjs,dktzqd,ssccljs,dkssccl,dksscclfz,bmysfz,
 	zfysfz,zhdf,xdm,year,cbhs,tdgy,xyqd,ghtjbg,cxrd,tsfabz,tscxzm,xmlx,xmsg,xmys,xmzbsy,jbqk,dktj,sczkfjz,sc_status as scStatus,
