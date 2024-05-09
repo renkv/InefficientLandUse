@@ -110,6 +110,9 @@ public class LandDetailInfoController extends BaseController{
         }else if(category.equals("villages"))
         {
             return PREFIX + "/villagesAdd.html";
+        }else if(category.equals("industries"))
+        {
+            return PREFIX + "/industriesAdd.html";
         }
         return PREFIX + "/landDetailAdd.html";
     }
@@ -127,6 +130,9 @@ public class LandDetailInfoController extends BaseController{
         }else if(vo.getCategory().equals("villages"))
         {
             return PREFIX + "/villagesEdit.html";
+        }else if(vo.getCategory().equals("industries"))
+        {
+            return PREFIX + "/industriesEdit.html";
         }
         return PREFIX + "/detailEdit.html";
     }
@@ -143,6 +149,9 @@ public class LandDetailInfoController extends BaseController{
         }else if(vo.getCategory().equals("villages"))
         {
             return PREFIX + "/villagesDetail.html";
+        }else if(vo.getCategory().equals("industries"))
+        {
+            return PREFIX + "/industriesDetail.html";
         }
         return PREFIX + "/landDetail.html";
     }

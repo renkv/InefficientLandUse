@@ -1,0 +1,143 @@
+@layout("/common/_form.html",{js:["/assets/easyUploader/easyUploader.jq.js","/assets/landdetail/townsEdit.js"],css:["/assets/easyUploader/main.css"]}){
+
+<form class="layui-form" id="fileShareForm" lay-filter="fileShareForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input id="id" name="id" type="hidden" value="${vo.id}"/>
+                    <input id="category" name="category" type="hidden" value="${vo.category}"/>
+                    <input id="landCode" name="landCode" type="hidden" value="${vo.landCode}"/>
+                    <input id="businessKey" name="businessKey" type="hidden" value="${vo.businessKey}"/>
+                    <input id="xmc" name="xmc" type="hidden" value="${vo.xmc}"/>
+                    <input id="xdmV" name="xdmV" type="hidden" value="${vo.xdm}"/>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">区县名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <select id="xdm" name="xdm" lay-verify="required" value="${vo.xdm}" lay-filter="xdmSelect">
+                                    <option value="">请选择区县</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">片区编号<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="pqbh" name="pqbh" placeholder="请输入片区编号" value="${vo.pqbh}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">项目名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xmmc" name="xmmc" placeholder="请输入项目名称" value="${vo.xmmc}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块编号<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dkbh" name="dkbh" placeholder="请输入地块编码" value="${vo.dkbh}"  type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块面积<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dkmj" name="dkmj" placeholder="请输入地块面积" onkeyup="numLimit(this.value,6)" value="${vo.dkmj}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">大类名称<span style="color: red;">*</span></label>
+                            <input id="dlmc" name="dlmc" type="hidden" value="${vo.dlmc}" class="layui-input"/>
+                            <input id="dldmV" name="dldmV" type="hidden" value="${vo.dldm}" class="layui-input"/>
+                            <div class="layui-input-block">
+                                <select name="dldm" id="dldm" value="${vo.dldm}" lay-verify="required"lay-filter="dldmSelect">
+                                    <option value="">请选择大类</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">小类名称<span style="color: red;">*</span></label>
+                            <input id="xlmc" name="xlmc" value="${vo.xlmc}" type="hidden" class="layui-input"/>
+                            <input id="xldmV" name="xldmV" value="${vo.xldm}" type="hidden" class="layui-input"/>
+                            <div class="layui-input-block">
+                                <select name="xldm" id="xldm" value="${vo.xldm}"  lay-verify="required" lay-filter="xldmSelect">
+                                    <option value="">请选择小类</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">现状用途<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzyt" name="xzyt" placeholder="请输入现状用途" value="${vo.xzyt}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">规划用途<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="ghyt" name="ghyt" placeholder="请输入规划用途" value="${vo.ghyt}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-block">
+                                <textarea name="remark" id="remark" placeholder="请输入备注内容" class="layui-textarea">${vo.remark}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">附件</label>
+                            <div class="layui-input-block">
+                                <!--div id="uploader"></div>-->
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                                    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+                                    <div class="layui-upload-list">
+                                        <table class="layui-table">
+                                            <thead>
+                                            <tr><th>文件名</th>
+                                                <th>大小</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr></thead>
+                                            <tbody id="demoList">
+                                            @if(tool.isNotEmpty(vo.fileInfoList)){
+                                            @for(item in vo.fileInfoList){
+                                            <tr>
+                                                <td style="display:none">${item.fileId}</td>
+                                                <td><a href="${ctxPath}/system/downLoadFile?fileId=${item.fileId}" download="${ctxPath}/system/downLoadFile?fileId=${item.fileId}">${item.fileName}</a></td>
+                                                <td>${item.fileSizeKb}KB</td>
+                                                <td><span style="color: #5FB878;">上传成功</span></td>
+                                                <td><button onclick="deleteFile(this,'${item.fileId}')" class="layui-btn layui-btn-xs layui-btn-danger">删除</button></td>
+                                            </tr>
+                                            @}
+                                            @}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

@@ -1,0 +1,218 @@
+@layout("/common/_form.html",{css:["/assets/easyUploader/main.css"]}){
+
+<form class="layui-form" id="fileShareForm" lay-filter="fileShareForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">区县编码<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xdm" name="xdm" readonly value="${vo.xdm}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">区县名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xmc" name="xmc" readonly value="${vo.xmc}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">标识码<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="landCode" name="landCode" readonly value="${vo.landCode}"  type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">片区编号<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="pqbh" name="pqbh" readonly value="${vo.pqbh}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">项目名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xmmc" name="xmmc" readonly value="${vo.xmmc}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <!--<div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">乡镇代码<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzdm" name="xzdm" readonly value="${vo.xzdm}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">乡镇名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzmc" name="xzmc" readonly value="${vo.xzmc}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>-->
+
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块编号<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dkbh" name="dkbh" readonly value="${vo.dkbh}"  type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块面积<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dkmj" name="dkmj" readonly value="${vo.dkmj}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                                <label>（公顷）</label>
+                            </div>
+
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">大类代码<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dldm" name="dldm" readonly value="${vo.dldm}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">大类名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="dlmc" name="dlmc" readonly value="${vo.dlmc}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">小类代码<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xldm" name="xldm" readonly value="${vo.xldm}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">小类名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xlmc" name="xlmc" readonly value="${vo.xlmc}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">现状用途<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzyt" name="xzyt" readonly value="${vo.xzyt}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <!--<div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">现状容积率<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzrjl" name="xzrjl" readonly value="${vo.xzrjl}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">现状建筑密度<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xzjzmd" name="xzjzmd" readonly value="${vo.xzjzmd}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>-->
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">规划用途<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="ghyt" name="ghyt" readonly value="${vo.ghyt}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">规划容积率<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="ghrjl" name="ghrjl" readonly value="${vo.ghrjl}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">规划建筑密度<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="ghjzmd" name="ghjzmd" readonly  value="${vo.ghjzmd}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">开发潜力<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="kfql" name="kfql" readonly value="${vo.kfql}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">再开发时序<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="zkfsx" name="zkfsx" readonly value="${vo.zkfsx}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">片区面积<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="pqmj" name="pqmj" readonly value="${vo.pqmj}" type="text" lay-verify="required"
+                                       class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-block">
+                                <textarea name="remark" id="remark" readonly class="layui-textarea">${vo.remark}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">附件</label>
+                            <div class="layui-input-block">
+                                <!--div id="uploader"></div>-->
+                                <div class="layui-upload">
+                                    <div class="layui-upload-list">
+                                        <table class="layui-table">
+                                            <thead>
+                                            <tr><th>文件名</th>
+                                                <th>大小</th>
+                                            </tr></thead>
+                                            <tbody id="demoList">
+                                            @if(tool.isNotEmpty(vo.fileInfoList)){
+                                            @for(item in vo.fileInfoList){
+                                            <tr>
+                                                <td><a href="${ctxPath}/system/downLoadFile?fileId=${item.fileId}" download="${ctxPath}/system/downLoadFile?fileId=${item.fileId}">${item.fileName}</a></td>
+                                                <td>${item.fileSizeKb}KB</td>
+                                            </tr>
+                                            @}
+                                            @}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

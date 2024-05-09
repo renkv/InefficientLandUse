@@ -167,10 +167,11 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
      * 弹出添加
      */
     detailMainTable.openAddPage = function () {
+        debugger
         func.open({
             height: 1000,
             title: '新增低效用地项目',
-            content: Feng.ctxPath + '/landdetail/add',
+            content: Feng.ctxPath + '/landdetail/add?category=industries',
             tableId: detailMainTable.tableId,
             endCallback: function () {
                 table.reload(detailMainTable.tableId);
