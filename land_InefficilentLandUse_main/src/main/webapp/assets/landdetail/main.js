@@ -28,10 +28,10 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         return [[
             {fixed: 'left',type: 'checkbox'},
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
-            {field: 'landCode', align: 'center',fixed: 'left', title: '编码'},
+            {field: 'landCode', hide: true,align: 'center',fixed: 'left', title: '编码'},
             {field: 'xmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '县名称'},
-            {field: 'pqbh', sort: false,align: 'center',merge:true,fixed: 'left', title: '片区编号'},
-            {field: 'xmmc', sort: false,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
+     /*       {field: 'pqbh', sort: false,align: 'center',merge:true,fixed: 'left', title: '片区编号'},*/
+            {field: 'xmmc', sort: false,align: 'center',merge:true,fixed: 'left', title: '项目名称',templet:function (d){
                     var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.xmmc+ '</a></div>';
                     return html;
                 }
@@ -43,23 +43,26 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
                     return html;
                 }
                 },
+            {field: 'category', sort: false,merge:true,align: 'center', title: '地块类型'},
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
         /*    {field: 'dldm', sort: false,align: 'center', title: '大类代码'},*/
-            {field: 'dlmc', sort: false,align: 'center', title: '大类名称'},
+            {field: 'dlmc', sort: false,merge:true,align: 'center', title: '大类名称'},
     /*        {field: 'xldm', sort: false, align: 'center',title: '小类代码'},*/
-            {field: 'xlmc', sort: false, align: 'center',title: '小类名称'},
-            {field: 'xzyt', sort: false, align: 'center',title: '现状用途'},
-            {field: 'ghyt', sort: false, align: 'center',title: '规划用途'},
+            {field: 'xlmc', sort: false,merge:true, align: 'center',title: '小类名称'},
+            {field: 'xzyt', sort: false,merge:true, align: 'center',title: '现状用途'},
+            {field: 'ghyt', hide: true,sort: false, align: 'center',title: '规划用途'},
+            {field: 'landStatus', sort: false,merge:true,align: 'center', title: '地块状态'},
+            {field: 'zkfsx', sort: false, align: 'center',title: '再开发时序'},
             {field: 'remark', sort: false, align: 'center',title: '备注'},
 /*            {field: 'xzrjl', sort: false, align: 'center',title: '现状容积率'},
             {field: 'xzjzmd', sort: false, align: 'center',title: '现状建筑密度'},
             {field: 'kfql', sort: false, align: 'center',title: '开发潜力'},
             {field: 'zkfsx', sort: false, align: 'center',title: '再开发时序'},
             {field: 'pqmj', sort: false, align: 'center',title: '片区面积'},*/
-            {field: 'createUserName', sort: false,align: 'center', title: '创建人名字'},
-            {field: 'createTime', sort: false,align: 'center', title: '创建时间'},
-            {field: 'updateUserName', sort: false,align: 'center', title: '修改人名字'},
-            {field: 'updateTime', sort: false,align: 'center', title: '修改时间'}
+            {field: 'createUserName',hide: true, sort: false,align: 'center', title: '创建人名字'},
+            {field: 'createTime',hide: true, sort: false,align: 'center', title: '创建时间'},
+            {field: 'updateUserName',hide: true, sort: false,align: 'center', title: '修改人名字'},
+            {field: 'updateTime',hide: true, sort: false,align: 'center', title: '修改时间'}
             /*,
             {align: 'center', toolbar: '#tableBar', title: '操作'}*/
         ]];
@@ -75,7 +78,27 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         cellMinWidth: 100,
         cols: detailMainTable.initColumn(),
         done:function (){
-            tableMerge.render(this)
+            tableMerge.render(this);
+            $("[data-field = 'category']").children().each(function(){
+                if($(this).text() == 'towns'){
+                    $(this).text("低效城镇");
+                }else if($(this).text() == 'industries'){
+                    $(this).text("低效产业");
+                }else if($(this).text() == 'villages'){
+                    $(this).text("低效村庄");
+                }
+            });
+            $("[data-field = 'landStatus']").children().each(function(){
+                if($(this).text() == 'towns'){
+                    $(this).text("低效城镇");
+                }else if($(this).text() == 'industries'){
+                    $(this).text("低效产业");
+                }else if($(this).text() == 'villages'){
+                    $(this).text("低效村庄");
+                }else if($(this).text() == ''){
+                    $(this).text("待处置");
+                }
+            });
         }
     });
     //渲染时间选择框
@@ -120,11 +143,12 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
     detailMainTable.search = function () {
         var queryData = {};
         queryData['timeLimit'] = $('#timeLimit').val();
-        queryData['xdm'] = '';
         queryData['xmmc'] = $('#xmmc').val();
         queryData['landStatus'] = $('#landStatus').val();
         var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
         queryData['xdm'] = value;
+        var landType = $('select[name="landType"]').next().find('.layui-this').attr('lay-value');
+        queryData['category'] = landType;
 
         table.reload(detailMainTable.tableId, {
             where: queryData, page: {curr: 1}

@@ -8,20 +8,16 @@
             'name': '全部低效土地',
             'title': '面积：2222333.225，数量：30000',
             'children': [
-                { 'name': '收储再开发', 'title': 'department manager', 'className': 'middle-level',
+                { 'name': '收储再开发', 'title': '面积：333.225，数量：25', 'className': 'middle-level',
                     'children': [
-                        { 'name': 'Li Jing', 'title': 'senior engineer', 'className': 'product-dept' },
-                        { 'name': 'Li Xin', 'title': 'senior engineer', 'className': 'product-dept',
-                            'children': [
-                                { 'name': 'To To', 'title': 'engineer', 'className': 'pipeline1' },
-                                { 'name': 'Fei Fei', 'title': 'engineer', 'className': 'pipeline1' },
-                                { 'name': 'Xuan Xuan', 'title': 'engineer', 'className': 'pipeline1' }
-                            ]
-                        }
+                        { 'name': '拟收储', 'title': '面积：3.225，数量：1', 'className': 'product-dept' },
+                        { 'name': '已收储', 'title': '面积：0，数量：0', 'className': 'product-dept'},
+                        { 'name': '待开发', 'title': '面积：0，数量：0', 'className': 'product-dept'},
+                        { 'name': '已开发', 'title': '面积：0，数量：0', 'className': 'product-dept'},
                     ]
                 },
-                { 'name': '自主开发', 'title': 'department manager', 'className': 'middle-level',
-                    'children': [
+                { 'name': '自主开发', 'title': '面积：0，数量：0', 'className': 'middle-level',
+                    /*'children': [
                         { 'name': 'Pang Pang', 'title': 'senior engineer', 'className': 'rd-dept' },
                         { 'name': 'Hei Hei', 'title': 'senior engineer', 'className': 'rd-dept',
                             'children': [
@@ -30,10 +26,10 @@
                                 { 'name': 'Zai Zai', 'title': 'engineer', 'className': 'frontend1' }
                             ]
                         }
-                    ]
+                    ]*/
                 },
-                { 'name': '复垦耕地', 'title': 'department manager', 'className': 'middle-level',
-                    'children': [
+                { 'name': '复垦耕地', 'title': '面积：0，数量：0', 'className': 'middle-level',
+                    /*'children': [
                         { 'name': 'Pang Pang', 'title': 'senior engineer', 'className': 'rd-dept' },
                         { 'name': 'Hei Hei', 'title': 'senior engineer', 'className': 'rd-dept',
                             'children': [
@@ -42,10 +38,10 @@
                                 { 'name': 'Zai Zai', 'title': 'engineer', 'className': 'frontend1' }
                             ]
                         }
-                    ]
+                    ]*/
                 },
-                { 'name': '技术提升', 'title': 'department manager', 'className': 'middle-level',
-                    'children': [
+                { 'name': '技术提升', 'title': '面积：0，数量：0', 'className': 'middle-level',
+                    /*'children': [
                         { 'name': 'Pang Pang', 'title': 'senior engineer', 'className': 'rd-dept' },
                         { 'name': 'Hei Hei', 'title': 'senior engineer', 'className': 'rd-dept',
                             'children': [
@@ -54,9 +50,9 @@
                                 { 'name': 'Zai Zai', 'title': 'engineer', 'className': 'frontend1' }
                             ]
                         }
-                    ]
-                },{ 'name': '司法处置或转让', 'title': 'department manager', 'className': 'middle-level',
-                    'children': [
+                    ]*/
+                },{ 'name': '司法处置或转让', 'title': '面积：0，数量：0', 'className': 'middle-level',
+                    /*'children': [
                         { 'name': 'Pang Pang', 'title': 'senior engineer', 'className': 'rd-dept' },
                         { 'name': 'Hei Hei', 'title': 'senior engineer', 'className': 'rd-dept',
                             'children': [
@@ -65,7 +61,7 @@
                                 { 'name': 'Zai Zai', 'title': 'engineer', 'className': 'frontend1' }
                             ]
                         }
-                    ]
+                    ]*/
                 }
             ]
         };

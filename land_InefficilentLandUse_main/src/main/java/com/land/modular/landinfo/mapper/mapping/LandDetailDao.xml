@@ -114,7 +114,7 @@
         <if test="vo.landCode != null and vo.landCode != ''">
             and land_code = #{vo.landCode}
         </if>
-        order by create_time desc
+        order by xdm,pqbh, create_time desc
     </select>
     <select id="selectByList" resultType="com.land.modular.landinfo.entity.LandDetailInfo">
         select

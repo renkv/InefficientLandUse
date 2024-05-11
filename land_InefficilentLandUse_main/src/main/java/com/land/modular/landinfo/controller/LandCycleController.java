@@ -36,21 +36,23 @@ public class LandCycleController extends BaseController {
     @RequestMapping("/main")
     public String main(String landStatus, Model model) {
         model.addAttribute("landStatus",landStatus);
-        if(landStatus.equals("1")){
-            //收储再开发
-            return PREFIX + "/storage.html";
-        }else if(landStatus.equals("2")){
-            //自主开发
-            return PREFIX + "/autonomic.html";
-        }else if(landStatus.equals("3")){
-            //技术提升
-            return PREFIX + "/tecimpro.html";
-        }else if(landStatus.equals("4")){
-            //复垦耕地
-            return PREFIX + "/reclamation.html";
-        }else if(landStatus.equals("5")){
-            //司法处置或转让
-            return PREFIX + "/justice.html";
+        if(landStatus != null){
+            if(landStatus.equals("1")){
+                //收储再开发
+                return PREFIX + "/storage.html";
+            }else if(landStatus.equals("2")){
+                //自主开发
+                return PREFIX + "/autonomic.html";
+            }else if(landStatus.equals("3")){
+                //技术提升
+                return PREFIX + "/tecimpro.html";
+            }else if(landStatus.equals("4")){
+                //复垦耕地
+                return PREFIX + "/reclamation.html";
+            }else if(landStatus.equals("5")){
+                //司法处置或转让
+                return PREFIX + "/justice.html";
+            }
         }
         return PREFIX + "/main.html";
     }

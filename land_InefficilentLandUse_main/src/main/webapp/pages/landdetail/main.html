@@ -45,7 +45,13 @@
                                         <input id="category" type="hidden" class="layui-input" value=""/>
                                     </div>
                                     <div class="layui-inline">
-                                        <input id="landStatus" name="landStatus" class="layui-input" type="text" placeholder="地块状态"/>
+                                       <!-- <input id="landStatus" name="landStatus" class="layui-input" type="text" placeholder="地块状态"/>-->
+                                        <select id="landType" name="landStatus" lay-verify="required">
+                                            <option value="">请选择地块类型</option>
+                                            <option value="towns">城镇用地</option>
+                                            <option value="industries">产业用地</option>
+                                            <option value="villages">村庄用地</option>
+                                        </select>
                                     </div>
                                     <!--<div class="layui-inline">
                                         <input id="createUserName" class="layui-input" type="text" placeholder="创建人"/>
