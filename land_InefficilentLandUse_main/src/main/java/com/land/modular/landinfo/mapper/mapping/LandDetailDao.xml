@@ -153,4 +153,11 @@
         and xdm = #{xdm}
         order by create_time desc limit 1
     </select>
+
+    <select id="getOneById" resultMap="LandInfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from land_detail_info
+        where id = #{id}
+    </select>
 </mapper>

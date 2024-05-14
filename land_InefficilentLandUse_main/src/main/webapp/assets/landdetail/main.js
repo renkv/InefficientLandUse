@@ -51,7 +51,7 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
             {field: 'xlmc', sort: false,merge:true, align: 'center',title: '小类名称'},
             {field: 'xzyt', sort: false,merge:true, align: 'center',title: '现状用途'},
             {field: 'ghyt', hide: true,sort: false, align: 'center',title: '规划用途'},
-            {field: 'landStatus', sort: false,merge:true,align: 'center', title: '地块状态'},
+            {field: 'landStatus', sort: false,merge:true,align: 'center', title: '地块处置状态'},
             {field: 'zkfsx', sort: false, align: 'center',title: '再开发时序'},
             {field: 'remark', sort: false, align: 'center',title: '备注'},
 /*            {field: 'xzrjl', sort: false, align: 'center',title: '现状容积率'},
@@ -89,14 +89,24 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
                 }
             });
             $("[data-field = 'landStatus']").children().each(function(){
-                if($(this).text() == 'towns'){
-                    $(this).text("低效城镇");
-                }else if($(this).text() == 'industries'){
-                    $(this).text("低效产业");
-                }else if($(this).text() == 'villages'){
-                    $(this).text("低效村庄");
+                if($(this).text() == '1'){
+                    $(this).text("收储再开发");
+                    $(this).css("color","green");
+                }else if($(this).text() == '2'){
+                    $(this).text("自主开发");
+                    $(this).css("color","green");
+                }else if($(this).text() == '3'){
+                    $(this).text("技术提升");
+                    $(this).css("color","green");
+                }else if($(this).text() == '4'){
+                    $(this).text("复垦耕地");
+                    $(this).css("color","green");
+                }else if($(this).text() == '5'){
+                    $(this).text("司法处置或转让");
+                    $(this).css("color","green");
                 }else if($(this).text() == ''){
                     $(this).text("待处置");
+                    $(this).css("color","red");
                 }
             });
         }

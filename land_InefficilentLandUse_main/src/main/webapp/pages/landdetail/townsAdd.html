@@ -3,6 +3,7 @@
 <form class="layui-form" id="townsAddForm" lay-filter="townsAddForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
+            <div class="layui-card-header" style="background: rgb(100, 187, 110);">低效用地基本信息</div>
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
                     <input id="id" name="id" type="hidden"/>
@@ -76,7 +77,7 @@
                             <label class="layui-form-label">大类名称<span style="color: red;">*</span></label>
                             <input id="dlmc" name="dlmc" type="hidden" class="layui-input"/>
                             <div class="layui-input-block">
-                                <select name="dldm" id="dldm" lay-verify="required"lay-filter="dldmSelect">
+                                <select name="dldm" id="dldm" lay-verify="required" lay-filter="dldmSelect">
                                     <option value="">请选择大类</option>
                                 </select>
                             </div>
@@ -159,26 +160,51 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-row">
-                        <div class="layui-inline layui-col-md12">
-                            <label class="layui-form-label">附件</label>
-                            <div class="layui-input-block">
-                                <!--div id="uploader"></div>-->
-                                <div class="layui-upload">
-                                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
-                                    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
-                                    <div class="layui-upload-list">
-                                        <table class="layui-table">
-                                            <thead>
-                                            <tr><th>文件名</th>
-                                                <th>大小</th>
-                                                <th>状态</th>
-                                                <th>操作</th>
-                                            </tr></thead>
-                                            <tbody id="demoList">
-                                            </tbody>
-                                        </table>
-                                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header" style="background: rgb(255, 100, 82);">低效用地处置信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">处置类型</label>
+                        <div class="layui-input-block">
+                            <select name="landStatus" id="landStatus" lay-filter="statusSelect">
+                                <option value="">请选择处置类型</option>
+                                <option value="1">收储再开发</option>
+                                <option value="2">自主开发</option>
+                                <option value="3">技术提升</option>
+                                <option value="4">复垦耕地</option>
+                                <option value="5">司法处置或转让</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header" style="background: rgb(200, 155, 61);">附件文档信息</div>
+            <div class="layui-card-body">
+                <div class="layui-row">
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">附件</label>
+                        <div class="layui-input-block">
+                            <!--div id="uploader"></div>-->
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                                <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+                                <div class="layui-upload-list">
+                                    <table class="layui-table">
+                                        <thead>
+                                        <tr><th>文件名</th>
+                                            <th>大小</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr></thead>
+                                        <tbody id="demoList">
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

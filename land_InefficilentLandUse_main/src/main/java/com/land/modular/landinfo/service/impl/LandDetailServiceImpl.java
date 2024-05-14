@@ -185,6 +185,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             throw new ServiceException(CoreExceptionEnum.NO_CURRENT_USER);
         }
         User user = userService.getById(currentUser.getId());
+        LandDetailInfo entity = new LandDetailInfo();
         if(StringUtils.isEmpty(landDetail.getId())){
             int nowYear = DateUtil.year(new Date());
             String landCode = "";
@@ -207,11 +208,14 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             landDetail.setCreateUserName(user.getName());
             landDetail.setCreateTime(new Date());
         }else{
+            entity = this.baseMapper.getOneById(landDetail.getId());
             landDetail.setUpdateUser(currentUser.getId());
             landDetail.setUpdateUserName(user.getName());
             landDetail.setUpdateTime(new Date());
         }
-        this.saveOrUpdate(landDetail);
+        BeanCopyUtils.copyNotNullProperties(landDetail,entity);
+        this.saveOrUpdate(entity);
+
     }
 
     /**

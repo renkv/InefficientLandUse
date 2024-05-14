@@ -19,4 +19,6 @@ public interface LandDetailDao extends BaseMapper<LandDetailInfo> {
     LandDetailInfoVo getDetailById(@Param("id")Long id);
 
     LandDetailInfo getByYearAndQx(@Param("year")int nowYear, @Param("xdm")String xdm);
+
+    LandDetailInfo getOneById(@Param("id")Long id);
 }

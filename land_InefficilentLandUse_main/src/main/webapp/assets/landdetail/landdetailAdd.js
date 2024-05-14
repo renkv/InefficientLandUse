@@ -34,6 +34,13 @@ layui.use(['layer','upload', 'form', 'admin', 'ax'], function () {
             }
         }, function (data) {
         });
+        //初始化处置类型选择
+        $("#landStatus").html('<option value="">请选择处置类型</option>');
+        $("#landStatus").append('<option value="1">收储再开发</option>');
+        $("#landStatus").append('<option value="2">自主开发</option>');
+        $("#landStatus").append('<option value="3">技术提升</option>');
+        $("#landStatus").append('<option value="4">复垦耕地</option>');
+        $("#landStatus").append('<option value="5">司法处置或转让</option>');
         qxAjax.start();
         ajax.start();
         form.render();
@@ -66,6 +73,255 @@ layui.use(['layer','upload', 'form', 'admin', 'ax'], function () {
         var e = data.elem;
         var text = e[e.selectedIndex].text;
         $("#xmc").val(text);
+    });
+    //获取指定class的父节点
+    function getParents(element, className) {
+        //dom.getAttribute('class')==dom.className，两者等价
+        var returnParentElement = null;
+        function getpNode(element, className) {
+            //创建父级节点的类数组
+            let pClassList = element.parentNode.getAttribute('class');
+            let pNode = element.parentNode;
+            if (!pClassList) {
+                //如果未找到类名数组，就是父类无类名，则再次递归
+                getpNode(pNode, className);
+            } else if (pClassList && pClassList.indexOf(className) < 0) {
+                //如果父类的类名中没有预期类名，则再次递归
+                getpNode(pNode, className);
+            } else if (pClassList && pClassList.indexOf(className) > -1) {
+                returnParentElement = pNode;
+            }
+
+        }
+        getpNode(element, className);
+        //console.log(returnParentElement);
+        return returnParentElement;
+    }
+
+
+
+    //处置类型
+    form.on('select(statusSelect)',function (data){
+        var value = data.value;
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        var firstNode = getParents(e,"layui-row");
+        var html = '';
+        if(value == "1"){
+             html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">处置类型</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="landStatus" id="landStatus" lay-filter="statusSelect">\n' +
+                '                                <option value="">请选择处置类型</option>\n' +
+                '                                <option value="1" selected="selected">收储再开发</option>\n' +
+                '                                <option value="2">自主开发</option>\n' +
+                '                                <option value="3">技术提升</option>\n' +
+                '                                <option value="4">复垦耕地</option>\n' +
+                '                                <option value="5">司法处置或转让</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div><div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">再开发时序</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input id="zkfsx" name="zkfsx" type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">开发状态</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input id="scStatus" name="scStatus"  type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">成本核算</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input name="cbhs" id="cbhs"   type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">协议签订</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input id="xyqd" name="xyqd"    type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">土地供应</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input id="tdgy" name="tdgy"   type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md12">\n' +
+                '                            <label class="layui-form-label">具体进展情况</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <textarea name="sczkfjz" id="sczkfjz" class="layui-textarea"></textarea>\n' +
+                '                            </div>\n' +
+                '                        </div>';
+
+        }else if(value == "2"){
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">处置类型</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="landStatus" id="landStatus" lay-filter="statusSelect">\n' +
+                '                                <option value="">请选择处置类型</option>\n' +
+                '                                <option value="1">收储再开发</option>\n' +
+                '                                <option value="2" selected="selected">自主开发</option>\n' +
+                '                                <option value="3">技术提升</option>\n' +
+                '                                <option value="4">复垦耕地</option>\n' +
+                '                                <option value="5">司法处置或转让</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div><div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">再开发时序</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="zkfsx" name="zkfsx"  type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">规划条件变更</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input name="ghtjbg" id="ghtjbg"  type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">规划工程审批</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="ghgcsp" name="ghgcsp"  type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">成效认定</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="cxrd" name="cxrd"  type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+        }else if(value == "3"){
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">处置类型</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="landStatus" id="landStatus" lay-filter="statusSelect">\n' +
+                '                                <option value="">请选择处置类型</option>\n' +
+                '                                <option value="1">收储再开发</option>\n' +
+                '                                <option value="2">自主开发</option>\n' +
+                '                                <option value="3" selected="selected">技术提升</option>\n' +
+                '                                <option value="4">复垦耕地</option>\n' +
+                '                                <option value="5">司法处置或转让</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div><div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">再开发时序</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="zkfsx" name="zkfsx"  type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">提升方案编制</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input name="tsfabz" id="tsfabz"  type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">提升方案实施</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="tsfass" name="tsfass"  type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">提升成效证明</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="tscxzm" name="tscxzm" type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+        }else if(value == "4"){
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">处置类型</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="landStatus" id="landStatus" lay-filter="statusSelect">\n' +
+                '                                <option value="">请选择处置类型</option>\n' +
+                '                                <option value="1">收储再开发</option>\n' +
+                '                                <option value="2">自主开发</option>\n' +
+                '                                <option value="3">技术提升</option>\n' +
+                '                                <option value="4" selected="selected">复垦耕地</option>\n' +
+                '                                <option value="5">司法处置或转让</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div><div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">再开发时序</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input id="zkfsx" name="zkfsx"  placeholder="请输入再开发时序" type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">项目立项</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input name="xmlx" id="xmlx" placeholder="请输入项目立项" type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">项目施工</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input id="xmsg" name="xmsg"  placeholder="请输入项目施工" type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">项目验收</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input id="xmys" name="xmys"  placeholder="请输入项目验收" type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-inline layui-col-md6">\n' +
+                '                            <label class="layui-form-label">项目指标收益</label>\n' +
+                '                            <div class="layui-input-block">\n' +
+                '                                <input id="xmzbsy" name="xmzbsy"  placeholder="请输入项目指标收益" type="text" class="layui-input"/>\n' +
+                '                            </div>\n' +
+                '                        </div>';
+        }else if(value == "5"){
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">处置类型</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="landStatus" id="landStatus" lay-filter="statusSelect">\n' +
+                '                                <option value="">请选择处置类型</option>\n' +
+                '                                <option value="1">收储再开发</option>\n' +
+                '                                <option value="2">自主开发</option>\n' +
+                '                                <option value="3">技术提升</option>\n' +
+                '                                <option value="4">复垦耕地</option>\n' +
+                '                                <option value="5" selected="selected">司法处置或转让</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div><div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">再开发时序</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="zkfsx" name="zkfsx"  type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                ' <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">基本情况</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input name="jbqk" id="jbqk" placeholder="请输入基本情况" type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">地块推介</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="dktj" name="dktj" placeholder="请输入地块推介" type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+        }else{
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">处置类型</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="landStatus" id="landStatus" lay-filter="statusSelect">\n' +
+                '                                <option value="">请选择处置类型</option>\n' +
+                '                                <option value="1">收储再开发</option>\n' +
+                '                                <option value="2">自主开发</option>\n' +
+                '                                <option value="3">技术提升</option>\n' +
+                '                                <option value="4">复垦耕地</option>\n' +
+                '                                <option value="5">司法处置或转让</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+        }
+        firstNode.innerHTML = (html);
+        form.render();
     });
 
     /**
