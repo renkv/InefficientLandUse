@@ -47,11 +47,24 @@
             },
 
         ];
+        // 选框样式
+        window.selectBoxStyle = {
+            fillColor: "rgb(230, 162, 60, 0.5)", //填充颜色
+            strokeWeight: 3, //边框宽度
+            strokeColor: "#67C23A", // 边框颜色
+        };
+        // 导出回调
+        window.exportCallback = function (feature, coordinates) {
+            //feature 是当前要素, coordinates 是要素的点数组
+            console.log(feature, coordinates);
+            console.log(JSON.stringify(feature));
+        };
+
     </script>
     <link href="/assets/dist/css/app.00b2c079.css" rel="preload" as="style" />
     <link href="/assets/dist/css/chunk-vendors.43f02cb8.css" rel="preload" as="style" />
-    <link href="/assets/dist/js/app.d569dc87.js" rel="preload" as="script" />
-    <link href="/assets/dist/js/chunk-vendors.7985c663.js" rel="preload" as="script" />
+    <link href="/assets/dist/js/app.0e783c2e.js" rel="preload" as="script" />
+    <link href="/assets/dist/js/chunk-vendors.9371f829.js" rel="preload" as="script" />
     <link href="/assets/dist/css/chunk-vendors.43f02cb8.css" rel="stylesheet" />
     <link href="/assets/dist/css/app.00b2c079.css" rel="stylesheet" />
 </head>
@@ -63,7 +76,7 @@
 ></noscript
 >
 <div id="app"></div>
-<script src="/assets/dist/js/chunk-vendors.7985c663.js"></script>
-<script src="/assets/dist/js/app.d569dc87.js"></script>
+<script src="/assets/dist/js/chunk-vendors.9371f829.js"></script>
+<script src="/assets/dist/js/app.0e783c2e.js"></script>
 </body>
 </html>

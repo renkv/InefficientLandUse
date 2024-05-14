@@ -148,7 +148,7 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
         queryData['xdm'] = value;
         var landType = $('select[name="landType"]').next().find('.layui-this').attr('lay-value');
-        queryData['category'] = landType;
+        queryData['landType'] = landType;
 
         table.reload(detailMainTable.tableId, {
             where: queryData, page: {curr: 1}

@@ -3,6 +3,7 @@
 <form class="layui-form" id="fileShareForm" lay-filter="fileShareForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
+            <div class="layui-card-header" style="background: rgb(100, 187, 255);">低效用地基本信息</div>
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
                     <div class="layui-row">
@@ -21,7 +22,7 @@
                             </div>
                         </div>
                         <div class="layui-inline layui-col-md6">
-                            <label class="layui-form-label">标识码<span style="color: red;">*</span></label>
+                            <label class="layui-form-label">地块编码<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
                                 <input id="landCode" name="landCode" readonly value="${vo.landCode}"  type="text" lay-verify="required"
                                        class="layui-input"/>
@@ -177,6 +178,106 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header" style="background: rgb(100, 187, 255);">低效用地处置信息</div>
+                @if(isNotEmpty(vo.landStatus) && vo.landStatus == '4'){
+
+                <div class="layui-card-body">
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">处置类型</label>
+                            <div class="layui-input-block">
+                                <input id="czlx" name="czlx" readonly value="复垦耕地" placeholder="请输入再开发时序" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">再开发时序</label>
+                            <div class="layui-input-block">
+                                <input id="zkfsx" name="zkfsx" value="${vo.zkfsx}" readonly placeholder="请输入再开发时序" type="text" class="layui-input"/>
+                                <input id="id" name="id" type="hidden" value="${vo.id}" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">项目立项</label>
+                            <div class="layui-input-block">
+                                <input name="xmlx" id="xmlx" value="${vo.xmlx}" readonly placeholder="请输入项目立项" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">项目施工</label>
+                            <div class="layui-input-block">
+                                <input id="xmsg" name="xmsg" value="${vo.xmsg}" readonly placeholder="请输入项目施工" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">项目验收</label>
+                            <div class="layui-input-block">
+                                <input id="xmys" name="xmys" value="${vo.xmys}" readonly placeholder="请输入项目验收" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">项目指标收益</label>
+                            <div class="layui-input-block">
+                                <input id="xmzbsy" name="xmzbsy" value="${vo.xmzbsy}" readonly placeholder="请输入项目指标收益" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    @}
+                    @if(isNotEmpty(vo.landStatus) && vo.landStatus == '1'){
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">处置类型</label>
+                            <div class="layui-input-block">
+                                <input id="czlx" name="czlx" readonly value="收储再开发" placeholder="请输入再开发时序" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">再开发时序</label>
+                            <div class="layui-input-block">
+                                <input id="zkfsx" name="zkfsx" readonly value="${vo.zkfsx}"   type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">开发状态</label>
+                            <div class="layui-input-block">
+                                <input id="scStatus" name="scStatus" readonly value="${vo.scStatus}"   type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">成本核算</label>
+                            <div class="layui-input-block">
+                                <input name="cbhs" id="cbhs" readonly value="${vo.cbhs}"   type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">协议签订</label>
+                            <div class="layui-input-block">
+                                <input id="xyqd" name="xyqd" readonly value="${vo.xyqd}"   type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">土地供应</label>
+                            <div class="layui-input-block">
+                                <input id="tdgy" name="tdgy" readonly value="${vo.tdgy}"   type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md12">
+                            <label class="layui-form-label">具体进展情况</label>
+                            <div class="layui-input-block">
+                                <textarea name="sczkfjz" id="sczkfjz" class="layui-textarea">${vo.sczkfjz}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    @}
+
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">附件文档信息</div>
+                <div class="layui-card-body">
                     <div class="layui-row">
                         <div class="layui-inline layui-col-md12">
                             <label class="layui-form-label">附件</label>

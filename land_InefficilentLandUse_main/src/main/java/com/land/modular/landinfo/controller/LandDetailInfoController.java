@@ -25,6 +25,7 @@ import org.beetl.ext.simulate.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -144,6 +145,17 @@ public class LandDetailInfoController extends BaseController{
         LandDetailInfoVo vo = landDetailService.getDetailById(id);
         model.addAttribute("vo",vo);
         model.addAttribute("ctxPath",ConfigListener.getConf().get("contextPath"));
+        if(!StringUtils.isEmpty(vo.getScStatus()) ){
+            if(vo.getScStatus().equals("1")){
+                vo.setScStatus("拟收储");
+            }else if(vo.getScStatus().equals("2")){
+                vo.setScStatus("已收储");
+            }else if(vo.getScStatus().equals("3")){
+                vo.setScStatus("待开发");
+            }else if(vo.getScStatus().equals("4")){
+                vo.setScStatus("已开发");
+            }
+        }
         if(vo.getCategory().equals("towns")){
             return PREFIX + "/townsDetail.html";
         }else if(vo.getCategory().equals("villages"))
@@ -185,7 +197,7 @@ public class LandDetailInfoController extends BaseController{
      */
     @RequestMapping("/selectList")
     @ResponseBody
-    public Object selectList(@RequestParam(required = false) String createUserName,@RequestParam(required = false) String landCode,
+    public Object selectList(@RequestParam(required = false) String createUserName,@RequestParam(required = false) String landCode, @RequestParam(required = false) String landType,
                              @RequestParam(required = false) String category,@RequestParam(required = false) String xdm,@RequestParam(required = false) String xmmc,
                              @RequestParam(required = false) String timeLimit) {
 
@@ -205,6 +217,9 @@ public class LandDetailInfoController extends BaseController{
         vo.setCategory(category);
         vo.setCreateUserName(createUserName);
         vo.setLandCode(landCode);
+        if(!StringUtils.isEmpty(landType)){
+            vo.setCategory(landType);
+        }
         //main.setDeptName(deptName);
         Page<Map<String, Object>> list = landDetailService.selectList(vo, beginTime, endTime);
         Page wrapped = new UserWrapper(list).wrap();
