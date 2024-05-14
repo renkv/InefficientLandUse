@@ -147,18 +147,7 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
             window.open(Feng.ctxPath+"/landdetail/showOnMap?value="+data.dkbh+"&key=DKBH&xmmc="+data.xmmc);
         }
     });
-    /*// 工具条点击事件
-    table.on('tool(' + detailMainTable.tableId + ')', function (obj) {
-        var data = obj.data;
-        var layEvent = obj.event;
-        if (layEvent === 'edit') {
-            detailMainTable.jumpEditPage(data);
-        }else if (layEvent === 'detail') {
-            detailMainTable.jumpDetailPage(data);
-        }else if(layEvent === 'location'){
-            detailMainTable.jumpLocationPage(data);
-        }
-    });*/
+
 
     /**
      * 点击查询按钮
@@ -167,9 +156,18 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
         var queryData = {};
         queryData['timeLimit'] = $('#timeLimit').val();
         queryData['xmmc'] = $('#xmmc').val();
-        queryData['landStatus'] = $('#landStatus').val();
         var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
-        queryData['xdm'] = value;
+        var landStatus = $('select[name="landStatus"]').next().find('.layui-this').attr('lay-value');
+        if(value != undefined){
+            queryData['xdm'] = value;
+        }else{
+            queryData['xdm'] = "";
+        }
+        if(landStatus != undefined){
+            queryData['landStatus'] = landStatus;
+        }else{
+            queryData['landStatus'] = "";
+        }
 
         table.reload(detailMainTable.tableId, {
             where: queryData, page: {curr: 1}

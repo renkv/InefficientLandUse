@@ -3,6 +3,7 @@
 <form class="layui-form" id="fileShareForm" lay-filter="fileShareForm">
     <div class="layui-fluid" style="padding-bottom: 75px;">
         <div class="layui-card">
+            <div class="layui-card-header" style="background: rgb(100, 187, 110);">低效用地基本信息</div>
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
                     <input id="id" name="id" type="hidden" value="${vo.id}"/>
@@ -11,6 +12,7 @@
                     <input id="businessKey" name="businessKey" type="hidden" value="${vo.businessKey}"/>
                     <input id="xmc" name="xmc" type="hidden" value="${vo.xmc}"/>
                     <input id="xdmV" name="xdmV" type="hidden" value="${vo.xdm}"/>
+                    <input id="landStatusV" name="landStatusV" type="hidden" value="${vo.landStatus}"/>
                     <div class="layui-row">
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">区县名称<span style="color: red;">*</span></label>
@@ -94,44 +96,212 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-row">
-                        <div class="layui-inline layui-col-md12">
-                            <label class="layui-form-label">附件</label>
-                            <div class="layui-input-block">
-                                <!--div id="uploader"></div>-->
-                                <div class="layui-upload">
-                                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
-                                    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
-                                    <div class="layui-upload-list">
-                                        <table class="layui-table">
-                                            <thead>
-                                            <tr><th>文件名</th>
-                                                <th>大小</th>
-                                                <th>状态</th>
-                                                <th>操作</th>
-                                            </tr></thead>
-                                            <tbody id="demoList">
-                                            @if(tool.isNotEmpty(vo.fileInfoList)){
-                                            @for(item in vo.fileInfoList){
-                                            <tr>
-                                                <td style="display:none">${item.fileId}</td>
-                                                <td><a href="${ctxPath}/system/downLoadFile?fileId=${item.fileId}" download="${ctxPath}/system/downLoadFile?fileId=${item.fileId}">${item.fileName}</a></td>
-                                                <td>${item.fileSizeKb}KB</td>
-                                                <td><span style="color: #5FB878;">上传成功</span></td>
-                                                <td><button onclick="deleteFile(this,'${item.fileId}')" class="layui-btn layui-btn-xs layui-btn-danger">删除</button></td>
-                                            </tr>
-                                            @}
-                                            @}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header" style="background: rgb(255, 100, 82);">低效用地处置信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">处置类型</label>
+                        <div class="layui-input-block">
+                            <select name="landStatus" id="landStatus" lay-filter="statusSelect">
+                                <option value="">请选择处置类型</option>
+                                <option value="1">收储再开发</option>
+                                <option value="2">自主开发</option>
+                                <option value="3">技术提升</option>
+                                <option value="4">复垦耕地</option>
+                                <option value="5">司法处置或转让</option>
+                            </select>
+                        </div>
+                    </div>
+                    @if(isNotEmpty(vo.landStatus) && vo.landStatus == '4'){
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">再开发时序</label>
+                        <div class="layui-input-block">
+                            <input id="zkfsx" name="zkfsx" value="${vo.zkfsx}"  placeholder="请输入再开发时序" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">项目立项</label>
+                        <div class="layui-input-block">
+                            <input name="xmlx" id="xmlx" value="${vo.xmlx}"  placeholder="请输入项目立项" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">项目施工</label>
+                        <div class="layui-input-block">
+                            <input id="xmsg" name="xmsg" value="${vo.xmsg}" readonly placeholder="请输入项目施工" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">项目验收</label>
+                        <div class="layui-input-block">
+                            <input id="xmys" name="xmys" value="${vo.xmys}"  placeholder="请输入项目验收" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">项目指标收益</label>
+                        <div class="layui-input-block">
+                            <input id="xmzbsy" name="xmzbsy" value="${vo.xmzbsy}"  placeholder="请输入项目指标收益" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    @}
+                    @if(isNotEmpty(vo.landStatus) && vo.landStatus == '1'){
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">再开发时序</label>
+                        <div class="layui-input-block">
+                            <input id="zkfsx" name="zkfsx"  value="${vo.zkfsx}"   type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">开发状态</label>
+                        <div class="layui-input-block">
+                            <input id="scStatus" name="scStatus"  value="${vo.scStatus}"   type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">成本核算</label>
+                        <div class="layui-input-block">
+                            <input name="cbhs" id="cbhs"  value="${vo.cbhs}"   type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">协议签订</label>
+                        <div class="layui-input-block">
+                            <input id="xyqd" name="xyqd"  value="${vo.xyqd}"   type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">土地供应</label>
+                        <div class="layui-input-block">
+                            <input id="tdgy" name="tdgy"  value="${vo.tdgy}"   type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">具体进展情况</label>
+                        <div class="layui-input-block">
+                            <textarea name="sczkfjz" id="sczkfjz" class="layui-textarea">${vo.sczkfjz}</textarea>
+                        </div>
+                    </div>
+                    @}
+                    @if(isNotEmpty(vo.landStatus) && vo.landStatus == '2'){
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">再开发时序</label>
+                        <div class="layui-input-block">
+                            <input id="zkfsx" name="zkfsx" value="${vo.zkfsx}"  placeholder="请输入再开发时序" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">规划条件变更</label>
+                        <div class="layui-input-block">
+                            <input name="ghtjbg" id="ghtjbg" value="${vo.ghtjbg}"  placeholder="请输入规划条件变更" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">规划工程审批</label>
+                        <div class="layui-input-block">
+                            <input id="ghgcsp" name="ghgcsp" value="${vo.ghgcsp}"  placeholder="请输入规划工程审批" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">成效认定</label>
+                        <div class="layui-input-block">
+                            <input id="cxrd" name="cxrd" value="${vo.cxrd}"   placeholder="请输入成效认定" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                </div>
+                @}
+                @if(isNotEmpty(vo.landStatus) && vo.landStatus == '3'){
+                <div class="layui-inline layui-col-md6">
+                    <label class="layui-form-label">再开发时序</label>
+                    <div class="layui-input-block">
+                        <input id="zkfsx" name="zkfsx" alue="${vo.zkfsx}"    placeholder="请输入再开发时序" type="text" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-md6">
+                    <label class="layui-form-label">提升方案编制</label>
+                    <div class="layui-input-block">
+                        <input name="tsfabz" id="tsfabz" value="${vo.tsfabz}"  placeholder="请输入提升方案编制" type="text" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-md6">
+                    <label class="layui-form-label">提升方案实施</label>
+                    <div class="layui-input-block">
+                        <input id="tsfass" name="tsfass" value="${vo.tsfass}"  placeholder="请输入提升方案实施" type="text" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-md6">
+                    <label class="layui-form-label">提升成效证明</label>
+                    <div class="layui-input-block">
+                        <input id="tscxzm" name="tscxzm" value="${vo.tscxzm}"   placeholder="请输入提升成效证明" type="text" class="layui-input"/>
+                    </div>
+                </div>
+                @}
+                @if(isNotEmpty(vo.landStatus) && vo.landStatus == '5'){
+                <div class="layui-inline layui-col-md6">
+                    <label class="layui-form-label">再开发时序</label>
+                    <div class="layui-input-block">
+                        <input id="zkfsx" name="zkfsx" value="${vo.zkfsx}"  placeholder="请输入再开发时序" type="text" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-md6">
+                    <label class="layui-form-label">基本情况</label>
+                    <div class="layui-input-block">
+                        <input name="jbqk" id="jbqk" value="${vo.jbqk}"   placeholder="请输入基本情况" type="text" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-md6">
+                    <label class="layui-form-label">地块推介</label>
+                    <div class="layui-input-block">
+                        <input id="dktj" name="dktj" value="${vo.dktj}"   placeholder="请输入地块推介" type="text" class="layui-input"/>
+                    </div>
+                </div>
+                @}
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header" style="background: rgb(200, 155, 61);">附件文档信息</div>
+        <div class="layui-card-body">
+            <div class="layui-row">
+                <div class="layui-inline layui-col-md12">
+                    <label class="layui-form-label">附件</label>
+                    <div class="layui-input-block">
+                        <!--div id="uploader"></div>-->
+                        <div class="layui-upload">
+                            <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                            <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+                            <div class="layui-upload-list">
+                                <table class="layui-table">
+                                    <thead>
+                                    <tr><th>文件名</th>
+                                        <th>大小</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr></thead>
+                                    <tbody id="demoList">
+                                    @if(tool.isNotEmpty(vo.fileInfoList)){
+                                    @for(item in vo.fileInfoList){
+                                    <tr>
+                                        <td style="display:none">${item.fileId}</td>
+                                        <td><a href="${ctxPath}/system/downLoadFile?fileId=${item.fileId}" download="${ctxPath}/system/downLoadFile?fileId=${item.fileId}">${item.fileName}</a></td>
+                                        <td>${item.fileSizeKb}KB</td>
+                                        <td><span style="color: #5FB878;">上传成功</span></td>
+                                        <td><button onclick="deleteFile(this,'${item.fileId}')" class="layui-btn layui-btn-xs layui-btn-danger">删除</button></td>
+                                    </tr>
+                                    @}
+                                    @}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div class="form-group-bottom text-center">
         <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>

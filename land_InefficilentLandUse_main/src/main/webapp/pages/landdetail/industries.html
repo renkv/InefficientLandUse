@@ -16,7 +16,6 @@
                                     <div class="layui-inline">
                                         <select id="xdm" name="xdm" lay-verify="required">
                                             <option value="">请选择区县</option>
-                                            <option value="130100">石家庄市</option>
                                             <option value="130102">长安区</option>
                                             <option value="130104">桥西区</option>
                                             <option value="130105">新华区</option>
@@ -45,7 +44,15 @@
                                         <input id="category" type="hidden" class="layui-input" value="${category}"/>
                                     </div>
                                     <div class="layui-inline">
-                                        <input id="status" class="layui-input" type="text" placeholder="地块状态"/>
+                                        <!--<input id="status" class="layui-input" type="text" placeholder="地块状态"/>-->
+                                        <select name="landStatus" id="landStatus" lay-filter="statusSelect">
+                                            <option value="">请选择处置类型</option>
+                                            <option value="1">收储再开发</option>
+                                            <option value="2">自主开发</option>
+                                            <option value="3">技术提升</option>
+                                            <option value="4">复垦耕地</option>
+                                            <option value="5">司法处置或转让</option>
+                                        </select>
                                     </div>
                                     <!--<div class="layui-inline">
                                         <input id="createUserName" class="layui-input" type="text" placeholder="创建人"/>

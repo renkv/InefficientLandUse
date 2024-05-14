@@ -133,6 +133,7 @@ layui.use(['table', 'admin','laydate', 'tableMerge','ax', 'func','upload'], func
         var layEvent = obj.event;
         if (layEvent === 'showRec') {
             func.open({
+                width:"1500px",
                 height: 1000,
                 title: '详情',
                 content: Feng.ctxPath + '/landdetail/detail?id=' + data.id,
@@ -153,9 +154,18 @@ layui.use(['table', 'admin','laydate', 'tableMerge','ax', 'func','upload'], func
         var queryData = {};
         queryData['timeLimit'] = $('#timeLimit').val();
         queryData['xmmc'] = $('#xmmc').val();
-        queryData['landStatus'] = $('#landStatus').val();
         var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
-        queryData['xdm'] = value;
+        var landStatus = $('select[name="landStatus"]').next().find('.layui-this').attr('lay-value');
+        if(value != undefined){
+            queryData['xdm'] = value;
+        }else{
+            queryData['xdm'] = "";
+        }
+        if(landStatus != undefined){
+            queryData['landStatus'] = landStatus;
+        }else{
+            queryData['landStatus'] = "";
+        }
 
         table.reload(detailMainTable.tableId, {
             where: queryData, page: {curr: 1}
@@ -168,6 +178,7 @@ layui.use(['table', 'admin','laydate', 'tableMerge','ax', 'func','upload'], func
      */
     detailMainTable.jumpDetailPage = function (data) {
         func.open({
+            width:"1500px",
             height: 1000,
             title: '详情',
             content: Feng.ctxPath + '/landdetail/detail?id=' + data.id,
@@ -187,6 +198,7 @@ layui.use(['table', 'admin','laydate', 'tableMerge','ax', 'func','upload'], func
      */
     detailMainTable.jumpEditPage = function (data) {
         func.open({
+            width:"1500px",
             height: 1000,
             title: '编辑',
             content: Feng.ctxPath + '/landdetail/edit?id=' + data.id,
@@ -201,6 +213,7 @@ layui.use(['table', 'admin','laydate', 'tableMerge','ax', 'func','upload'], func
      */
     detailMainTable.openAddPage = function () {
         func.open({
+            width:"1500px",
             height: 1000,
             title: '新增低效用地项目',
             content: Feng.ctxPath + '/landdetail/add?category=villages',

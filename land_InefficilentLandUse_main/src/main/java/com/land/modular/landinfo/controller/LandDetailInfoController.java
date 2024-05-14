@@ -199,7 +199,7 @@ public class LandDetailInfoController extends BaseController{
     @ResponseBody
     public Object selectList(@RequestParam(required = false) String createUserName,@RequestParam(required = false) String landCode, @RequestParam(required = false) String landType,
                              @RequestParam(required = false) String category,@RequestParam(required = false) String xdm,@RequestParam(required = false) String xmmc,
-                             @RequestParam(required = false) String timeLimit) {
+                             @RequestParam(required = false) String landStatus,@RequestParam(required = false) String timeLimit) {
 
         //拼接查询条件
         String beginTime = "";
@@ -213,7 +213,7 @@ public class LandDetailInfoController extends BaseController{
         LandDetailInfoVo vo = new LandDetailInfoVo();
         vo.setXmmc(xmmc);
         vo.setXdm(xdm);
-        //vo.setLandStatus("");
+        vo.setLandStatus(landStatus);
         vo.setCategory(category);
         vo.setCreateUserName(createUserName);
         vo.setLandCode(landCode);

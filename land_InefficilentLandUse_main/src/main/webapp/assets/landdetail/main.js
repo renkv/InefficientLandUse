@@ -156,9 +156,17 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         queryData['xmmc'] = $('#xmmc').val();
         queryData['landStatus'] = $('#landStatus').val();
         var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
-        queryData['xdm'] = value;
+        if(value != undefined){
+            queryData['xdm'] = value;
+        }else{
+            queryData['xdm'] = "";
+        }
         var landType = $('select[name="landType"]').next().find('.layui-this').attr('lay-value');
-        queryData['landType'] = landType;
+        if(landType != undefined){
+            queryData['landType'] = landType;
+        }else{
+            queryData['landType'] = "";
+        }
 
         table.reload(detailMainTable.tableId, {
             where: queryData, page: {curr: 1}
