@@ -24,6 +24,7 @@ public class LandPlanInfoVo {
     private String planStartTime;
 
     private String planEndTime;
+    private String xmmc;
 
     private String actStartTime;
 

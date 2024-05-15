@@ -81,6 +81,24 @@
         <if test="vo.planType != null and vo.planType != ''">
             and t.plan_type = #{vo.planType}
         </if>
+        <if test="vo.planName != null and vo.planName != ''">
+            and t.plan_name like CONCAT('%',#{vo.planName},'%')
+        </if>
+        <if test="vo.busName != null and vo.busName != ''">
+            and t.bus_name like CONCAT('%',#{vo.busName},'%')
+        </if>
+        <if test="vo.villageName != null and vo.villageName != ''">
+            and t.village_name like CONCAT('%',#{vo.villageName},'%')
+        </if>
+        <if test="vo.renewalName != null and vo.renewalName != ''">
+            and t.renewal_name like CONCAT('%',#{vo.renewalName},'%')
+        </if>
+        <if test="vo.zoneName != null and vo.zoneName != ''">
+            and t.zone_name like CONCAT('%',#{zoneName},'%')
+        </if>
+        <if test="vo.busName != null and vo.xmmc != ''">
+            and d.XMMC like CONCAT('%',#{vo.xmmc},'%')
+        </if>
         order by t.create_time desc
     </select>
 

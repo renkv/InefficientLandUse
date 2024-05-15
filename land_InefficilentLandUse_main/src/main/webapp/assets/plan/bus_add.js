@@ -24,24 +24,31 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         return [[
             {fixed: 'left',type: 'checkbox'},
             {field: 'id', hide: true,align: 'center',title: 'ID'},
-            {field: 'landCode', align: 'center', title: '编码'},
+            {field: 'landCode', hide: true, align: 'center', title: '编码'},
             {field: 'xmc', sort: false,align: 'center', title: '县名称'},
-            {field: 'pqbh', sort: false,align: 'center', title: '片区编号'},
+            {field: 'pqbh', hide: true, sort: false,align: 'center', title: '片区编号'},
             {field: 'xmmc', sort: false,align: 'center', title: '项目名称'},
             {field: 'dkbh', sort: false,align: 'center', title: '地块编号'},
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
             {field: 'dlmc', sort: false,align: 'center', title: '大类名称'},
             {field: 'xlmc', sort: false, align: 'center',title: '小类名称'},
             {field: 'xzyt', sort: false, align: 'center',title: '现状用途'},
-            {field: 'ghyt', sort: false, align: 'center',title: '规划用途'},
+            {field: 'ghyt', hide: true, sort: false, align: 'center',title: '规划用途'},
             {field: 'remark', sort: false, align: 'center',title: '备注'},
-            {field: 'createUserName', sort: false,align: 'center', title: '创建人名字'},
-            {field: 'createTime', sort: false,align: 'center', title: '创建时间'},
-            {field: 'updateUserName', sort: false,align: 'center', title: '修改人名字'},
-            {field: 'updateTime', sort: false,align: 'center', title: '修改时间'}
+            {field: 'createUserName', hide: true, sort: false,align: 'center', title: '创建人名字'},
+            {field: 'createTime',  hide: true,sort: false,align: 'center', title: '创建时间'},
+            {field: 'updateUserName',  hide: true,sort: false,align: 'center', title: '修改人名字'},
+            {field: 'updateTime',  hide: true,sort: false,align: 'center', title: '修改时间'}
 
         ]];
     };
+
+    //渲染时间选择框
+    laydate.render({
+        elem: '#planStartTime',
+        range: false,
+        min: Feng.currentDate()
+    });
 
     // 渲染表格
     table.render({
@@ -59,9 +66,18 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         queryData['timeLimit'] = $('#timeLimit').val();
         queryData['xdm'] = '';
         queryData['xmmc'] = $('#xmmc').val();
-        queryData['landStatus'] = $('#landStatus').val();
         var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
-        queryData['xdm'] = value;
+        var landStatus = $('select[name="landStatus"]').next().find('.layui-this').attr('lay-value');
+        if(value != undefined){
+            queryData['xdm'] = value;
+        }else{
+            queryData['xdm'] = "";
+        }
+        if(landStatus != undefined){
+            queryData['landStatus'] = landStatus;
+        }else{
+            queryData['landStatus'] = "";
+        }
 
         table.reload(addLandTable.tableId, {
             where: queryData, page: {curr: 1}

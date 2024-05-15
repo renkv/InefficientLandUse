@@ -159,8 +159,13 @@ public class LandPlanController extends BaseController {
      */
     @RequestMapping("/selectList")
     @ResponseBody
-    public Object selectList(@RequestParam(required = false) String createUserName,
-                             @RequestParam(required = false) String planType,@RequestParam(required = false) String xdm,@RequestParam(required = false) String xmmc,
+    public Object selectList(@RequestParam(required = false) String planName,
+                             @RequestParam(required = false) String planType,
+                             @RequestParam(required = false) String busName,
+                             @RequestParam(required = false) String villageName,
+                             @RequestParam(required = false) String renewalName,
+                             @RequestParam(required = false) String zoneName,
+                             @RequestParam(required = false) String xmmc,
                              @RequestParam(required = false) String timeLimit) {
 
         //拼接查询条件
@@ -174,7 +179,12 @@ public class LandPlanController extends BaseController {
         }
         LandPlanInfoVo vo = new LandPlanInfoVo();
         vo.setPlanType(planType);
-
+        vo.setPlanName(planName);
+        vo.setBusName(busName);
+        vo.setXmmc(xmmc);
+        vo.setVillageName(villageName);
+        vo.setZoneName(zoneName);
+        vo.setRenewalName(renewalName);
         //main.setDeptName(deptName);
         Page<Map<String, Object>> list = landPlanInfoService.selectList(vo, beginTime, endTime);
         Page wrapped = new UserWrapper(list).wrap();

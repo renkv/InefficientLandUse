@@ -40,7 +40,15 @@
                                         <input id="xmmc" name="xmmc" class="layui-input" type="text" placeholder="项目名称"/>
                                     </div>
                                     <div class="layui-inline">
-                                        <input id="landStatus" name="landStatus" class="layui-input" type="text" placeholder="地块状态"/>
+                                        <!--<input id="landStatus" name="landStatus" class="layui-input" type="text" placeholder="地块状态"/>-->
+                                        <select name="landStatus" id="landStatus" lay-filter="statusSelect">
+                                            <option value="">请选择处置类型</option>
+                                            <option value="1">收储再开发</option>
+                                            <option value="2">自主开发</option>
+                                            <option value="3">技术提升</option>
+                                            <option value="4">复垦耕地</option>
+                                            <option value="5">司法处置或转让</option>
+                                        </select>
                                     </div>
                                     <div class="layui-inline">
                                         <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
@@ -84,7 +92,7 @@
                             <input id="planStartTime" name="planStartTime" value="${vo.planStartTime}" placeholder="请输入计划开始时间" type="text" class="layui-input"/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md6">
+                    <!--<div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">计划完成时间</label>
                         <div class="layui-input-block">
                             <input id="planEndTime" name="planEndTime" value="${vo.planEndTime}" placeholder="请输入计划完成时间" type="text" class="layui-input"/>
@@ -101,7 +109,7 @@
                         <div class="layui-input-block">
                             <input id="actEndTime" name="actEndTime" value="${vo.actEndTime}" placeholder="请输入实际完成时间" type="text" class="layui-input"/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">计划完成面积</label>
                         <div class="layui-input-block">
@@ -120,12 +128,12 @@
                             <input id="planUnit" name="planUnit" value="${vo.planUnit}"  placeholder="请输入计划实施单位" type="text" class="layui-input"/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md6">
+                    <!--<div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">实际实施单位</label>
                         <div class="layui-input-block">
                             <input id="actUnit" name="actUnit" value="${vo.actUnit}"  placeholder="请输入实际实施单位" type="text" class="layui-input"/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">当前状态</label>
                         <div class="layui-input-block">
