@@ -4,6 +4,7 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.modular.plan.vo.LandPlanInfoVo;
 
+import java.util.List;
 import java.util.Map;
 
 public interface LandPlanInfoService {
@@ -14,4 +15,6 @@ public interface LandPlanInfoService {
     boolean delete(String ids);
 
     LandPlanInfoVo getDetailById(Long id);
+
+    String uploadExcel(List result,String planType);
 }
