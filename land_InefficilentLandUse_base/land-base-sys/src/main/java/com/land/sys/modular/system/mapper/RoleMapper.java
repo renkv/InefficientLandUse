@@ -60,4 +60,6 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @date 2019/8/28 10:32:04
      */
     IPage<Map<String, Object>> listRole(Page pageContext, @Param("name") String name);
+
+    Role selectOneByName(@Param("name") String name);
 }

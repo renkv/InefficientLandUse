@@ -115,4 +115,24 @@
         from land_plan_info t
         where t.id = #{id}
     </select>
+
+    <select id="diffStaList" resultType="java.util.Map">
+        select year,reasonsType,count(1) as landNum from(
+        select left(t.plan_start_time,4) as year,t.reasons_type as reasonsType
+        from land_plan_info t
+            left join land_detail_info b
+        on t.land_code=b.land_code
+        where 1=1
+        <if test="beginTime != null and beginTime != ''">
+            and t.create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and t.create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        <if test="vo.xdm != null and vo.xdm != ''">
+            and b.xdm = #{xdm}
+        </if>
+        ) t
+        group by year,reasonsType
+    </select>
 </mapper>

@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8088
   max-http-header-size: 10240
 
 beetl:
@@ -38,3 +38,5 @@ mybatis-plus:
 
 log:
   path: _app_logs
+token:
+  url: http://8.130.36.218:8084/api/checkToken

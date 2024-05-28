@@ -137,4 +137,13 @@
         </if>
     </select>
 
+    <select id="findBySpec" resultType="com.land.sys.modular.consts.model.result.SysConfigResult">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_config where 1 = 1
+        <if test="param.code != null and param.code != ''">
+            and code like CONCAT('%',#{param.code},'%')
+        </if>
+        limit 1
+    </select>
 </mapper>

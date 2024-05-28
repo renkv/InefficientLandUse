@@ -77,12 +77,20 @@
         <result property="sczkfjz" column="sczkfjz" jdbcType="VARCHAR"/>
         <result property="scStatus" column="sc_status" jdbcType="VARCHAR"/>
 
+        <result property="sfss" column="sfss" jdbcType="VARCHAR"/>
+        <result property="wssyy" column="wssyy" jdbcType="VARCHAR"/>
+        <result property="tjyy" column="tjyy" jdbcType="VARCHAR"/>
+        <result property="zzss" column="zzss" jdbcType="VARCHAR"/>
+        <result property="kssj" column="kssj" jdbcType="VARCHAR"/>
+        <result property="ywc" column="ywc" jdbcType="VARCHAR"/>
+        <result property="wcsj" column="wcsj" jdbcType="VARCHAR"/>
+
 
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
       id ,XMC as xmc ,PQBH as pqbh,XMMC as xmmc,XZDM as xzdm,XZMC as xzmc,DKBH as dkbh,DKMJ as dkmj,DLDM as dldm,DLMC as dlmc,XLDM as xldm,XLMC xlmc,XZYT xzyt,
-      XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,ghgcsp,
+      XZRJL xzrjl,XZJZMD xzjzmd,GHYT ghyt,GHRJL ghrjl,ghgcsp,wcsj,ywc,kssj,zzss,tjyy,sfss,wssyy,
 	GHJZMD ghjzmd,KFQL kfql,ZKFSX zkfsx,PQMJ pqmj,ZB  zb,create_user as createUser,create_user_name as createUserName,category as category,land_code as landCode,
 	land_status as landStatus,zbq,qymc,bdcqzsh,crsj,htrjl,httzqd,htmjss,hydm,hymc,rjljsz,dkrjl,rjlfz,tzqdfz,tzqdjs,dktzqd,ssccljs,dkssccl,dksscclfz,bmysfz,
 	zfysfz,zhdf,xdm,year,cbhs,tdgy,xyqd,ghtjbg,cxrd,tsfabz,tscxzm,xmlx,xmsg,xmys,xmzbsy,jbqk,dktj,sczkfjz,sc_status as scStatus,
@@ -159,5 +167,45 @@
         <include refid="Base_Column_List"/>
         from land_detail_info
         where id = #{id}
+    </select>
+
+    <select id="landStaList"  resultType="java.util.Map">
+        select xmc,year,category,dlmc,xlmc,xzyt,count(1) as landNum,sum(dkmj) as landArea
+        from land_detail_info
+        where 1=1
+        <if test="vo.category != null and vo.category != ''">
+            and category = #{vo.category}
+        </if>
+        <if test="vo.xdm != null and vo.xdm != ''">
+            and xdm = #{vo.xdm}
+        </if>
+        <if test="beginTime != null and beginTime != ''">
+            and create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        group by xmc,year,category,dlmc,xlmc,xzyt
+        order by xmc,year
+    </select>
+
+    <select id="cycleStaList" resultType="java.util.Map">
+        select xmc,year,land_status as landStatus,dlmc,xlmc,xzyt,count(1) as landNum,sum(dkmj) as landArea
+        from land_detail_info
+        where 1=1
+        <if test="vo.landStatus != null and vo.landStatus != ''">
+            and land_status = #{vo.landStatus}
+        </if>
+        <if test="vo.xdm != null and vo.xdm != ''">
+            and xdm = #{vo.xdm}
+        </if>
+        <if test="beginTime != null and beginTime != ''">
+            and create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        group by xmc,year,land_status,dlmc,xlmc,xzyt
+        order by xmc,year
     </select>
 </mapper>

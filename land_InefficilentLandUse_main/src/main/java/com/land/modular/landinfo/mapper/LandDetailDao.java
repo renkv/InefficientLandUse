@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.landinfo.entity.LandInfo;
 import com.land.modular.landinfo.vo.LandDetailInfoVo;
+import com.land.modular.statistics.vo.LandStaVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +22,8 @@ public interface LandDetailDao extends BaseMapper<LandDetailInfo> {
     LandDetailInfo getByYearAndQx(@Param("year")int nowYear, @Param("xdm")String xdm);
 
     LandDetailInfo getOneById(@Param("id")Long id);
+
+    Page<Map<String, Object>> landStaList(@Param("page")Page page, @Param("vo")LandStaVo vo, @Param("beginTime")String beginTime,@Param("endTime") String endTime);
+
+    Page<Map<String, Object>> cycleStaList(@Param("page")Page page, @Param("vo")LandStaVo vo, @Param("beginTime")String beginTime,@Param("endTime") String endTime);
 }

@@ -18,6 +18,7 @@ import com.land.modular.plan.service.LandPlanInfoService;
 import com.land.modular.plan.vo.LandPlanExcelParam;
 import com.land.modular.plan.vo.LandPlanInfoVo;
 
+import com.land.modular.statistics.vo.LandStaVo;
 import com.land.sys.modular.system.entity.User;
 import com.land.sys.modular.system.service.UserService;
 import com.land.utils.BeanCopyUtils;
@@ -145,5 +146,18 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
             this.saveOrUpdate(main);
         }
         return msg;
+    }
+
+    /**
+     * 统计
+     * @param vo
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public Page<Map<String, Object>> diffStaList(LandStaVo vo, String beginTime, String endTime) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.diffStaList(page, vo, beginTime, endTime);
     }
 }

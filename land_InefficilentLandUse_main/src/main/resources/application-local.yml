@@ -57,3 +57,5 @@ spring:
 # 邮件发送（改为自己的账号）
 mail:
   from: sn93@qq.com
+token:
+  url: http://8.130.36.218:8084/api/checkToken

@@ -218,6 +218,39 @@ public class LandDetailInfoVo {
     private String scStatus;
 
     /**
+     *是否实施 1是0否
+     */
+    private String sfss;
+    /**
+     * 未实施原因 1未到计划的再开发时序 2企业原因导致无法实施 3政府原因导致无法实施
+     */
+    private String wssyy;
+    /**
+     * 未实施具体原因描述
+     */
+    private String tjyy;
+    /**
+     *是否正在实施 1是 0否
+     */
+    private String zzss;
+    /**
+     *开始时间
+     */
+
+    private String kssj;
+    /**
+     *是否已完成 1是 0否
+     */
+
+    private String ywc;
+
+    /**
+     *完成时间
+     */
+
+    private String wcsj;
+
+    /**
      * 文件信息
      */
     private List<FileInfo> fileInfoList;

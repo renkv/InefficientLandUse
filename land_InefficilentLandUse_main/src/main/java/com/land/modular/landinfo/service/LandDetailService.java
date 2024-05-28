@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.landinfo.entity.LandInfo;
 import com.land.modular.landinfo.vo.LandDetailInfoVo;
+import com.land.modular.statistics.vo.LandStaVo;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -24,4 +25,8 @@ public interface LandDetailService {
     LandDetailInfoVo getDetailById(Long id);
 
     ResponseData saveLandDis(LandDetailInfo landDetail);
+
+    Page<Map<String, Object>> landStaList(LandStaVo vo, String beginTime, String endTime);
+
+    Page<Map<String, Object>> cycleStaList(LandStaVo vo, String beginTime, String endTime);
 }

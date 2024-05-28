@@ -46,13 +46,24 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
             {field: 'category', sort: false,merge:true,align: 'center', title: '地块类型'},
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
         /*    {field: 'dldm', sort: false,align: 'center', title: '大类代码'},*/
-            {field: 'dlmc', sort: false,merge:true,align: 'center', title: '大类名称'},
+            /*{field: 'dlmc', sort: false,merge:true,align: 'center', title: '大类名称'},*/
     /*        {field: 'xldm', sort: false, align: 'center',title: '小类代码'},*/
-            {field: 'xlmc', sort: false,merge:true, align: 'center',title: '小类名称'},
+            {field: 'xlmc',width:250, sort: false,merge:true, align: 'center',title: '小类名称',
+                templet:function (d){
+                    var html = '<div><a rel="nofollow"  href="javascript:void(0);" >('+d.dlmc+')' + d.xlmc+ '</a></div>';
+                    return html;
+                }
+            },
             {field: 'xzyt', sort: false,merge:true, align: 'center',title: '现状用途'},
-            {field: 'ghyt', hide: true,sort: false, align: 'center',title: '规划用途'},
-            {field: 'landStatus', sort: false,merge:true,align: 'center', title: '地块处置状态'},
-            {field: 'zkfsx', sort: false, align: 'center',title: '再开发时序'},
+            {field: 'ghyt',width:180, sort: false, align: 'center',title: '规划用途'},
+            {field: 'landStatus', sort: false,merge:true,align: 'center', title: '再开发模式'},
+            {field: 'zkfsx', width:180,sort: false, align: 'center',title: '再开发时序'},
+            {field: 'sfss', sort: false, align: 'center',title: '实施状态'},
+            {field: 'wssyy', sort: false, align: 'center',title: '未实施原因'},
+            {field: 'zzss',hide:true,width:150, sort: false, align: 'center',title: '是否正在实施'},
+            {field: 'kssj', sort: false, align: 'center',title: '开始时间'},
+            {field: 'ywc', hide:true,sort: false, align: 'center',title: '是否已完成'},
+            {field: 'wcsj', sort: false, align: 'center',title: '完成时间'},
             {field: 'remark', sort: false, align: 'center',title: '备注'},
 /*            {field: 'xzrjl', sort: false, align: 'center',title: '现状容积率'},
             {field: 'xzjzmd', sort: false, align: 'center',title: '现状建筑密度'},
@@ -109,8 +120,58 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
                     $(this).css("color","red");
                 }
             });
+            $("[data-field = 'sfss']").children().each(function(){
+                if($(this).text() == '0'){
+                    $(this).text("未实施");
+                }else if($(this).text() == '1'){
+                    $(this).text("正在实施");
+                }else if($(this).text() == '2'){
+                    $(this).text("实施已完成");
+                }
+            });
+            $("[data-field = 'wssyy']").children().each(function(){
+                if($(this).text() == '1'){
+                    $(this).text("未到计划的再开发时序");
+                }else if($(this).text() == '2'){
+                    $(this).text("企业原因导致无法实施");
+                }else if($(this).text() == '3'){
+                    $(this).text("政府原因导致无法实施");
+                }
+            });
+            /*$("[data-field = 'zzss']").children().each(function(){
+                if($(this).text() == '1'){
+                    $(this).text("是");
+                }else if($(this).text() == '0'){
+                    $(this).text("否");
+                }
+            });
+            $("[data-field = 'ywc']").children().each(function(){
+                if($(this).text() == '1'){
+                    $(this).text("是");
+                }else if($(this).text() == '0'){
+                    $(this).text("否");
+                }
+            });*/
+            //autoFixedHeight(this.elem[0]);
         }
     });
+
+    //固定行随单元格自动调整
+    function autoFixedHeight(tableElem) {
+        // 获取表格div
+        var $tableView = $(tableElem).next(".layui-table-view");
+        // 获取两侧浮动栏
+        var $fixed = $tableView.find(".layui-table-fixed");
+        var dataIndex;
+        var trHeight;
+        // 遍历tr 修正浮动栏行高
+        $tableView.find(".layui-table-main").find("tr").each(function () {
+            dataIndex = $(this).attr("data-index");
+            trHeight = $(this).css("height");
+            $fixed.find("tr[data-index=" + dataIndex + "]").css("height", trHeight);
+        });
+    }
+
     //渲染时间选择框
     laydate.render({
         elem: '#timeLimit',

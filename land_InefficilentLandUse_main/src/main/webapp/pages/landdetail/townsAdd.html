@@ -168,6 +168,19 @@
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
                     <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">实施状态</label>
+                        <div class="layui-input-block">
+                            <select name="sfss" id="sfss" lay-filter="sfssSelect">
+                                <option value="">请选择实施状态</option>
+                                <option value="0">未实施</option>
+                                <option value="1">正在实施</option>
+                                <option value="2">实施已完成</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-row">
+                    <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">处置类型</label>
                         <div class="layui-input-block">
                             <select name="landStatus" id="landStatus" lay-filter="statusSelect">
