@@ -1,5 +1,5 @@
 
-layui.use(['layer','upload', 'form', 'formSelects','admin', 'ax'], function () {
+layui.use(['layer','upload', 'form','laydate', 'formSelects','admin', 'ax'], function () {
     var $ = layui.jquery;
     var $ax = layui.ax;
     var form = layui.form;
@@ -7,6 +7,7 @@ layui.use(['layer','upload', 'form', 'formSelects','admin', 'ax'], function () {
     var layer = layui.layer;
     var upload = layui.upload;
     var formSelects = layui.formSelects;
+    var laydate = layui.laydate;
     var category;
 
     var activeDlSelect = function () {
@@ -85,6 +86,48 @@ layui.use(['layer','upload', 'form', 'formSelects','admin', 'ax'], function () {
             $("#landStatus").append('<option value="4">复垦耕地</option>');
             $("#landStatus").append('<option value="5">司法处置或转让</option>');
         }
+        var sfssV = $("#sfssV").val();
+        //初始化实施状态选择
+        $("#sfss").html('<option value="">请选择实施状态</option>');
+        if(sfssV == "0"){
+            $("#sfss").append('<option value="0" selected="selected">未实施</option>');
+            $("#sfss").append('<option value="1">正在实施</option>');
+            $("#sfss").append('<option value="2">实施已完成</option>');
+        }else if(sfssV == "1"){
+            $("#sfss").append('<option value="0" >未实施</option>');
+            $("#sfss").append('<option value="1" selected="selected">正在实施</option>');
+            $("#sfss").append('<option value="2" >实施已完成</option>');
+        }else if(sfssV == "2"){
+            $("#sfss").append('<option value="0" >未实施</option>');
+            $("#sfss").append('<option value="1" >正在实施</option>');
+            $("#sfss").append('<option value="2" selected="selected">实施已完成</option>');
+        }else{
+            $("#sfss").append('<option value="0">未实施</option>');
+            $("#sfss").append('<option value="1">正在实施</option>');
+            $("#sfss").append('<option value="2">实施已完成</option>');
+        }
+        //初始化未实施原因
+        if(sfssV == "0"){
+            var wssyyV = $("#wssyyV").val();
+            $("#wssyy").html('<option value="">请选择未实施原因</option>');
+            if(wssyyV == "1"){
+                $("#wssyy").append('<option value="1" selected="selected">未到计划的再开发时序</option>');
+                $("#wssyy").append('<option value="2">企业原因导致无法实施</option>');
+                $("#wssyy").append('<option value="3">政府原因导致无法实施</option>');
+            }else if(wssyyV == "2"){
+                $("#wssyy").append('<option value="1" >未到计划的再开发时序</option>');
+                $("#wssyy").append('<option value="2" selected="selected">企业原因导致无法实施</option>');
+                $("#wssyy").append('<option value="3" >政府原因导致无法实施</option>');
+            }else if(wssyyV == "3"){
+                $("#wssyy").append('<option value="1" >未到计划的再开发时序</option>');
+                $("#wssyy").append('<option value="2" >企业原因导致无法实施</option>');
+                $("#wssyy").append('<option value="3 selected="selected">政府原因导致无法实施</option>');
+            }else{
+                $("#wssyy").append('<option value="1">未到计划的再开发时序</option>');
+                $("#wssyy").append('<option value="2">企业原因导致无法实施</option>');
+                $("#wssyy").append('<option value="3">政府原因导致无法实施</option>');
+            }
+        }
         qxAjax.start();
         ajax.start();
         form.render();
@@ -114,7 +157,15 @@ layui.use(['layer','upload', 'form', 'formSelects','admin', 'ax'], function () {
         form.render();
     }
     setDefaultValue();
-
+    //渲染时间选择框
+    laydate.render({
+        elem: '#kssj',
+        range: false
+    });
+    laydate.render({
+        elem: '#wcsj',
+        range: false
+    });
 
     form.on('select(dldmSelect)',function (data){
         var value = data.value;
@@ -168,6 +219,94 @@ layui.use(['layer','upload', 'form', 'formSelects','admin', 'ax'], function () {
         //console.log(returnParentElement);
         return returnParentElement;
     }
+
+    //实施状态
+    form.on('select(sfssSelect)',function (data){
+        var value = data.value;
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        var firstNode = getParents(e,"layui-row");
+        var html = '';
+        if(value == "0"){
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">实施状态</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="sfss" id="sfss" lay-filter="sfssSelect">\n' +
+                '                                <option value="">请选择实施状态</option>\n' +
+                '                                <option value="0" selected = "selected">未实施</option>\n' +
+                '                                <option value="1">正在实施</option>\n' +
+                '                                <option value="2">实施已完成</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div><div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">未实施原因</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="wssyy" id="wssyy">\n' +
+                '                                <option value="">请选择未实施原因</option>\n' +
+                '                                <option value="1">未到计划的再开发时序</option>\n' +
+                '                                <option value="2">企业原因导致无法实施</option>\n' +
+                '                                <option value="3">政府原因导致无法实施</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md12">\n' +
+                '                        <label class="layui-form-label">具体原因描述</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <textarea name="tjyy" id="tjyy" class="layui-textarea"></textarea>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+        }else if(value == "1"){
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">实施状态</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="sfss" id="sfss" lay-filter="sfssSelect">\n' +
+                '                                <option value="">请选择实施状态</option>\n' +
+                '                                <option value="0">未实施</option>\n' +
+                '                                <option value="1" selected="selected">正在实施</option>\n' +
+                '                                <option value="2">实施已完成</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">开始时间</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="kssj" name="kssj" placeholder="请输入开始时间" type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+        }else if(value == "2"){
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">实施状态</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="sfss" id="sfss" lay-filter="sfssSelect">\n' +
+                '                                <option value="">请选择实施状态</option>\n' +
+                '                                <option value="0">未实施</option>\n' +
+                '                                <option value="1">正在实施</option>\n' +
+                '                                <option value="2" selected="selected">实施已完成</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">完成时间</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <input id="wcsj" name="wcsj" placeholder="请输入完成时间" type="text" class="layui-input"/>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+        }else{
+            html = '<div class="layui-inline layui-col-md6">\n' +
+                '                        <label class="layui-form-label">实施状态</label>\n' +
+                '                        <div class="layui-input-block">\n' +
+                '                            <select name="sfss" id="sfss" lay-filter="sfssSelect">\n' +
+                '                                <option value="">请选择实施状态</option>\n' +
+                '                                <option value="0">未实施</option>\n' +
+                '                                <option value="1">正在实施</option>\n' +
+                '                                <option value="2">实施已完成</option>\n' +
+                '                            </select>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+        }
+        firstNode.innerHTML = (html);
+        form.render();
+    });
 
 
     //处置类型

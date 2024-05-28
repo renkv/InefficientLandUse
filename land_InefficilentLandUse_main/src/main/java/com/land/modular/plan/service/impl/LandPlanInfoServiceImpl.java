@@ -11,11 +11,14 @@ import com.land.auth.context.LoginContextHolder;
 import com.land.auth.model.LoginUser;
 import com.land.base.pojo.page.LayuiPageFactory;
 import com.land.modular.landinfo.entity.LandDetailInfo;
+import com.land.modular.landinfo.vo.LandDetailExcelParam;
 import com.land.modular.plan.entity.LandPlanInfoEntity;
 import com.land.modular.plan.mapper.LandPlanDao;
 import com.land.modular.plan.service.LandPlanInfoService;
+import com.land.modular.plan.vo.LandPlanExcelParam;
 import com.land.modular.plan.vo.LandPlanInfoVo;
 
+import com.land.modular.statistics.vo.LandStaVo;
 import com.land.sys.modular.system.entity.User;
 import com.land.sys.modular.system.service.UserService;
 import com.land.utils.BeanCopyUtils;
@@ -29,6 +32,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Service("landPlanInfoService")
@@ -113,5 +117,47 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
     @Override
     public LandPlanInfoVo getDetailById(Long id) {
         return this.baseMapper.getDetailById(id);
+    }
+
+    /**
+     * 导入低效用地信息
+     * @param result
+     * @return
+     */
+    @Override
+    public String uploadExcel(List result,String planType) {
+        String msg = "";
+        LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        for (int i = 0; i < result.size(); i++) {
+            LandPlanExcelParam param = (LandPlanExcelParam) result.get(i);
+            LandPlanInfoEntity main = new LandPlanInfoEntity();
+            //时间（精确到毫秒）
+            DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+            String localDate = LocalDateTime.now().format(ofPattern);
+            //3位随机数
+            String randomNumeric = RandomStringUtils.randomNumeric(3);
+            String planCode = "P"+localDate + randomNumeric;
+            BeanUtils.copyProperties(param,main);
+            main.setCreateUser(currentUser.getId());
+            main.setCreateUserName(currentUser.getName());
+            main.setCreateTime(new Date());
+            main.setPlanCode(planCode);
+            main.setPlanType(planType);
+            this.saveOrUpdate(main);
+        }
+        return msg;
+    }
+
+    /**
+     * 统计
+     * @param vo
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public Page<Map<String, Object>> diffStaList(LandStaVo vo, String beginTime, String endTime) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.diffStaList(page, vo, beginTime, endTime);
     }
 }

@@ -14,18 +14,14 @@
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <input id="policyName" class="layui-input" type="text" placeholder="政策名称"/>
+                                        <input id="xmmc" class="layui-input" type="text" placeholder="地块项目名称"/>
                                     </div>
                                     <div class="layui-inline">
-                                        <select id="policyType" name="policyType" lay-verify="required">
-                                            <option value="">请选择类型</option>
-                                            <option value="1">国家级</option>
-                                            <option value="2">省级</option>
-                                            <option value="3">市级</option>
-                                            <option value="4">县级</option>
-                                        </select>
+                                        <input id="planName" class="layui-input" type="text" placeholder="计划名称"/>
                                     </div>
-
+                                    <div class="layui-inline">
+                                        <input id="busName" class="layui-input" type="text" placeholder="企业名称"/>
+                                    </div>
                                     <div class="layui-inline">
                                         <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
                                     </div>
@@ -34,6 +30,8 @@
                                         <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>新增</button>
                                         <button id="btnDel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67e;</i>删除</button>
                                         <button id="btnEdt" class="layui-btn icon-btn"><i class="layui-icon">&#xe642;</i>修改</button>
+                                        <button id="btnImp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67c;</i>导入</button>
+                                        <a href="/assets/plan/低效企业导入模板.xlsx" class="layui-btn icon-btn"><i class="layui-icon">&#xe601;</i>下载模板</a>
                                     </div>
                                 </div>
                             </div>

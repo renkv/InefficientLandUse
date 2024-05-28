@@ -189,4 +189,13 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
         Page pageContext = LayuiPageFactory.defaultPage();
         return baseMapper.listRole(pageContext, name);
     }
+
+    /**
+     * 根据名称获取唯一值
+     * @param name
+     * @return
+     */
+    public Role selectOneByName(String name) {
+        return baseMapper.selectOneByName( name);
+    }
 }

@@ -1,5 +1,6 @@
 package com.land.modular.plan.vo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -24,6 +25,7 @@ public class LandPlanInfoVo {
     private String planStartTime;
 
     private String planEndTime;
+    private String xmmc;
 
     private String actStartTime;
 
@@ -70,4 +72,16 @@ public class LandPlanInfoVo {
     private String busStatus;
 
     private String remark;
+
+    private String useStatus;
+
+    private String disType;
+
+    private String conStandard;
+
+    private String disStandard;
+    private String countyCode;
+    private String countyName;
+    private String year;
+    private String disYear;
 }

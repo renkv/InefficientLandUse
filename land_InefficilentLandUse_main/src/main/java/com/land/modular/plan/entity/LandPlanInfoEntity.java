@@ -120,5 +120,27 @@ public class LandPlanInfoEntity {
     @Basic
     @Column(name = "plan_code", nullable = true, length = 2000)
     private String planCode;
-
+    @Basic
+    @Column(name = "use_status", nullable = true, length = 2000)
+    private String useStatus;
+    @Basic
+    @Column(name = "dis_type", nullable = true, length = 2000)
+    private String disType;
+    @Basic
+    @Column(name = "con_standard", nullable = true, length = 2000)
+    private String conStandard;
+    @Basic
+    @Column(name = "dis_standard", nullable = true, length = 2000)
+    private String disStandard;
+    @Basic
+    @Column(name = "county_code", nullable = true, length = 20)
+    private String countyCode;
+    @Basic
+    @Column(name = "county_name", nullable = true, length = 20)
+    private String countyName;
+    @Basic
+    @Column(name = "year", nullable = true, length = 20)
+    private String year;
 }
+
+

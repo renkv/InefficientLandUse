@@ -1,10 +1,15 @@
-layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
+layui.config({
+}).extend({
+    tableMerge: 'tableMerge'
+});
+layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
     var laydate = layui.laydate;
+    var tableMerge = layui.tableMerge;
 
     /**
      * 文件政策管理
@@ -20,32 +25,26 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
         return [[
 
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
-            {field: 'landCode', align: 'center',fixed: 'left', title: '地块编码'},
+            {field: 'landCode',hide:true, align: 'center',fixed: 'left', title: '地块编码'},
             {field: 'xmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '县名称'},
-            {field: 'pqbh', sort: false,align: 'center',merge:true,fixed: 'left', title: '片区编号'},
-            {field: 'xmmc', sort: false,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
-                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.xmmc+ '</a></div>';
-                    return html;
-                }
+            {field: 'pqbh',hide:true, sort: false,align: 'center',merge:true,fixed: 'left', title: '片区编号'},
+            {field: 'xmmc',width:180, sort: false,align: 'center',fixed: 'left', title: '项目名称'
             },
-            {field: 'dkbh', sort: false,align: 'center', title: '地块编号',templet:function (d){
-                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showMap">' + d.dkbh+ '</a></div>';
-                    return html;
-                }
+            {field: 'dkbh', sort: false,fixed: 'left',align: 'center', title: '地块编号'
             },
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
             {field: 'dlmc', sort: false,align: 'center', title: '大类名称'},
             {field: 'xlmc', sort: false, align: 'center',title: '小类名称'},
             {field: 'xzyt', sort: false, align: 'center',title: '现状用途'},
-            {field: 'ghyt', sort: false, align: 'center',title: '规划用途'},
+            {field: 'ghyt',hide:true, sort: false, align: 'center',title: '规划用途'},
             {field: 'planType', sort: false, align: 'center',title: '计划类型'},
             {field: 'planName', sort: false, align: 'center',title: '计划名称'},
-            {field: 'planStartTime', sort: false, align: 'center',title: '计划开始时间'},
-            {field: 'planEndTime', sort: false, align: 'center',title: '计划完成时间'},
-            {field: 'actStartTime', sort: false, align: 'center',title: '实际开始时间'},
-            {field: 'actEndTime', sort: false, align: 'center',title: '实际完成时间'},
-            {field: 'planArea', sort: false, align: 'center',title: '计划完成面积'},
-            {field: 'currentArea', sort: false, align: 'center',title: '当前已完成面积'},
+            {field: 'planStartTime',width:150, sort: false, align: 'center',title: '计划开始时间'},
+            {field: 'planEndTime',hide:true, sort: false, align: 'center',title: '计划完成时间'},
+            {field: 'actStartTime',hide:true, sort: false, align: 'center',title: '实际开始时间'},
+            {field: 'actEndTime', hide:true,sort: false, align: 'center',title: '实际完成时间'},
+            {field: 'planArea',width:150, sort: false, align: 'center',title: '计划完成面积'},
+            {field: 'currentArea',width:150, sort: false, align: 'center',title: '当前已完成面积'},
             {field: 'remArea', sort: false, align: 'center',title: '剩余面积'},
             {field: 'curStatus', sort: false, align: 'center',title: '当前状态'},
             {field: 'curProgress', sort: false, align: 'center',title: '当前进展'},
@@ -64,6 +63,7 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
         cellMinWidth: 100,
         cols: planMainTable.initColumn(),
         done:function(res, curr, count){
+            tableMerge.render(this);
             $("[data-field = 'planType']").children().each(function(){
                 if($(this).text() == '1'){
                     $(this).text("低效企业");
@@ -91,8 +91,8 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
     planMainTable.search = function () {
         var queryData = {};
 
-        queryData['policyType'] = $('select[name="policyType"]').next().find('.layui-this').attr('lay-value');
-        queryData['policyName'] = $('#policyName').val();
+        queryData['xmmc'] = $('#xmmc').val();
+        queryData['planName'] = $('#planName').val();
         queryData['timeLimit'] = $('#timeLimit').val();
 
         table.reload(planMainTable.tableId, {

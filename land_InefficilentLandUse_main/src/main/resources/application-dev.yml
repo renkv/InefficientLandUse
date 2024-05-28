@@ -40,7 +40,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/land_low_use?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT&allowPublicKeyRetrieval=true
     username: root
-    password: ROOT123!
+    password: Dxyd123!@
     filters: wall,mergeStat
 
     # 连接池大小根据实际情况调整
@@ -57,3 +57,5 @@ spring:
 # 邮件发送（改为自己的账号）
 mail:
   from: sn93@qq.com
+token:
+  url: http://8.130.36.218:8084/api/checkToken

@@ -22,6 +22,7 @@ import com.land.modular.landinfo.service.LandDetailHisService;
 import com.land.modular.landinfo.service.LandDetailService;
 import com.land.modular.landinfo.vo.LandDetailExcelParam;
 import com.land.modular.landinfo.vo.LandDetailInfoVo;
+import com.land.modular.statistics.vo.LandStaVo;
 import com.land.modular.weekwork.entity.WeekWorkDetail;
 import com.land.modular.weekwork.entity.WeekWorkMain;
 import com.land.modular.weekwork.vo.WeekWorkDetailExcelParam;
@@ -307,5 +308,31 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
         }
 
         return new SuccessResponseData();
+    }
+
+    /**
+     * 信息统计
+     * @param vo
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public Page<Map<String, Object>> landStaList(LandStaVo vo, String beginTime, String endTime) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.landStaList(page, vo, beginTime, endTime);
+    }
+
+    /**
+     * 全周期统计
+     * @param vo
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public Page<Map<String, Object>> cycleStaList(LandStaVo vo, String beginTime, String endTime) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.cycleStaList(page, vo, beginTime, endTime);
     }
 }

@@ -1,14 +1,16 @@
 package com.land.modular.plan.controller;
 
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.land.base.consts.ConstantsContext;
 import com.land.base.log.BussinessLog;
 import com.land.base.pojo.page.LayuiPageFactory;
-import com.land.modular.landinfo.entity.LandDetailInfo;
-import com.land.modular.landinfo.vo.LandDetailInfoVo;
 import com.land.modular.plan.service.LandPlanInfoService;
+import com.land.modular.plan.vo.LandPlanExcelParam;
 import com.land.modular.plan.vo.LandPlanInfoVo;
 import com.land.sys.core.constant.dictmap.DeptDict;
 import com.land.sys.core.listener.ConfigListener;
@@ -18,9 +20,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -159,8 +166,13 @@ public class LandPlanController extends BaseController {
      */
     @RequestMapping("/selectList")
     @ResponseBody
-    public Object selectList(@RequestParam(required = false) String createUserName,
-                             @RequestParam(required = false) String planType,@RequestParam(required = false) String xdm,@RequestParam(required = false) String xmmc,
+    public Object selectList(@RequestParam(required = false) String planName,
+                             @RequestParam(required = false) String planType,
+                             @RequestParam(required = false) String busName,
+                             @RequestParam(required = false) String villageName,
+                             @RequestParam(required = false) String renewalName,
+                             @RequestParam(required = false) String zoneName,
+                             @RequestParam(required = false) String xmmc,
                              @RequestParam(required = false) String timeLimit) {
 
         //拼接查询条件
@@ -174,7 +186,12 @@ public class LandPlanController extends BaseController {
         }
         LandPlanInfoVo vo = new LandPlanInfoVo();
         vo.setPlanType(planType);
-
+        vo.setPlanName(planName);
+        vo.setBusName(busName);
+        vo.setXmmc(xmmc);
+        vo.setVillageName(villageName);
+        vo.setZoneName(zoneName);
+        vo.setRenewalName(renewalName);
         //main.setDeptName(deptName);
         Page<Map<String, Object>> list = landPlanInfoService.selectList(vo, beginTime, endTime);
         Page wrapped = new UserWrapper(list).wrap();
@@ -203,5 +220,46 @@ public class LandPlanController extends BaseController {
     public  ResponseData delete(String ids){
         boolean isDel = landPlanInfoService.delete(ids);
         return SUCCESS_TIP;
+    }
+
+
+    /**
+     * 数据批量导入
+     * @param multipartFile
+     * @param request
+     * @return
+     */
+    @RequestMapping("/uploadExcel")
+    @ResponseBody
+    public ResponseData uploadExcel(@RequestParam(required = false) String planType,@RequestPart("file") MultipartFile multipartFile, HttpServletRequest request) {
+
+        String name = multipartFile.getOriginalFilename();
+        request.getSession().setAttribute("upFile", name);
+        String fileSavePath = ConstantsContext.getFileUploadPath();
+        try {
+            multipartFile.transferTo(new File(fileSavePath + name));
+
+            File file = new File(fileSavePath + name);
+            try {
+                ImportParams params = new ImportParams();
+                List result = ExcelImportUtil.importExcel(file, LandPlanExcelParam.class, params);
+                if (result==null || result.size()==0){
+                    return ResponseData.error("上传数据不能为空");
+                }
+                /*if (result.size()>=1000){
+                    return ResponseData.error("单次最多上传1000条");
+                }*/
+                String retMsg = landPlanInfoService.uploadExcel(result,planType);
+
+                return ResponseData.success(0, "上传成功",retMsg);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseData.error(e.getMessage());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+//            throw new ServiceException(BizExceptionEnum.UPLOAD_ERROR);
+            return ResponseData.error(e.getMessage());
+        }
     }
 }

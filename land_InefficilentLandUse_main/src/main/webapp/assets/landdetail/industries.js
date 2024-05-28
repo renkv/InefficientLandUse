@@ -29,7 +29,7 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
             {field: 'landCode',hide: true, align: 'center',fixed: 'left', title: '编码'},
             {field: 'xmc', sort: false,merge:true,align: 'center', fixed: 'left',title: '县名称'},
-            {field: 'year', sort: false,merge:true,align: 'center', fixed: 'left',title: '年份'},
+           /* {field: 'year', sort: false,merge:true,align: 'center', fixed: 'left',title: '年份'},*/
             {field: 'pqbh', hide: true,sort: false,merge:true,align: 'center',fixed: 'left', title: '片区编号'},
             {field: 'xmmc', sort: false,merge:true,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
                     var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.xmmc+ '</a></div>';
@@ -43,20 +43,31 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
                 }
             },
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
-            /*    {field: 'dldm', sort: false,align: 'center', title: '大类代码'},*/
+            /*    {field: 'dldm', sort: false,align: 'center', title: '大类代码'},
             {field: 'dlmc', sort: false,align: 'center', merge:true,title: '大类名称'},
-            /*        {field: 'xldm', sort: false, align: 'center',title: '小类代码'},*/
-            {field: 'xlmc', sort: false, align: 'center',merge:true,title: '小类名称'},
+                  {field: 'xldm', sort: false, align: 'center',title: '小类代码'},*/
+            {field: 'xlmc',width:250, sort: false,merge:true, align: 'center',title: '小类名称',
+                templet:function (d){
+                    var html = '<div><a rel="nofollow"  href="javascript:void(0);" >('+d.dlmc+')' + d.xlmc+ '</a></div>';
+                    return html;
+                }
+            },
             {field: 'xzyt', sort: false, merge:true,align: 'center',title: '现状用途'},
-            {field: 'ghyt', sort: false,hide:true, align: 'center',title: '规划用途'},
+            {field: 'ghyt', width:180,sort: false, align: 'center',title: '规划用途'},
             {field: 'htrjl', sort: false,hide:true, align: 'center',title: '合同容积率'},
             {field: 'httzqd', sort: false,hide:true, align: 'center',title: '合同投资强度'},
             {field: 'htmjss', sort: false,hide:true, align: 'center',title: '合同亩均税收'},
             {field: 'dkrjl', sort: false, align: 'center',title: '现状容积率'},
-            {field: 'dktzqd', sort: false, align: 'center',title: '现状投资强度'},
-            {field: 'dkssccl', sort: false, align: 'center',title: '现状税收产出率'},
-            {field: 'landStatus', sort: false,merge:true,align: 'center', title: '地块状态'},
-            {field: 'zkfsx', sort: false, align: 'center',title: '再开发时序'},
+            {field: 'dktzqd', width:180,sort: false, align: 'center',title: '现状投资强度'},
+            {field: 'dkssccl',width:180, sort: false, align: 'center',title: '现状税收产出率'},
+            {field: 'landStatus', sort: false,merge:true,align: 'center', title: '再开发模式'},
+            {field: 'zkfsx', width:180,sort: false, align: 'center',title: '再开发时序'},
+            {field: 'sfss', sort: false, align: 'center',title: '实施状态'},
+            {field: 'wssyy', sort: false, align: 'center',title: '未实施原因'},
+            {field: 'zzss',hide:true,width:150, sort: false, align: 'center',title: '是否正在实施'},
+            {field: 'kssj', sort: false, align: 'center',title: '开始时间'},
+            {field: 'ywc', hide:true,sort: false, align: 'center',title: '是否已完成'},
+            {field: 'wcsj', sort: false, align: 'center',title: '完成时间'},
             {field: 'remark', sort: false, align: 'center',title: '备注'},
             /*            {field: 'xzrjl', sort: false, align: 'center',title: '现状容积率'},
                         {field: 'xzjzmd', sort: false, align: 'center',title: '现状建筑密度'},

@@ -39,7 +39,13 @@
         <result column="remark" property="remark" />
         <result column="plan_code" property="planCode" />
         <result column="create_user_name" property="createUserName" />
-        <result column="update_user_name" property="updateUserName" />
+        <result column="use_status" property="useStatus" />
+        <result column="dis_type" property="disType" />
+        <result column="con_standard" property="conStandard" />
+        <result column="dis_standard" property="disStandard" />
+        <result column="county_code" property="countyCode" />
+        <result column="county_name" property="countyName" />
+        <result column="year" property="year" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -47,8 +53,9 @@
         t.id,t.land_code as landCode,t.plan_type as planType,t.plan_name as planName,plan_code as planCode,
     t.create_time as createTime,t.update_time as updateTime,t.create_user as createUser,t.update_user as updateUser,
     t.plan_start_time as planStartTime,t.plan_end_time  as planEndTime,t.create_user_name as createUserName,t.update_user_name as updateUserName,
-    t.act_start_time as actStartTime,t.act_end_time as actEndTime,t.plan_area as planArea,
-    t.current_area as currentArea,t.rem_area as remArea,
+    t.act_start_time as actStartTime,t.act_end_time as actEndTime,t.plan_area as planArea,t.county_code as countyCode,t.county_name as countyName,
+    t.year as disYear,
+    t.current_area as currentArea,t.rem_area as remArea,t.use_status as useStatus,t.dis_type as disType,t.con_standard as conStandard,t.dis_standard as disStandard,
     t.cur_status as curStatus,t.cur_progress as curProgress, t.reasons ,t.reasons_type as reasonsType,
     t.village_name as villageName,t.renewal_name as renewalName,t.zone_name as zoneName,t.plan_unit as planUnit,
     t.act_unit as actUnit,t.credit_code as creditCode,t.bus_name as busName,t.occupy_area as occupyArea,
@@ -81,6 +88,24 @@
         <if test="vo.planType != null and vo.planType != ''">
             and t.plan_type = #{vo.planType}
         </if>
+        <if test="vo.planName != null and vo.planName != ''">
+            and t.plan_name like CONCAT('%',#{vo.planName},'%')
+        </if>
+        <if test="vo.busName != null and vo.busName != ''">
+            and t.bus_name like CONCAT('%',#{vo.busName},'%')
+        </if>
+        <if test="vo.villageName != null and vo.villageName != ''">
+            and t.village_name like CONCAT('%',#{vo.villageName},'%')
+        </if>
+        <if test="vo.renewalName != null and vo.renewalName != ''">
+            and t.renewal_name like CONCAT('%',#{vo.renewalName},'%')
+        </if>
+        <if test="vo.zoneName != null and vo.zoneName != ''">
+            and t.zone_name like CONCAT('%',#{zoneName},'%')
+        </if>
+        <if test="vo.busName != null and vo.xmmc != ''">
+            and d.XMMC like CONCAT('%',#{vo.xmmc},'%')
+        </if>
         order by t.create_time desc
     </select>
 
@@ -89,5 +114,25 @@
         <include refid="Base_Column_List"/>
         from land_plan_info t
         where t.id = #{id}
+    </select>
+
+    <select id="diffStaList" resultType="java.util.Map">
+        select year,reasonsType,count(1) as landNum from(
+        select left(t.plan_start_time,4) as year,t.reasons_type as reasonsType
+        from land_plan_info t
+            left join land_detail_info b
+        on t.land_code=b.land_code
+        where 1=1
+        <if test="beginTime != null and beginTime != ''">
+            and t.create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and t.create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        <if test="vo.xdm != null and vo.xdm != ''">
+            and b.xdm = #{xdm}
+        </if>
+        ) t
+        group by year,reasonsType
     </select>
 </mapper>

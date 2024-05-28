@@ -1,10 +1,16 @@
-layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
+layui.config({
+}).extend({
+    tableMerge: 'tableMerge'
+});
+layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
     var admin = layui.admin;
     var func = layui.func;
     var laydate = layui.laydate;
+    var upload = layui.upload;
+    var tableMerge = layui.tableMerge;
 
     /**
      * 文件政策管理
@@ -20,31 +26,38 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
         return [[
             {fixed: 'left',type: 'checkbox'},
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
-            {field: 'landCode', align: 'center',fixed: 'left', title: '地块编码'},
-            {field: 'planCode', align: 'center',fixed: 'left', title: '计划编码',templet:function (d){
-                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showDetail">' + d.planCode+ '</a></div>';
+            {field: 'landCode', hide:true,align: 'center',fixed: 'left', title: '地块编码'},
+            {field: 'planCode', hide:true,align: 'center',fixed: 'left', title: '计划编码'},
+            {field: 'countyName',width:150,align: 'center',merge:true,fixed: 'left', title: '区县'},
+            {field: 'xmmc',width:150,align: 'center',merge:true,fixed: 'left', title: '地块项目名称'},
+            {field: 'planName', sort: false, align: 'center',fixed: 'left',title: '计划名称'},
+            {field: 'disYear', sort: false, align: 'center',fixed: 'left',title: '年份'},
+            {field: 'busName', sort: false, align: 'center',fixed: 'left',title: '企业名称',templet:function (d){
+                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showDetail">' + d.busName+ '</a></div>';
                     return html;
                 }
-            },
-            {field: 'planName', sort: false, align: 'center',title: '计划名称'},
-            {field: 'busName', sort: false, align: 'center',title: '企业名称'},
+                },
             {field: 'zoneName', sort: false, align: 'center',title: '开发区名称'},
-            {field: 'creditCode', sort: false, align: 'center',title: '社会统一信用代码'},
+            {field: 'creditCode',width:150, sort: false, align: 'center',title: '社会统一信用代码'},
             {field: 'occupyArea', sort: false, align: 'center',title: '占地面积'},
             {field: 'located', sort: false, align: 'center',title: '坐落'},
-            {field: 'preYearTax', sort: false, align: 'center',title: '上年度亩均税收'},
-            {field: 'upYearTax', sort: false, align: 'center',title: '上上年度亩均税收'},
-            {field: 'isPlanBus', sort: false, align: 'center',title: '是否规上企业'},
+            {field: 'preYearTax',width:120, sort: false, align: 'center',title: '上年度亩均税收'},
+            {field: 'upYearTax',width:150, sort: false, align: 'center',title: '上上年度亩均税收'},
+            {field: 'isPlanBus', width:120,sort: false, align: 'center',title: '是否规上企业'},
             {field: 'busStatus', sort: false, align: 'center',title: '经营状态'},
-            {field: 'planStartTime', sort: false, align: 'center',title: '计划开始时间'},
-            {field: 'planEndTime', sort: false, align: 'center',title: '计划完成时间'},
-            {field: 'actStartTime', sort: false, align: 'center',title: '实际开始时间'},
-            {field: 'actEndTime', sort: false, align: 'center',title: '实际完成时间'},
-            {field: 'planArea', sort: false, align: 'center',title: '计划完成面积'},
-            {field: 'currentArea', sort: false, align: 'center',title: '当前已完成面积'},
+            {field: 'useStatus', sort: false, align: 'center',title: '现状用途'},
+            {field: 'disType', sort: false, align: 'center',title: '处置类型'},
+            {field: 'conStandard', sort: false, align: 'center',title: '认定标准'},
+            {field: 'disStandard', sort: false, align: 'center',title: '处置标准'},
+            {field: 'planStartTime',width:120, sort: false, align: 'center',title: '计划开始时间'},
+            {field: 'planEndTime', sort: false,hide:true, align: 'center',title: '计划完成时间'},
+            {field: 'actStartTime', sort: false,hide:true, align: 'center',title: '实际开始时间'},
+            {field: 'actEndTime', sort: false,hide:true, align: 'center',title: '实际完成时间'},
+            {field: 'planArea',width:120, sort: false, align: 'center',title: '计划完成面积'},
+            {field: 'currentArea', width:120,sort: false, align: 'center',title: '当前已完成面积'},
             {field: 'remArea', sort: false, align: 'center',title: '剩余面积'},
-            {field: 'planUnit', sort: false, align: 'center',title: '计划实施单位'},
-            {field: 'actUnit', sort: false, align: 'center',title: '实际实施单位'},
+            {field: 'planUnit',width:120, sort: false, align: 'center',title: '计划实施单位'},
+            {field: 'actUnit', sort: false,hide:true, align: 'center',title: '实际实施单位'},
             {field: 'curStatus', sort: false, align: 'center',title: '当前状态'},
             {field: 'curProgress', sort: false, align: 'center',title: '当前进展'},
             {field: 'reasonsType', sort: false, align: 'center',title: '困难原因'},
@@ -62,6 +75,7 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
         cellMinWidth: 100,
         cols: busMainTable.initColumn(),
         done:function(res, curr, count){
+            tableMerge.render(this);
             $("[data-field = 'reasonsType']").children().each(function(){
                 if($(this).text() == '1'){
                     $(this).text("困难原因1");
@@ -89,8 +103,10 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
     busMainTable.search = function () {
         var queryData = {};
 
-        queryData['policyType'] = $('select[name="policyType"]').next().find('.layui-this').attr('lay-value');
-        queryData['policyName'] = $('#policyName').val();
+        /*queryData['policyType'] = $('select[name="policyType"]').next().find('.layui-this').attr('lay-value');*/
+        queryData['xmmc'] = $('#xmmc').val();
+        queryData['planName'] = $('#planName').val();
+        queryData['busName'] = $('#busName').val();
         queryData['timeLimit'] = $('#timeLimit').val();
 
         table.reload(busMainTable.tableId, {
@@ -221,6 +237,25 @@ layui.use(['table', 'admin', 'laydate','ax', 'func'], function () {
             });
             layer.close(index);
         });
+    });
+
+    //执行实例
+    var uploadInst = upload.render({
+        elem: '#btnImp'
+        , url: '/plan/uploadExcel?planType=1'
+        ,accept: 'file'
+        , done: function (res) {
+            if (res.code==500){
+                Feng.error("导入失败!" + res.message);
+            }else{
+                Feng.success("导入成功！");
+                $('#btnSearch').click()
+            }
+        }
+        , error: function () {
+            Feng.error("导入失败!");
+            //请求异常回调
+        }
     });
 
 });

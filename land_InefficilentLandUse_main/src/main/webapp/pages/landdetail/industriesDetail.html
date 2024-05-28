@@ -185,6 +185,60 @@
             <div class="layui-card-header" style="background: rgb(255, 100, 82);">低效用地处置信息</div>
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">实施状态</label>
+                        <div class="layui-input-block">
+                            @if(isNotEmpty(vo.sfss) && vo.sfss == '0'){
+                            <input id="sfss" name="sfss" value="未实施" readonly type="text" class="layui-input"/>
+                            @}
+                            @if(isNotEmpty(vo.sfss) && vo.sfss == '1'){
+                            <input id="sfss" name="sfss" value="正在实施" readonly type="text" class="layui-input"/>
+                            @}
+                            @if(isNotEmpty(vo.sfss) && vo.sfss == '2'){
+                            <input id="sfss" name="sfss" value="实施已完成" readonly type="text" class="layui-input"/>
+                            @}
+                        </div>
+                    </div>
+                    @if(isNotEmpty(vo.sfss) && vo.sfss == '0'){
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">未实施原因</label>
+                        <div class="layui-input-block">
+                            @if(isNotEmpty(vo.wssyy) && vo.wssyy == '1'){
+                            <input id="wssyy" name="wssyy" value="未到计划的再开发时序" readonly type="text" class="layui-input"/>
+                            @}
+                            @if(isNotEmpty(vo.wssyy) && vo.wssyy == '2'){
+                            <input id="wssyy" name="wssyy" value="企业原因导致无法实施" readonly type="text" class="layui-input"/>
+                            @}
+                            @if(isNotEmpty(vo.wssyy) && vo.wssyy == '3'){
+                            <input id="wssyy" name="wssyy" value="政府原因导致无法实施" readonly type="text" class="layui-input"/>
+                            @}
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">具体原因描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="tjyy" id="tjyy" class="layui-textarea" readonly>${vo.tjyy}</textarea>
+                        </div>
+                    </div>
+                    @}
+                    @if(isNotEmpty(vo.sfss) && vo.sfss == '1'){
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">开始时间</label>
+                        <div class="layui-input-block">
+                            <input id="kssj" name="kssj" value="${vo.kssj}" readonly  placeholder="请输入开始时间" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    @}
+                    @if(isNotEmpty(vo.sfss) && vo.sfss == '2'){
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">完成时间</label>
+                        <div class="layui-input-block">
+                            <input id="wcsj" name="wcsj" value="${vo.wcsj}"  readonly placeholder="请输入完成时间" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    @}
+                </div>
+                <div class="layui-form-item layui-row">
 
                     @if(isNotEmpty(vo.landStatus) && vo.landStatus == '4'){
                     <div class="layui-inline layui-col-md6">

@@ -102,6 +102,7 @@ E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\ma
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\modular\system\entity\UserPos.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\modular\system\controller\TranInfoController.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\modular\system\mapper\NoticeMapper.java
+E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\core\util\HttpClient.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\modular\system\controller\UeditorController.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\core\auth\filter\JwtAuthorizationTokenFilter.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\modular\rest\service\impl\RestUserPosServiceImpl.java
@@ -197,6 +198,7 @@ E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\ma
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\modular\system\warpper\DeptWrapper.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\core\constant\dictmap\RoleDict.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\modular\rest\model\LogQueryParam.java
+E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\core\util\YamlReader.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\core\constant\state\LogSucceed.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\core\properties\GunsProperties.java
 E:\project\InefficientLandUse\land_InefficilentLandUse_base\land-base-sys\src\main\java\com\land\sys\modular\rest\mapper\RestDictTypeMapper.java

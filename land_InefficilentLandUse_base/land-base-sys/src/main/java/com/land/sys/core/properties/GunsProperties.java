@@ -27,6 +27,7 @@ import lombok.Data;
 public class GunsProperties {
 
     public static final String PREFIX = "guns";
+    public static final String TOKENURL = "http://8.130.36.218:8084/api/checkToken";
 
     private Boolean springSessionOpen = false;
 

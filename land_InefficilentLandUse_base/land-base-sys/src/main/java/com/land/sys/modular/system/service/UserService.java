@@ -321,7 +321,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @author fengshuonan
      * @Date 2019-06-28 13:35
      */
-    private void addPosition(String positions, Long userId) {
+    public void addPosition(String positions, Long userId) {
         if (ToolUtil.isNotEmpty(positions)) {
             String[] position = positions.split(",");
             for (String item : position) {

@@ -1,0 +1,77 @@
+@layout("/common/_container.html",{js:["/assets/statistics/cycleSta.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+<div class="layui-body-header">
+    <span class="layui-body-header-title">低效用地</span>
+</div>
+
+<div id="myContiner" style="height: 100%">
+
+    <div class="ui-layout-center">
+        <div class="layui-fluid">
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <select id="xdm" name="xdm" lay-verify="required">
+                                            <option value="">请选择区县</option>
+                                            <option value="130102">长安区</option>
+                                            <option value="130104">桥西区</option>
+                                            <option value="130105">新华区</option>
+                                            <option value="130107">井陉矿区</option>
+                                            <option value="130108">裕华区</option>
+                                            <option value="130109">藁城区</option>
+                                            <option value="130110">鹿泉区</option>
+                                            <option value="130111">栾城区</option>
+                                            <option value="130121">井陉县</option>
+                                            <option value="130123">正定县</option>
+                                            <option value="130125">行唐县</option>
+                                            <option value="130126">灵寿县</option>
+                                            <option value="130127">高邑县</option>
+                                            <option value="130128">深泽县</option>
+                                            <option value="130129">赞皇县</option>
+                                            <option value="130130">无极县</option>
+                                            <option value="130131">平山县</option>
+                                            <option value="130132">元氏县</option>
+                                            <option value="130133">赵县</option>
+                                            <option value="130184">新乐市</option>
+                                            <option value="130183">晋州市</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <select id="landStatus" name="landStatus" lay-verify="required">
+                                            <option value="">请选择处置类型</option>
+                                            <option value="1">收储再开发</option>
+                                            <option value="2">自主开发</option>
+                                            <option value="3">技术提升</option>
+                                            <option value="4">复垦耕地</option>
+                                            <option value="5">司法处置或转让</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                        <button id="btnOut" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="layui-table" id="detailMainTable" lay-filter="detailMainTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="location">查看位置</a>
+    &lt;!&ndash;<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="excel">导出详情</a>&ndash;&gt;
+</script>-->
+
+@}

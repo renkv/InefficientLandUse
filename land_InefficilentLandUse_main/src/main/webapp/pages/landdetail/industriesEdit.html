@@ -104,6 +104,55 @@
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
                     <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">实施状态</label>
+                        <div class="layui-input-block">
+                            <select name="sfss" id="sfss" lay-filter="sfssSelect">
+                                <option value="">请选择实施状态</option>
+                                <option value="0">未实施</option>
+                                <option value="1">正在实施</option>
+                                <option value="2">实施已完成</option>
+                            </select>
+                        </div>
+                    </div>
+                    @if(isNotEmpty(vo.sfss) && vo.sfss == '0'){
+                    <input id="wssyyV" name="wssyyV" type="hidden" value="${vo.wssyy}"/>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">未实施原因</label>
+                        <div class="layui-input-block">
+                            <select name="wssyy" id="wssyy">
+                                <option value="">请选择未实施原因</option>
+                                <option value="1">未到计划的再开发时序</option>
+                                <option value="2">企业原因导致无法实施</option>
+                                <option value="3">政府原因导致无法实施</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">具体原因描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="tjyy" id="tjyy" class="layui-textarea">${vo.tjyy}</textarea>
+                        </div>
+                    </div>
+                    @}
+                    @if(isNotEmpty(vo.sfss) && vo.sfss == '1'){
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">开始时间</label>
+                        <div class="layui-input-block">
+                            <input id="kssj" name="kssj" value="${vo.kssj}"  placeholder="请输入开始时间" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    @}
+                    @if(isNotEmpty(vo.sfss) && vo.sfss == '2'){
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">完成时间</label>
+                        <div class="layui-input-block">
+                            <input id="wcsj" name="wcsj" value="${vo.wcsj}"  placeholder="请输入完成时间" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    @}
+                </div>
+                <div class="layui-form-item layui-row">
+                    <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">处置类型</label>
                         <div class="layui-input-block">
                             <select name="landStatus" id="landStatus" lay-filter="statusSelect">
