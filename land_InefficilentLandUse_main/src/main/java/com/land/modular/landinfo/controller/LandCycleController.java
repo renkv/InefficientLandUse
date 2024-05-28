@@ -119,19 +119,34 @@ public class LandCycleController extends BaseController {
         LandDetailInfoVo vo = landDetailService.getDetailById(id);
         model.addAttribute("vo",vo);
         model.addAttribute("ctxPath", ConfigListener.getConf().get("contextPath"));
-        if(vo.getLandStatus().equals("storage")){
-            if(!StringUtils.isEmpty(vo.getScStatus())){
-                if("1".equals(vo.getScStatus())){
+        if(vo.getLandStatus().equals("storage")) {
+            if (!StringUtils.isEmpty(vo.getScStatus())) {
+                if ("1".equals(vo.getScStatus())) {
                     vo.setScStatus("拟收储");
-                }else if("2".equals(vo.getScStatus())){
+                } else if ("2".equals(vo.getScStatus())) {
                     vo.setScStatus("已收储");
-                }else if("2".equals(vo.getScStatus())){
+                } else if ("2".equals(vo.getScStatus())) {
                     vo.setScStatus("待开发");
-                }else if("4".equals(vo.getScStatus())){
+                } else if ("4".equals(vo.getScStatus())) {
                     vo.setScStatus("已开发");
                 }
             }
+
+        }
+        if (vo.getLandStatus().equals("1")) {
             return PREFIX + "/storageDetail.html";
+        } else if (vo.getLandStatus().equals("2")) {
+            //自主开发
+            return PREFIX + "/autonomicDetail.html";
+        } else if (vo.getLandStatus().equals("3")) {
+            //技术提升
+            return PREFIX + "/tecimproDetail.html";
+        } else if (vo.getLandStatus().equals("4")) {
+            //复垦耕地
+            return PREFIX + "/reclamationDetail.html";
+        } else if (vo.getLandStatus().equals("5")) {
+            //司法处置或转让
+            return PREFIX + "/justiceDetail.html";
         }
         return PREFIX + "/landDetail.html";
     }

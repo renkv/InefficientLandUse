@@ -28,9 +28,10 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         return [[
             {fixed: 'left',type: 'checkbox'},
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
-            {field: 'landCode', align: 'center',fixed: 'left', title: '编码'},
+            {field: 'landCode',hide: true, align: 'center',fixed: 'left', title: '编码'},
             {field: 'xmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '县名称'},
-            {field: 'pqbh', sort: false,align: 'center',merge:true,fixed: 'left', title: '片区编号'},
+            {field: 'year', sort: false,merge:true,align: 'center', fixed: 'left',title: '年份'},
+            {field: 'pqbh', sort: false,align: 'center',merge:true,fixed: 'left',hide: true, title: '片区编号'},
             {field: 'xmmc', sort: false,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
                     var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.xmmc+ '</a></div>';
                     return html;
@@ -42,18 +43,20 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
                 }
             },
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
-            {field: 'dlmc', sort: false,align: 'center', title: '大类名称'},
-            {field: 'xlmc', sort: false, align: 'center',title: '小类名称'},
-            {field: 'xzyt', sort: false, align: 'center',title: '现状用途'},
-            {field: 'ghyt', sort: false, align: 'center',title: '规划用途'},
+            {field: 'dlmc', sort: false,align: 'center', merge:true, title: '大类名称'},
+            {field: 'xlmc', sort: false, align: 'center', merge:true,title: '小类名称'},
+            {field: 'xzyt', sort: false, align: 'center', merge:true,title: '现状用途'},
+            {field: 'ghyt', sort: false, align: 'center',hide: true,title: '规划用途'},
             {field: 'zkfsx', sort: false, align: 'center',title: '再开发时序'},
-            {field: 'jbqk', sort: false, align: 'center',title: '基本情况'},
-            {field: 'dktj', sort: false, align: 'center',title: '地块推介'},
             {field: 'remark', sort: false, align: 'center',title: '备注'},
-            {field: 'createUserName', sort: false,align: 'center', title: '创建人名字'},
-            {field: 'createTime', sort: false,align: 'center', title: '创建时间'},
-            {field: 'updateUserName', sort: false,align: 'center', title: '修改人名字'},
-            {field: 'updateTime', sort: false,align: 'center', title: '修改时间'}
+
+            // {field: 'jbqk', sort: false, align: 'center',title: '基本情况'},
+            // {field: 'dktj', sort: false, align: 'center',title: '地块推介'},
+
+            {field: 'createUserName',hide: true, sort: false,align: 'center', hide: true,title: '创建人名字'},
+            {field: 'createTime', hide: true,sort: false,align: 'center',hide: true, title: '创建时间'},
+            {field: 'updateUserName', hide: true,sort: false,align: 'center', hide: true,title: '修改人名字'},
+            {field: 'updateTime', hide: true,sort: false,align: 'center', hide: true,title: '修改时间'}
 
         ]];
     };

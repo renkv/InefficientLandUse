@@ -30,6 +30,7 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
             {field: 'id', hide: true,align: 'center',fixed: 'left', title: 'ID'},
             {field: 'landCode', align: 'center',fixed: 'left', title: '编码'},
             {field: 'xmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '县名称'},
+            {field: 'year', sort: false,merge:true,align: 'center', fixed: 'left',title: '年份'},
             {field: 'pqbh', sort: false,align: 'center',merge:true,fixed: 'left', title: '片区编号'},
             {field: 'xmmc', sort: false,align: 'center',fixed: 'left', title: '项目名称',templet:function (d){
                     var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.xmmc+ '</a></div>';
@@ -46,15 +47,16 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
             {field: 'xlmc', sort: false, align: 'center',title: '小类名称'},
             {field: 'xzyt', sort: false, align: 'center',title: '现状用途'},
             {field: 'ghyt', sort: false, align: 'center',title: '规划用途'},
+            {field: 'landStatus', sort: false,merge:true,align: 'center', title: '地块状态'},
             {field: 'zkfsx', sort: false, align: 'center',title: '再开发时序'},
-            {field: 'ghtjbg', sort: false, align: 'center',title: '规划条件变更'},
-            {field: 'ghgcsp', sort: false, align: 'center',title: '规划工程审批'},
-            {field: 'cxrd', sort: false, align: 'center',title: '成效认定'},
+            // {field: 'ghtjbg', sort: false, align: 'center',title: '规划条件变更'},
+            // {field: 'ghgcsp', sort: false, align: 'center',title: '规划工程审批'},
+            // {field: 'cxrd', sort: false, align: 'center',title: '成效认定'},
             {field: 'remark', sort: false, align: 'center',title: '备注'},
-            {field: 'createUserName', sort: false,align: 'center', title: '创建人名字'},
-            {field: 'createTime', sort: false,align: 'center', title: '创建时间'},
-            {field: 'updateUserName', sort: false,align: 'center', title: '修改人名字'},
-            {field: 'updateTime', sort: false,align: 'center', title: '修改时间'}
+            {field: 'createUserName',hide: true, sort: false,align: 'center', title: '创建人名字'},
+            {field: 'createTime', hide: true,sort: false,align: 'center', title: '创建时间'},
+            {field: 'updateUserName',hide: true, sort: false,align: 'center', title: '修改人名字'},
+            {field: 'updateTime', hide: true,sort: false,align: 'center', title: '修改时间'}
 
         ]];
     };

@@ -26,7 +26,7 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
             {field: 'id', hide: true,align: 'center',title: 'ID'},
             {field: 'landCode', align: 'center', title: '编码'},
             {field: 'xmc', sort: false,align: 'center', title: '县名称'},
-            {field: 'pqbh', sort: false,align: 'center', title: '片区编号'},
+            // {field: 'pqbh', sort: false,align: 'center', title: '片区编号'},
             {field: 'xmmc', sort: false,align: 'center', title: '项目名称'},
             {field: 'dkbh', sort: false,align: 'center', title: '地块编号'},
             {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
