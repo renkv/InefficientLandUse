@@ -10,6 +10,7 @@ layui.use(['layer','upload', 'form', 'laydate','admin', 'ax'], function () {
     var category;
 
     var activeDlSelect = function () {
+        var deptName = $("#deptName").val();
         //初始化区县
         $("#xdm").html('<option value="">请选择区县</option>');
         var qxAjax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=sjzqx", function (data) {
@@ -17,7 +18,13 @@ layui.use(['layer','upload', 'form', 'laydate','admin', 'ax'], function () {
                 var name = data.data[i].name;
                 var code = data.data[i].code;
                 if(data.data[i].parentId === 0){
-                    $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                    if(deptName != "" ){
+                        if(deptName.indexOf(name) >= 0){
+                            $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                        }
+                    }else{
+                        $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                    }
                 }
             }
         }, function (data) {
@@ -35,6 +42,19 @@ layui.use(['layer','upload', 'form', 'laydate','admin', 'ax'], function () {
             }
         }, function (data) {
         });
+
+        //初始化行业
+        $("#hydm").html('<option value="">请选择行业</option>');
+        var hyajax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=INDUSTRY", function (data) {
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    $("#hydm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+        }, function (data) {
+        });
         //初始化处置类型选择
         $("#landStatus").html('<option value="">请选择处置类型</option>');
         $("#landStatus").append('<option value="1">收储再开发</option>');
@@ -44,6 +64,7 @@ layui.use(['layer','upload', 'form', 'laydate','admin', 'ax'], function () {
         $("#landStatus").append('<option value="5">司法处置或转让</option>');
         qxAjax.start();
         ajax.start();
+        hyajax.start();
         form.render();
     };
     activeDlSelect();
@@ -55,6 +76,10 @@ layui.use(['layer','upload', 'form', 'laydate','admin', 'ax'], function () {
     });
     laydate.render({
         elem: '#wcsj',
+        range: false
+    });
+    laydate.render({
+        elem: '#crsj',
         range: false
     });
 
@@ -79,6 +104,11 @@ layui.use(['layer','upload', 'form', 'laydate','admin', 'ax'], function () {
         var e = data.elem;
         var text = e[e.selectedIndex].text;
         $("#xlmc").val(text);
+    });
+    form.on('select(hydmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#hymc").val(text);
     });
     form.on('select(xdmSelect)',function (data){
         var e = data.elem;

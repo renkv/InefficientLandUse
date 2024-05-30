@@ -132,6 +132,24 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
                     $(this).css("color","red");
                 }
             });
+            $("[data-field = 'sfss']").children().each(function(){
+                if($(this).text() == '0'){
+                    $(this).text("未实施");
+                }else if($(this).text() == '1'){
+                    $(this).text("正在实施");
+                }else if($(this).text() == '2'){
+                    $(this).text("实施已完成");
+                }
+            });
+            $("[data-field = 'wssyy']").children().each(function(){
+                if($(this).text() == '1'){
+                    $(this).text("未到计划的再开发时序");
+                }else if($(this).text() == '2'){
+                    $(this).text("企业原因导致无法实施");
+                }else if($(this).text() == '3'){
+                    $(this).text("政府原因导致无法实施");
+                }
+            });
         }
     });
     //渲染时间选择框

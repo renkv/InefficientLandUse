@@ -50,6 +50,9 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
     public Page<Map<String, Object>> selectList(LandPlanInfoVo vo, String beginTime, String endTime) {
         Page page = LayuiPageFactory.defaultPage();
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        if(currentUser.getDeptName() != null){
+            vo.setCountyName(currentUser.getDeptName());
+        }
         //vo.setDeptId(currentUser.getDeptId());
         return this.baseMapper.selectListByPage(page, vo, beginTime, endTime);
     }

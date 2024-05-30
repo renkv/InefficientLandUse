@@ -116,6 +116,9 @@
         <if test="vo.xmmc != null and vo.xmmc != ''">
             and xmmc like CONCAT('%',#{vo.xmmc},'%')
         </if>
+        <if test="vo.xmc != null and vo.xmc != ''">
+            and #{vo.xmc} like CONCAT('%',xmc,'%')
+        </if>
         <if test="vo.landStatus != null and vo.landStatus != ''">
             and land_status = #{vo.landStatus}
         </if>

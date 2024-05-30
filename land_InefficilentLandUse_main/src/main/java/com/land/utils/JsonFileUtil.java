@@ -10,7 +10,7 @@ public class JsonFileUtil {
     public static void crateJson(JSONObject jsonObject,String filename) {
         try {
 
-            String orcPath = "D:\\project\\tudi\\land_InefficientLandUse_System\\land_InefficilentLandUse_main\\target\\classes\\assets\\dist\\GeoJson\\"+filename+".json";
+            String orcPath = "E:\\GeoJson\\"+filename+".json";
 
             String jsonString = jsonObject.toJSONString();
             // 生成json文件

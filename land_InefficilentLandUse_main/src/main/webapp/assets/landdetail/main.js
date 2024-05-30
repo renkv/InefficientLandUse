@@ -32,14 +32,14 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
             {field: 'xmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '县名称'},
      /*       {field: 'pqbh', sort: false,align: 'center',merge:true,fixed: 'left', title: '片区编号'},*/
             {field: 'xmmc', sort: false,align: 'center',merge:true,fixed: 'left', title: '项目名称',templet:function (d){
-                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.xmmc+ '</a></div>';
+                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showMap">' + d.xmmc+ '</a></div>';
                     return html;
                 }
                 },
           /*  {field: 'xzdm', sort: false,align: 'center', title: '乡镇代码'},*/
           /*  {field: 'xzmc', sort: false,align: 'center',merge:true, fixed: 'left',title: '乡镇名称'},*/
             {field: 'dkbh', sort: false,align: 'center', title: '地块编号',templet:function (d){
-                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showMap">' + d.dkbh+ '</a></div>';
+                    var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showRec">' + d.dkbh+ '</a></div>';
                     return html;
                 }
                 },
@@ -192,7 +192,7 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
                 }
             });
         }else if(layEvent === 'showMap'){
-            window.open(Feng.ctxPath+"/landdetail/showOnMap?value="+data.dkbh+"&key=DKBH&xmmc="+data.xmmc);
+            window.open(Feng.ctxPath+"/landdetail/showOnMap?key=项目名&value="+data.xmmc+"&xmmc="+data.xmmc);
         }
     });
     /*// 工具条点击事件

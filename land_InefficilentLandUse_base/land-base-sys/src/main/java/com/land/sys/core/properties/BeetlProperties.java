@@ -44,6 +44,8 @@ public class BeetlProperties {
 
     @Value("${spring.mvc.view.prefix}")
     private String prefix;
+    @Value("${token.url}")
+    private String tokenUrl;
 
     public Properties getProperties() {
         Properties properties = new Properties();

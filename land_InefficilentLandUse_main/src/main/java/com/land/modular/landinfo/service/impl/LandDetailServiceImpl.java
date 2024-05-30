@@ -70,7 +70,9 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
     public Page<Map<String, Object>> selectList(LandDetailInfoVo vo, String beginTime, String endTime) {
         Page page = LayuiPageFactory.defaultPage();
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
-        //vo.setDeptId(currentUser.getDeptId());
+        if(currentUser.getDeptName() != null){
+            vo.setXmc(currentUser.getDeptName());
+        }
         return this.baseMapper.selectListByPage(page, vo, beginTime, endTime);
     }
 
@@ -187,6 +189,10 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
         }
         User user = userService.getById(currentUser.getId());
         LandDetailInfo entity = new LandDetailInfo();
+        //如果是低效产业  项目名称赋值给企业名称
+        if(landDetail.getCategory().equals("industries")){
+            landDetail.setQymc(landDetail.getCategory());
+        }
         if(StringUtils.isEmpty(landDetail.getId())){
             int nowYear = DateUtil.year(new Date());
             String landCode = "";
@@ -334,5 +340,35 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
     public Page<Map<String, Object>> cycleStaList(LandStaVo vo, String beginTime, String endTime) {
         Page page = LayuiPageFactory.defaultPage();
         return this.baseMapper.cycleStaList(page, vo, beginTime, endTime);
+    }
+
+    /**
+     * 获取geogson数据
+     * @param response
+     * @param name
+     */
+    @Override
+    public void getFileStream(HttpServletResponse response,String name) {
+        // 指定文件路径，获取file文件
+        File file = new File("E:\\GeoJson\\"+name);
+        try {
+            // 将文件转为文件输入流
+            FileInputStream fileInputStream = new FileInputStream(file);
+            // 获取响应的输出流
+            OutputStream outputStream = response.getOutputStream();
+            // 将文件转成字节数组，再将数组写入响应的输出流
+            byte[] buffer = new byte[1024];
+            int bytesRead = -1;
+            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            // 刷新输出流
+            outputStream.flush();
+            // 关闭流
+            fileInputStream.close();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

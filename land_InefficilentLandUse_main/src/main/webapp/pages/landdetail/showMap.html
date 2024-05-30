@@ -11,7 +11,7 @@
     <script>
         // 天地图Key
         window.td_key = "7f4d8163e476d2f15ce90619ca4d0e7e";
-        var path = "/assets/dist/GeoJson/"+'${value}'+".json";
+        var path = "/landdetail/getGeoJsonByName?name="+'${value}'+".json";
         // GeoJson列表
         window.geo_list = [
             {
@@ -19,11 +19,17 @@
                 path: path,
             },
         ];
+        // 选框样式
+        window.selectBoxStyle = {
+            fillColor: "rgb(230, 162, 60, 0.5)", //填充颜色
+            strokeWeight: 3, //边框宽度
+            strokeColor: "#67C23A", // 边框颜色
+        };
     </script>
     <link href="/assets/dist/css/app.00b2c079.css" rel="preload" as="style" />
     <link href="/assets/dist/css/chunk-vendors.43f02cb8.css" rel="preload" as="style" />
-    <link href="/assets/dist/js/app.77da5ba1.js" rel="preload" as="script" />
-    <link href="/assets/dist/js/chunk-vendors.7985c663.js" rel="preload" as="script" />
+    <link href="/assets/dist/js/app.0e783c2e.js" rel="preload" as="script" />
+    <link href="/assets/dist/js/chunk-vendors.9371f829.js" rel="preload" as="script" />
     <link href="/assets/dist/css/chunk-vendors.43f02cb8.css" rel="stylesheet" />
     <link href="/assets/dist/css/app.00b2c079.css" rel="stylesheet" />
 </head>
@@ -35,7 +41,7 @@
 ></noscript
 >
 <div id="app"></div>
-<script src="/assets/dist/js/chunk-vendors.7985c663.js"></script>
-<script src="/assets/dist/js/app.77da5ba1.js"></script>
+<script src="/assets/dist/js/chunk-vendors.9371f829.js"></script>
+<script src="/assets/dist/js/app.0e783c2e.js"></script>
 </body>
 </html>

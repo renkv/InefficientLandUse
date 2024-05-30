@@ -13,6 +13,8 @@ layui.use(['layer','upload', 'form','laydate', 'formSelects','admin', 'ax'], fun
     var activeDlSelect = function () {
         var dldmV = $("#dldmV").val();
         var xdmV = $("#xdmV").val();
+        var deptName = $("#deptName").val();
+
         //初始化区县
         $("#xdm").html('<option value="">请选择区县</option>');
         var qxAjax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=sjzqx", function (data) {
@@ -20,12 +22,29 @@ layui.use(['layer','upload', 'form','laydate', 'formSelects','admin', 'ax'], fun
                 var name = data.data[i].name;
                 var code = data.data[i].code;
                 if(data.data[i].parentId === 0){
+                    if(deptName != "" ){
+                        if(deptName.indexOf(name) >= 0){
+                            if(code === xdmV){
+                                $("#xdm").append('<option value="' + code + '" selected="selected">'  + name + '</option>');
+                            }else{
+                                $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                            }
+                        }
+                    }else{
+                        if(code === xdmV){
+                            $("#xdm").append('<option value="' + code + '" selected="selected">'  + name + '</option>');
+                        }else{
+                            $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                        }
+                    }
+                }
+                /*if(data.data[i].parentId === 0){
                     if(code === xdmV){
                         $("#xdm").append('<option value="' + code + '" selected="selected">'  + name + '</option>');
                     }else{
                         $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
                     }
-                }
+                }*/
             }
         }, function (data) {
         });
@@ -41,6 +60,23 @@ layui.use(['layer','upload', 'form','laydate', 'formSelects','admin', 'ax'], fun
                         $("#dldm").append('<option value="' + code + '" selected="selected">'  + name + '</option>');
                     }else{
                         $("#dldm").append('<option value="' + code + '">'  + name + '</option>');
+                    }
+                }
+            }
+        }, function (data) {
+        });
+        //初始化行业
+        var hydmV = $("#hydmV").val();
+        $("#hydm").html('<option value="">请选择行业</option>');
+        var hyajax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=INDUSTRY", function (data) {
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    if(code === hydmV){
+                        $("#hydm").append('<option value="' + code + '" selected="selected">'  + name + '</option>');
+                    }else{
+                        $("#hydm").append('<option value="' + code + '">'  + name + '</option>');
                     }
                 }
             }
@@ -130,6 +166,7 @@ layui.use(['layer','upload', 'form','laydate', 'formSelects','admin', 'ax'], fun
         }
         qxAjax.start();
         ajax.start();
+        hyajax.start();
         form.render();
     };
     activeDlSelect();
@@ -166,6 +203,10 @@ layui.use(['layer','upload', 'form','laydate', 'formSelects','admin', 'ax'], fun
         elem: '#wcsj',
         range: false
     });
+    laydate.render({
+        elem: '#crsj',
+        range: false
+    });
 
     form.on('select(dldmSelect)',function (data){
         var value = data.value;
@@ -194,7 +235,11 @@ layui.use(['layer','upload', 'form','laydate', 'formSelects','admin', 'ax'], fun
         var text = e[e.selectedIndex].text;
         $("#xmc").val(text);
     });
-
+    form.on('select(hydmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#hymc").val(text);
+    });
 
     //获取指定class的父节点
     function getParents(element, className) {

@@ -244,7 +244,7 @@ public class ZipUtil {
     }
 
     public static void main(String[] args) {
-        File file = new File("E:\\desktop\\低效用地数据\\dxxztb.zip");
+        File file = new File("F:\\desktop\\低效用地\\11.zip");
         try {
             JSONObject obj = ZipUtil.shpToGeoJson(file);
            // JSONObject obj = ZipUtil.shpToGeoJsonByKey(file,"DKBH","CA33");
