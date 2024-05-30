@@ -7,6 +7,8 @@ import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.land.auth.context.LoginContextHolder;
+import com.land.auth.model.LoginUser;
 import com.land.base.consts.ConstantsContext;
 import com.land.base.log.BussinessLog;
 import com.land.base.pojo.page.LayuiPageFactory;
@@ -84,7 +86,7 @@ public class LandDetailInfoController extends BaseController{
         model.addAttribute("path",path);
         model.addAttribute("value",value);
         model.addAttribute("xmmc",xmmc);
-        File file = new File("E:\\desktop\\低效用地数据\\dxghtb.zip");
+        File file = new File("E:\\shpfile\\dxghtb.zip");
         JSONObject jsonObject = ZipUtil.shpToGeoJsonByKey(file,key,value);
         JsonFileUtil.crateJson(jsonObject,value);
         //return  PREFIX + "/map.html";
@@ -106,6 +108,12 @@ public class LandDetailInfoController extends BaseController{
     public String add(@RequestParam String category, Model model) {
         String businessKey = UUID.randomUUID().toString();
         model.addAttribute("businessKey",businessKey);
+        LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        if(currentUser.getDeptName() != null){
+           model.addAttribute("deptName",currentUser.getDeptName());
+        }else{
+            model.addAttribute("deptName","");
+        }
         if(category.equals("towns")){
             return PREFIX + "/townsAdd.html";
         }else if(category.equals("villages"))
@@ -126,6 +134,12 @@ public class LandDetailInfoController extends BaseController{
         LandDetailInfoVo vo = landDetailService.getDetailById(id);
         model.addAttribute("vo",vo);
         model.addAttribute("ctxPath", ConfigListener.getConf().get("contextPath"));
+        LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        if(currentUser.getDeptName() != null){
+            model.addAttribute("deptName",currentUser.getDeptName());
+        }else{
+            model.addAttribute("deptName","");
+        }
         if(vo.getCategory().equals("towns")){
             return PREFIX + "/townsEdit.html";
         }else if(vo.getCategory().equals("villages"))
@@ -295,6 +309,16 @@ public class LandDetailInfoController extends BaseController{
         main.setCreateUserName(createUserName);
         main.setDeptName(deptName);
         return landDetailService.exportToExcel(response,main,beginTime, endTime);
+    }
+
+    /**
+     * 根据名称获取geoson数据
+     * @param response
+     * @param name
+     */
+    @GetMapping("/getGeoJsonByName")
+    public void getGeoJsonByName(HttpServletResponse response, @RequestParam(required = true) String name){
+        landDetailService.getFileStream(response,name);
     }
 
 }

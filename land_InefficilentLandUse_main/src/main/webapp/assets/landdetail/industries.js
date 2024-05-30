@@ -57,9 +57,9 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
             {field: 'htrjl', sort: false,hide:true, align: 'center',title: '合同容积率'},
             {field: 'httzqd', sort: false,hide:true, align: 'center',title: '合同投资强度'},
             {field: 'htmjss', sort: false,hide:true, align: 'center',title: '合同亩均税收'},
-            {field: 'dkrjl', sort: false, align: 'center',title: '现状容积率'},
-            {field: 'dktzqd', width:180,sort: false, align: 'center',title: '现状投资强度'},
-            {field: 'dkssccl',width:180, sort: false, align: 'center',title: '现状税收产出率'},
+            {field: 'dkrjl', sort: false, hide:true,align: 'center',title: '现状容积率'},
+            {field: 'dktzqd', width:180,hide:true,sort: false, align: 'center',title: '现状投资强度'},
+            {field: 'dkssccl',width:180, hide:true,sort: false, align: 'center',title: '现状税收产出率'},
             {field: 'landStatus', sort: false,merge:true,align: 'center', title: '再开发模式'},
             {field: 'zkfsx', width:180,sort: false, align: 'center',title: '再开发时序'},
             {field: 'sfss', sort: false, align: 'center',title: '实施状态'},
@@ -111,6 +111,24 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
                 }else if($(this).text() == ''){
                     $(this).text("待处置");
                     $(this).css("color","red");
+                }
+            });
+            $("[data-field = 'sfss']").children().each(function(){
+                if($(this).text() == '0'){
+                    $(this).text("未实施");
+                }else if($(this).text() == '1'){
+                    $(this).text("正在实施");
+                }else if($(this).text() == '2'){
+                    $(this).text("实施已完成");
+                }
+            });
+            $("[data-field = 'wssyy']").children().each(function(){
+                if($(this).text() == '1'){
+                    $(this).text("未到计划的再开发时序");
+                }else if($(this).text() == '2'){
+                    $(this).text("企业原因导致无法实施");
+                }else if($(this).text() == '3'){
+                    $(this).text("政府原因导致无法实施");
                 }
             });
         }
@@ -217,10 +235,9 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
      * 弹出添加
      */
     detailMainTable.openAddPage = function () {
-        debugger
         func.open({
             width:"1500px",
-            height: 1000,
+            height: 1200,
             title: '新增低效用地项目',
             content: Feng.ctxPath + '/landdetail/add?category=industries',
             tableId: detailMainTable.tableId,

@@ -29,4 +29,6 @@ public interface LandDetailService {
     Page<Map<String, Object>> landStaList(LandStaVo vo, String beginTime, String endTime);
 
     Page<Map<String, Object>> cycleStaList(LandStaVo vo, String beginTime, String endTime);
+
+    void getFileStream(HttpServletResponse response,String name);
 }

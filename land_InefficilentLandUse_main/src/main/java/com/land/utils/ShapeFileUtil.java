@@ -24,7 +24,7 @@ public class ShapeFileUtil {
     public static FeatureCollection getFeatureCollectionByShpFile(File zipFile) throws IOException {
         try {
             //String tempDir = FileUtil.getTempDirPath();
-            File shapeDir = new File("D:\\temp" + File.separator + new Date().getTime());
+            File shapeDir = new File("E:\\temp" + File.separator + new Date().getTime());
             shapeDir.mkdir();
             List<String> files = ZipUtil.unZipFiles(zipFile, shapeDir.getPath() + File.separator);
             String shapFileName = "";

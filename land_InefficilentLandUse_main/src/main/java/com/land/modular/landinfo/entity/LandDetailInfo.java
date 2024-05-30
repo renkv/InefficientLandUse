@@ -206,7 +206,7 @@ public class LandDetailInfo {
     private String bdcqzsh;
     @Basic
     @TableField(value = "crsj")
-    private Timestamp crsj;
+    private Date crsj;
     @Basic
     @TableField(value = "htrjl")
     private String htrjl;

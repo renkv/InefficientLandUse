@@ -106,6 +106,9 @@
         <if test="vo.busName != null and vo.xmmc != ''">
             and d.XMMC like CONCAT('%',#{vo.xmmc},'%')
         </if>
+        <if test="vo.countyName != null and vo.countyName != ''">
+            and #{vo.countyName} like CONCAT('%',t.county_name,'%')
+        </if>
         order by t.create_time desc
     </select>
 
