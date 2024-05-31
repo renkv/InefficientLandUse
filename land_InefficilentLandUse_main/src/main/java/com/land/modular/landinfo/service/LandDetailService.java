@@ -18,7 +18,7 @@ public interface LandDetailService {
 
     String exportToExcel(HttpServletResponse response, LandInfo main,String beginTime, String endTime);
 
-    void saveLandDetail(LandDetailInfo landDetail);
+    LandDetailInfo saveLandDetail(LandDetailInfo landDetail);
 
     boolean delete(String ids);
 
@@ -31,4 +31,6 @@ public interface LandDetailService {
     Page<Map<String, Object>> cycleStaList(LandStaVo vo, String beginTime, String endTime);
 
     void getFileStream(HttpServletResponse response,String name);
+
+    LandDetailInfo selectByLandCode(String landCode);
 }

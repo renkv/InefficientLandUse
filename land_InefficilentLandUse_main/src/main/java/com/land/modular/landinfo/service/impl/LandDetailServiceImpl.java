@@ -182,7 +182,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
      * @param landDetail
      */
     @Override
-    public void saveLandDetail(LandDetailInfo landDetail) {
+    public LandDetailInfo saveLandDetail(LandDetailInfo landDetail) {
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
         if (currentUser == null) {
             throw new ServiceException(CoreExceptionEnum.NO_CURRENT_USER);
@@ -222,6 +222,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
         }
         BeanCopyUtils.copyNotNullProperties(landDetail,entity);
         this.saveOrUpdate(entity);
+        return  entity;
 
     }
 
@@ -370,5 +371,10 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public LandDetailInfo selectByLandCode(String landCode) {
+        return this.baseMapper.selectByLandCode(landCode);
     }
 }

@@ -7,16 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="land-base-generator" />
+        <module name="InefficilentLandUse" />
+        <module name="land-base" />
+        <module name="land-base-sys" />
         <module name="land-base-oauth2" />
         <module name="land-base-timers" />
+        <module name="land-base-generator" />
         <module name="land-base-dbctn" />
-        <module name="land-base-excel" />
-        <module name="land-base-sys" />
-        <module name="land-base" />
-        <module name="InefficilentLandUse" />
         <module name="land_InefficilentLandUse_main" />
         <module name="land-base-auth" />
+        <module name="land-base-excel" />
       </profile>
     </annotationProcessing>
   </component>
@@ -32,7 +32,7 @@
       <module name="land-base-sys" options="-parameters" />
       <module name="land-base-timers" options="-parameters" />
       <module name="land-low-use" options="-parameters" />
-      <module name="land_InefficilentLandUse_base" options="-parameters" />
+      <module name="land_InefficilentLandUse_base" options="" />
     </option>
   </component>
 </project>

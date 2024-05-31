@@ -211,4 +211,13 @@
         group by xmc,year,land_status,dlmc,xlmc,xzyt
         order by xmc,year
     </select>
+
+    <select id="selectByLandCode" resultType="com.land.modular.landinfo.entity.LandDetailInfo"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from land_detail_info
+        where land_code = #{landCode}
+
+    </select>
 </mapper>

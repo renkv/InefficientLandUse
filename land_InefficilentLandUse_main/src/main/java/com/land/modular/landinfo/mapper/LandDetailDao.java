@@ -26,4 +26,6 @@ public interface LandDetailDao extends BaseMapper<LandDetailInfo> {
     Page<Map<String, Object>> landStaList(@Param("page")Page page, @Param("vo")LandStaVo vo, @Param("beginTime")String beginTime,@Param("endTime") String endTime);
 
     Page<Map<String, Object>> cycleStaList(@Param("page")Page page, @Param("vo")LandStaVo vo, @Param("beginTime")String beginTime,@Param("endTime") String endTime);
+
+    LandDetailInfo selectByLandCode(@Param("landCode")String landCode);
 }

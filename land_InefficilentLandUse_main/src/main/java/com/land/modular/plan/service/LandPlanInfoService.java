@@ -2,6 +2,7 @@ package com.land.modular.plan.service;
 
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.plan.vo.LandPlanInfoVo;
 import com.land.modular.statistics.vo.LandStaVo;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 public interface LandPlanInfoService {
     Page<Map<String, Object>> selectList(LandPlanInfoVo vo, String beginTime, String endTime);
 
-    ResponseData savePlan(LandPlanInfoVo vo);
+    ResponseData savePlan(LandPlanInfoVo vo, LandDetailInfo landDetail);
 
     boolean delete(String ids);
 

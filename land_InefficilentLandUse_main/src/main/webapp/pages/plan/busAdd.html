@@ -86,7 +86,7 @@
                             <label class="layui-form-label">区县名称<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
                                 <input id="xmc" name="xmc" type="hidden" type="text" class="layui-input"/>
-                                <select name="xdm" id="xdm" lay-verify="required" lay-filter="xdmSelect">
+                                <select name="xdm" id="xdm"  lay-filter="xdmSelect">
                                     <option value="">请选择区县</option>
                                 </select>
                             </div>
@@ -96,28 +96,28 @@
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">片区编号<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
-                                <input id="pqbh" name="pqbh" placeholder="请输入片区编号" type="text" lay-verify="required"
+                                <input id="pqbh" name="pqbh" placeholder="请输入片区编号" type="text"
                                        class="layui-input"/>
                             </div>
                         </div>
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">项目名称<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
-                                <input id="xmmc" name="xmmc" placeholder="请输入项目名称" type="text" lay-verify="required"
+                                <input id="xmmc" name="xmmc" placeholder="请输入项目名称" type="text"
                                        class="layui-input"/>
                             </div>
                         </div>
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">地块编号<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
-                                <input id="dkbh" name="dkbh" placeholder="请输入地块编码" type="text" lay-verify="required"
+                                <input id="dkbh" name="dkbh" placeholder="请输入地块编码" type="text"
                                        class="layui-input"/>
                             </div>
                         </div>
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">地块面积<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
-                                <input id="dkmj" name="dkmj" placeholder="请输入地块面积" onkeyup="numLimit(this.value,6)" type="text" lay-verify="required"
+                                <input id="dkmj" name="dkmj" placeholder="请输入地块面积" onkeyup="numLimit(this.value,6)" type="text"
                                        class="layui-input"/>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <label class="layui-form-label">大类名称<span style="color: red;">*</span></label>
                             <input id="dlmc" name="dlmc" type="hidden" class="layui-input"/>
                             <div class="layui-input-block">
-                                <select name="dldm" id="dldm" lay-verify="required" lay-filter="dldmSelect">
+                                <select name="dldm" id="dldm"  lay-filter="dldmSelect">
                                     <option value="">请选择大类</option>
                                 </select>
                             </div>
@@ -135,7 +135,7 @@
                             <label class="layui-form-label">小类名称<span style="color: red;">*</span></label>
                             <input id="xlmc" name="xlmc" type="hidden" class="layui-input"/>
                             <div class="layui-input-block">
-                                <select name="xldm" id="xldm" lay-verify="required" lay-filter="xldmSelect">
+                                <select name="xldm" id="xldm" lay-filter="xldmSelect">
                                     <option value="">请选择小类</option>
                                 </select>
                             </div>
@@ -143,18 +143,142 @@
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">现状用途<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
-                                <input id="xzyt" name="xzyt" placeholder="请输入现状用途" type="text" lay-verify="required"
+                                <input id="xzyt" name="xzyt" placeholder="请输入现状用途" type="text"
                                        class="layui-input"/>
                             </div>
                         </div>
                         <div class="layui-inline layui-col-md6">
                             <label class="layui-form-label">规划用途<span style="color: red;">*</span></label>
                             <div class="layui-input-block">
-                                <input id="ghyt" name="ghyt" placeholder="请输入规划用途" type="text" lay-verify="required"
+                                <input id="ghyt" name="ghyt" placeholder="请输入规划用途" type="text"
                                        class="layui-input"/>
                             </div>
                         </div>
                     </div>
+
+                    <div style="display: none" id="cyDiv">
+                        <div class="layui-row">
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">不动产权证书号</label>
+                                <div class="layui-input-block">
+                                    <input id="bdcqzsh" name="bdcqzsh" placeholder="请输入不动产权证书号" type="text" class="layui-input"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">出让/划拨时间</label>
+                                <div class="layui-input-block">
+                                    <input id="crsj" name="crsj" placeholder="请输入出让/划拨时间" type="text" class="layui-input"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">合同容积率</label>
+                                <div class="layui-input-block">
+                                    <input id="htrjl" name="htrjl" placeholder="请输入合同容积率" type="text" class="layui-input"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">合同投资强度</label>
+                                <div class="layui-input-block">
+                                    <input id="httzqd" name="httzqd" placeholder="请输入合同投资强度" type="text" class="layui-input"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">合同亩均税收</label>
+                                <div class="layui-input-block">
+                                    <input id="htmjss" name="htmjss" placeholder="请输入合同亩均税收" type="text" class="layui-input"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">行业名称<span style="color: red;">*</span></label>
+                                <input id="hymc" name="hymc" type="hidden" class="layui-input"/>
+
+                                <div class="layui-input-block">
+                                    <select name="hydm" id="hydm"  lay-filter="hydmSelect">
+                                        <option value="">请选择行业名称</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">行业容积率基数值</label>
+                            <div class="layui-input-block">
+                                <input id="rjljsz" name="rjljsz" placeholder="请输入行业容积率基数值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块容积率</label>
+                            <div class="layui-input-block">
+                                <input id="dkrjl" name="dkrjl" placeholder="请输入地块容积率" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块容积率分值</label>
+                            <div class="layui-input-block">
+                                <input id="rjlfz" name="rjlfz" placeholder="请输入地块容积率分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">投资强度基数值</label>
+                            <div class="layui-input-block">
+                                <input id="tzqdjs" name="tzqdjs" placeholder="请输入投资强度基数值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块投资强度</label>
+                            <div class="layui-input-block">
+                                <input id="dktzqd" name="dktzqd" placeholder="请输入地块投资强度" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块投资强度分值</label>
+                            <div class="layui-input-block">
+                                <input id="tzqdfz" name="tzqdfz" placeholder="请输入地块投资强度分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">土地税收产出率基数值</label>
+                            <div class="layui-input-block">
+                                <input id="ssccljs" name="ssccljs" placeholder="请输入土地税收产出率基数值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块土地税收产出率</label>
+                            <div class="layui-input-block">
+                                <input id="dkssccl" name="dkssccl" placeholder="请输入地块土地税收产出率" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块土地税收产出率分值</label>
+                            <div class="layui-input-block">
+                                <input id="dksscclfz" name="dksscclfz" placeholder="请输入地块土地税收产出率分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">部门因素分值</label>
+                            <div class="layui-input-block">
+                                <input id="bmysfz" name="bmysfz" placeholder="请输入部门因素分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">政府因素分值</label>
+                            <div class="layui-input-block">
+                                <input id="zfysfz" name="zfysfz" placeholder="请输入政府因素分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">综合得分</label>
+                            <div class="layui-input-block">
+                                <input id="zhdf" name="zhdf" placeholder="请输入综合得分" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
                 </div>
             </div>
         </div>

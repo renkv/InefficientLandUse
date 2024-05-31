@@ -11,6 +11,7 @@ import com.land.auth.context.LoginContextHolder;
 import com.land.auth.model.LoginUser;
 import com.land.base.pojo.page.LayuiPageFactory;
 import com.land.modular.landinfo.entity.LandDetailInfo;
+import com.land.modular.landinfo.service.LandDetailService;
 import com.land.modular.landinfo.vo.LandDetailExcelParam;
 import com.land.modular.plan.entity.LandPlanInfoEntity;
 import com.land.modular.plan.mapper.LandPlanDao;
@@ -27,6 +28,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
@@ -39,6 +41,8 @@ import java.util.Map;
 public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanInfoEntity> implements LandPlanInfoService {
     @Autowired
     private UserService userService;
+    @Autowired
+    private LandDetailService landDetailService;
     /**
      * 分页查询列表
      * @param vo
@@ -63,11 +67,21 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
      * @return
      */
     @Override
-    public ResponseData savePlan(LandPlanInfoVo vo) {
+    @Transactional
+    public ResponseData savePlan(LandPlanInfoVo vo,LandDetailInfo landDetail) {
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
         if (currentUser == null) {
             throw new ServiceException(CoreExceptionEnum.NO_CURRENT_USER);
         }
+        LandDetailInfo en;
+        if(StringUtils.isEmpty(vo.getLandCode())){
+             en = landDetailService.saveLandDetail(landDetail);
+            vo.setLandCode(en.getLandCode());
+        }else{
+            en = landDetailService.selectByLandCode(vo.getLandCode());
+        }
+        vo.setCountyName(en.getXmc());
+        vo.setCountyCode(en.getXdm());
         User user = userService.getById(currentUser.getId());
         LandPlanInfoEntity entity = new LandPlanInfoEntity();
         if(StringUtils.isEmpty(vo.getId())){

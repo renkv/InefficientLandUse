@@ -117,6 +117,19 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         range: false
     });
 
+    form.on('select(categorySelect)',function (data){
+        var value = data.value;
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        debugger;
+        if(value != "" && value == 'industries'){
+            $("#cyDiv").css("display","block");
+        }else {
+            $("#cyDiv").css("display","none");
+        }
+        form.render();
+    });
+
     form.on('select(dldmSelect)',function (data){
         var value = data.value;
         var e = data.elem;
@@ -182,25 +195,6 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
 
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
-        /*debugger;
-        $("#landDiv111").html("");
-        var html = '<div class="layui-card-header">低效用地基础信息</div>\n' +
-            '            <div class="layui-card-body">\n' +
-            '                <div class="layui-form-item layui-row">\n' +
-            '                    <div class="layui-inline layui-col-md6">\n' +
-            '                        <label class="layui-form-label">低效用地类型</label>\n' +
-            '                        <div class="layui-input-block">\n' +
-            '                            <select name="category" id="category" lay-filter="categorySelect">\n' +
-            '                                <option value="">请选择地块类型</option>\n' +
-            '                                <option value="towns">低效城镇用地</option>\n' +
-            '                                <option value="industries">低效产业用地</option>\n' +
-            '                                <option value="villages">低效村庄用地</option>\n' +
-            '                            </select>\n' +
-            '                        </div>\n' +
-            '                    </div>\n' +
-            '                </div>\n' +
-            '            </div>';
-        $("#landDiv111").html(html);*/
         $("#landDiv").css("display","block");
         form.render();
     });
@@ -209,14 +203,34 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
     form.on('submit(btnSubmit)', function (data) {
         var checkStatus = table.checkStatus(addLandTable.tableId);
         var ids = [];
+        var id = "";
         $(checkStatus.data).each(function (i, o) {//o即为表格中一行的数据
             ids.push(o.landCode);
         });
-        if (ids.length != 1) {
+        if (ids.length > 1) {
             layer.msg('请选择一条数据');
             return false;
         }
-        var id = ids[0];
+        if (ids.length == 1) {
+            id = ids[0];
+        }
+        if(ids.length == 0){
+            var xmc = $("#xmc").val();
+            var pqbh = $("#pqbh").val();
+            var xmmc = $("#xmmc").val();
+            var dkbh = $("#dkbh").val();
+            var dkmj = $("#dkmj").val();
+            var dlmc = $("#dlmc").val();
+            var xlmc = $("#xlmc").val();
+            var xzyt = $("#xzyt").val();
+            var ghyt = $("#ghyt").val();
+
+            if(xmc == "" || pqbh== "" || xmmc == "" || dkbh == "" || dkmj == "" || dlmc == "" || xlmc== "" || xzyt== "" || ghyt== ""){
+                layer.msg('必填项不能为空!!!');
+                return false;
+
+            }
+        }
         var ajax = new $ax(Feng.ctxPath + "/plan/savePlan?landCode="+id, function (data) {
             Feng.success("保存成功！");
             //传给上个页面，刷新table用

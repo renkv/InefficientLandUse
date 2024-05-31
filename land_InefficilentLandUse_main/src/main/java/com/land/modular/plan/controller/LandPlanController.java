@@ -11,6 +11,7 @@ import com.land.auth.model.LoginUser;
 import com.land.base.consts.ConstantsContext;
 import com.land.base.log.BussinessLog;
 import com.land.base.pojo.page.LayuiPageFactory;
+import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.plan.service.LandPlanInfoService;
 import com.land.modular.plan.vo.LandPlanExcelParam;
 import com.land.modular.plan.vo.LandPlanInfoVo;
@@ -213,9 +214,10 @@ public class LandPlanController extends BaseController {
     @BussinessLog(value = "保存实施计划信息", key = "simpleName", dict = DeptDict.class)
     @RequestMapping(value = "/savePlan")
     @ResponseBody
-    public ResponseData savePlan(@Valid LandPlanInfoVo vo,  @RequestParam(required = true) String landCode) {
+    public ResponseData savePlan(@Valid LandPlanInfoVo vo, LandDetailInfo landDetail, @RequestParam(required = true) String landCode) {
         vo.setLandCode(landCode);
-        return landPlanInfoService.savePlan(vo);
+        return landPlanInfoService.savePlan(vo,landDetail);
+
     }
 
     /**
