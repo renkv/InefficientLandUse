@@ -6,6 +6,8 @@ import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.land.auth.context.LoginContextHolder;
+import com.land.auth.model.LoginUser;
 import com.land.base.consts.ConstantsContext;
 import com.land.base.log.BussinessLog;
 import com.land.base.pojo.page.LayuiPageFactory;
@@ -84,6 +86,12 @@ public class LandPlanController extends BaseController {
         /*String businessKey = UUID.randomUUID().toString();
         model.addAttribute("businessKey",businessKey);*/
         model.addAttribute("planType",planType);
+        LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        if(currentUser.getDeptName() != null){
+            model.addAttribute("deptName",currentUser.getDeptName());
+        }else{
+            model.addAttribute("deptName","");
+        }
         if(planType.equals("1")){
             //低效企业
             return PREFIX + "/busAdd.html";

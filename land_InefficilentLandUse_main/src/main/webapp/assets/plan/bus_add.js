@@ -58,6 +58,98 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         cellMinWidth: 100,
         cols: addLandTable.initColumn()
     });
+
+    var activeDlSelect = function () {
+        var deptName = $("#deptName").val();
+        //初始化区县
+        $("#xdm").html('<option value="">请选择区县</option>');
+        var qxAjax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=sjzqx", function (data) {
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    if(deptName != "" ){
+                        if(deptName.indexOf(name) >= 0){
+                            $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                        }
+                    }else{
+                        $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                    }
+                }
+            }
+        }, function (data) {
+        });
+        //初始化大类
+        $("#dldm").html('<option value="">请选择大类</option>');
+        var ajax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=LAND_TYPE", function (data) {
+            category = data.data;
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    $("#dldm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+        }, function (data) {
+        });
+
+        //初始化行业
+        $("#hydm").html('<option value="">请选择行业</option>');
+        var hyajax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=INDUSTRY", function (data) {
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    $("#hydm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+        }, function (data) {
+        });
+        qxAjax.start();
+        ajax.start();
+        hyajax.start();
+        form.render();
+    };
+    activeDlSelect();
+
+    laydate.render({
+        elem: '#crsj',
+        range: false
+    });
+
+    form.on('select(dldmSelect)',function (data){
+        var value = data.value;
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#dlmc").val(text);
+        $("#xldm").html('<option value="">请选择小类</option>');
+        if(value != "" && category.length >= 0){
+            for (var i = 0; i < category.length; i++) {
+                var name = category[i].name;
+                var code = category[i].code;
+                if(code != value && code.includes(value)){
+                    $("#xldm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+        }
+        form.render();
+    });
+    form.on('select(xldmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#xlmc").val(text);
+    });
+    form.on('select(hydmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#hymc").val(text);
+    });
+    form.on('select(xdmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#xmc").val(text);
+    });
+
     /**
      * 点击查询按钮
      */
@@ -65,8 +157,8 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         var queryData = {};
         queryData['timeLimit'] = $('#timeLimit').val();
         queryData['xdm'] = '';
-        queryData['xmmc'] = $('#xmmc').val();
-        var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
+        queryData['xmmc'] = $('#xmmcSelect').val();
+        var value = $('select[name="xdmSelect"]').next().find('.layui-this').attr('lay-value');
         var landStatus = $('select[name="landStatus"]').next().find('.layui-this').attr('lay-value');
         if(value != undefined){
             queryData['xdm'] = value;
@@ -86,6 +178,31 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {
         addLandTable.search();
+    });
+
+    // 添加按钮点击事件
+    $('#btnAdd').click(function () {
+        /*debugger;
+        $("#landDiv111").html("");
+        var html = '<div class="layui-card-header">低效用地基础信息</div>\n' +
+            '            <div class="layui-card-body">\n' +
+            '                <div class="layui-form-item layui-row">\n' +
+            '                    <div class="layui-inline layui-col-md6">\n' +
+            '                        <label class="layui-form-label">低效用地类型</label>\n' +
+            '                        <div class="layui-input-block">\n' +
+            '                            <select name="category" id="category" lay-filter="categorySelect">\n' +
+            '                                <option value="">请选择地块类型</option>\n' +
+            '                                <option value="towns">低效城镇用地</option>\n' +
+            '                                <option value="industries">低效产业用地</option>\n' +
+            '                                <option value="villages">低效村庄用地</option>\n' +
+            '                            </select>\n' +
+            '                        </div>\n' +
+            '                    </div>\n' +
+            '                </div>\n' +
+            '            </div>';
+        $("#landDiv111").html(html);*/
+        $("#landDiv").css("display","block");
+        form.render();
     });
 
     // 表单提交事件
@@ -115,4 +232,31 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         return false;
     });
 });
+
+function numLimit(data,num){
+    // 先把非数字的都替换掉(空)，除了数字和.
+    data = data.replace(/[^\d.]/g, "");
+    // 必须保证第一个为数字而不是.
+    data = data.replace(/^\./g, "");
+    // 保证只有出现一个.而没有多个.
+    data = data.replace(/\.{3,}/g, "");
+    // 保证.只出现一次，而不能出现两次以上
+    data =data
+        .replace(".", "$#$")
+        .replace(/\./g, "")
+        .replace("$#$", ".");
+    // 限制几位小数
+    let subscript = -1;
+    for (let i in data) {
+        if (data[i] === ".") {
+            subscript = i;
+        }
+        if (subscript !== -1) {
+            if (i - subscript > num) {
+                data = data.substring(0, data.length - 1);
+            }
+        }
+    }
+    return data;
+}
 
