@@ -362,7 +362,7 @@ layui.use(['table', 'admin','laydate', 'tableMerge', 'ax', 'func','upload'], fun
     //执行实例
     var uploadInst = upload.render({
         elem: '#btnImp'
-        , url: '/landdetail/uploadExcel'
+        , url: '/landdetail/uploadExcel?category=industries'
         ,accept: 'file'
         , done: function (res) {
             if (res.code==500){

@@ -87,4 +87,11 @@
         </if>
     </select>
 
+    <select id="getOneByNameAndCode" resultType="com.land.sys.modular.system.entity.Dict">
+        select t.code AS code, t.name AS name
+        from sys_dict t
+        left join  sys_dict_type d on t.dict_type_id=d.dict_type_id
+        where 1=1 and d.code=#{typeCode} and #{deptName} like  '%' || t.name || '%'
+        limit 1
+    </select>
 </mapper>

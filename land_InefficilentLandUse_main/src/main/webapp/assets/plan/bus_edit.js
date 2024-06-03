@@ -74,22 +74,7 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
                 }
               });
               form.render('checkbox');
-            /*console.log('res=',res)
-            res.data.forEach(function (item, index) {
-                $('tbody').find('tr[data-index="' + index + '"]').addClass('layui-table-click');
-            });
-            var rows = $('#data').next().find('.layui-table-box tbody tr')
-            if (rows.length > 0) {
-                console.log("找到了第1行",rows[0] );
 
-                // 如果想高亮显示该行，可以添加CSS样式或其他操作
-                $(rows[0]).addClass('ayui-table-click');
-                /!*var data = res.data[0];
-                // 行点击事件
-                rowClick(data);*!/
-            } else {
-                console.log("未找到指定行");
-            }*/
         }
     });
 
@@ -98,18 +83,6 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         table.reload(addLandTable.tableId, {url:Feng.ctxPath + '/landdetail/selectList?landCode='+landCode,
             page: {curr: 1}
         });
-        /*debugger;
-        if(isFirst == 0){
-            console.log(1111);
-            table.reload(addLandTable.tableId, {url:Feng.ctxPath + '/landdetail/selectList?landCode='+landCode,
-                page: {curr: 1}
-            });
-        }else{
-            console.log(1111);
-            table.reload(addLandTable.tableId, {url:Feng.ctxPath + '/landdetail/selectList',
-                page: {curr: 1}
-            });
-        }*/
     }
     loadDefautData();
 

@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.land.auth.context.LoginContextHolder;
 import com.land.auth.model.LoginUser;
 import com.land.base.consts.ConstantsContext;
+import com.land.base.dict.SystemDict;
 import com.land.base.pojo.page.LayuiPageFactory;
 import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.landinfo.entity.LandDetailInfoHis;
@@ -27,9 +28,11 @@ import com.land.modular.weekwork.entity.WeekWorkDetail;
 import com.land.modular.weekwork.entity.WeekWorkMain;
 import com.land.modular.weekwork.vo.WeekWorkDetailExcelParam;
 import com.land.sys.modular.system.entity.Dept;
+import com.land.sys.modular.system.entity.Dict;
 import com.land.sys.modular.system.entity.FileInfo;
 import com.land.sys.modular.system.entity.User;
 import com.land.sys.modular.system.service.DeptService;
+import com.land.sys.modular.system.service.DictService;
 import com.land.sys.modular.system.service.FileInfoService;
 import com.land.sys.modular.system.service.UserService;
 import com.land.utils.BeanCopyUtils;
@@ -59,6 +62,8 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
     private FileInfoService fileInfoService;
     @Autowired
     private LandDetailHisService landDetailHisService;
+    @Autowired
+    private DictService dictService;
     /**
      * 根据条件查询列表数据
      * @param vo
@@ -70,7 +75,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
     public Page<Map<String, Object>> selectList(LandDetailInfoVo vo, String beginTime, String endTime) {
         Page page = LayuiPageFactory.defaultPage();
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
-        if(currentUser.getDeptName() != null){
+        if(currentUser.getDeptName() != null && !(currentUser.getDeptName().equals("石家庄市自然资源与规划局"))){
             vo.setXmc(currentUser.getDeptName());
         }
         return this.baseMapper.selectListByPage(page, vo, beginTime, endTime);
@@ -82,17 +87,92 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
      * @return
      */
     @Override
-    public String uploadExcel(List result) {
+    public String uploadExcel(List result,String category) {
         String msg = "";
+        String xdm = "";
+        String xmc = "";
+        StringBuffer stringBuffer = new StringBuffer();
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        if(!(currentUser.getDeptName().equals("石家庄市自然资源与规划局"))){
+            String deptName = currentUser.getDeptName();
+            Dict deptDict = dictService.getOneByNameAndCode(deptName,"sjzqx");
+            if(deptDict != null){
+                xdm = deptDict.getCode();
+                xmc = deptDict.getName();
+            }
+        }
+        int nowYear = DateUtil.year(new Date());
+        Map<String,Object> map = new HashMap<>();
+        int code = 0;
+        String landCodeStr = "";
+        List<LandDetailInfo> inertList = new ArrayList<>();
         for (int i = 0; i < result.size(); i++) {
+            int errNum = i+1;
             LandDetailExcelParam param = (LandDetailExcelParam) result.get(i);
-            LandDetailInfo main = new LandDetailInfo();
-            BeanUtils.copyProperties(param,main);
-            main.setCreateUser(currentUser.getId());
-            main.setCreateUserName(currentUser.getName());
-            main.setCreateTime(new Date());
-            this.saveOrUpdate(main);
+            if(StringUtils.isEmpty(param.getXmc())){
+                stringBuffer.append("第" +errNum+"行，县名称为空");
+            }else if(!StringUtils.isEmpty(xmc) && !xmc.contains(param.getXmc())){
+                stringBuffer.append("第" +errNum+"行，县名称超出当前权限范围");
+            }else{
+                //判断地块编码是否已存在
+                if(!StringUtils.isEmpty(param.getDkbh())){
+                    List<LandDetailInfo> existList = this.baseMapper.selectByDkbh(param.getDkbh());
+                    if(existList.size() > 0){
+                        stringBuffer.append("第" +errNum+"行，地块编号已存在");
+                    }
+                }
+                LandDetailInfo main = new LandDetailInfo();
+                BeanCopyUtils.copyNotNullProperties(param,main);
+                String landCode = "";
+                landCodeStr = PinyinUtil.getPinYinHeadChar(main.getXmc());
+                if(map.get(landCodeStr) != null){
+                    code = (int) map.get(landCodeStr);
+                }else{
+                    LandDetailInfo info = null;
+                    //根据区县跟年份获取当前最大编号周期
+                    if(StringUtils.isEmpty(xdm)){
+                        Dict dict = dictService.getOneByNameAndCode(param.getXmc(),"sjzqx");
+                        String cuXdm = "";
+                        if(dict != null){
+                            cuXdm = dict.getCode();
+                        }
+                        info = this.baseMapper.getByYearAndQx(nowYear,cuXdm);
+                    }else{
+                        info = this.baseMapper.getByYearAndQx(nowYear,xdm);
+                    }
+                    if(info != null){
+                        String numStr = info.getLandCode().substring(info.getLandCode().length() - 3);
+                        code = Integer.valueOf(numStr) + 1;
+                        landCodeStr = PinyinUtil.getPinYinHeadChar(main.getXmc());
+                    }else if(!StringUtils.isEmpty(main.getXmc())){
+                        code = 1;
+                        landCodeStr = PinyinUtil.getPinYinHeadChar(main.getXmc());
+                    }else{
+                        code = 1;
+                        landCodeStr = "SJZ";
+                    }
+                }
+                landCode = landCodeStr + nowYear +String.format("%03d",code);
+
+                main.setLandCode(landCode);
+                main.setCategory(category);
+                code ++;
+                map.put(landCodeStr,code);
+                main.setYear(nowYear);
+                main.setCreateUser(currentUser.getId());
+                main.setCreateUserName(currentUser.getName());
+                main.setCreateTime(new Date());
+                //如果是低效产业  项目名称赋值给企业名称
+                if(category.equals("industries")){
+                    main.setQymc(main.getCategory());
+                }
+                inertList.add(main);
+            }
+        }
+        if(!stringBuffer.toString().equals("")){
+            return stringBuffer.toString();
+        }else{
+            this.saveOrUpdateBatch(inertList);
         }
         return msg;
     }

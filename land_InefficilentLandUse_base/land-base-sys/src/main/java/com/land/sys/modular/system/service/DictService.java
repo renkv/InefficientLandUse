@@ -1,6 +1,7 @@
 package com.land.sys.modular.system.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.land.base.dict.SystemDict;
 import com.land.base.enums.CommonStatus;
 import com.land.base.pojo.node.ZTreeNode;
 import com.land.base.pojo.page.LayuiPageFactory;
@@ -342,4 +343,8 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
         }
     }
 
+    public Dict getOneByNameAndCode(String deptName,String typeCode) {
+        Dict dict=this.baseMapper.getOneByNameAndCode(deptName,typeCode);
+        return dict;
+    }
 }

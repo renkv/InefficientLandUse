@@ -248,7 +248,7 @@ public class LandDetailInfoController extends BaseController{
      */
     @RequestMapping("/uploadExcel")
     @ResponseBody
-    public ResponseData uploadExcel(@RequestPart("file") MultipartFile multipartFile, HttpServletRequest request) {
+    public ResponseData uploadExcel(@RequestPart("file") MultipartFile multipartFile,String category, HttpServletRequest request) {
 
         String name = multipartFile.getOriginalFilename();
         request.getSession().setAttribute("upFile", name);
@@ -266,9 +266,12 @@ public class LandDetailInfoController extends BaseController{
                 /*if (result.size()>=1000){
                     return ResponseData.error("单次最多上传1000条");
                 }*/
-                String retMsg = landDetailService.uploadExcel(result);
-
-                return ResponseData.success(0, "上传成功",retMsg);
+                String retMsg = landDetailService.uploadExcel(result,category);
+                if(StringUtils.isEmpty(retMsg)){
+                    return ResponseData.success(0, "上传成功",retMsg);
+                }else{
+                    return ResponseData.error(retMsg);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 return ResponseData.error(e.getMessage());

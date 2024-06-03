@@ -14,7 +14,7 @@ import java.util.Map;
 public interface LandDetailService {
     Page<Map<String, Object>> selectList(LandDetailInfoVo vo, String beginTime, String endTime);
 
-    String uploadExcel(List result);
+    String uploadExcel(List result,String category);
 
     String exportToExcel(HttpServletResponse response, LandInfo main,String beginTime, String endTime);
 

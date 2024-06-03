@@ -220,4 +220,11 @@
         where land_code = #{landCode}
 
     </select>
+
+    <select id="selectByDkbh" resultMap="LandInfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from land_detail_info
+        where dkbh = #{dkbh}
+    </select>
 </mapper>

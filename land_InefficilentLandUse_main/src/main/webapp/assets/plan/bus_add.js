@@ -54,6 +54,7 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
     table.render({
         id: addLandTable.tableId,
         elem: '#' + addLandTable.tableId,
+        page: true,
         url:Feng.ctxPath + '/landdetail/selectList?category=',
         cellMinWidth: 100,
         cols: addLandTable.initColumn()
