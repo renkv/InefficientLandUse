@@ -93,10 +93,16 @@ public class LandDetailInfoController extends BaseController{
         return  PREFIX + "/showMap.html";
     }
 
-    @RequestMapping("/demo1")
-    public String demo1(String category, Model model) {
-        model.addAttribute("category",category);
-        return  "/demos/map.html";
+    /**
+     * 条件选择
+     * @param deptName
+     * @param model
+     * @return
+     */
+    @RequestMapping("/commonSelect")
+    public String commonSelect(String deptName, Model model) {
+        model.addAttribute("deptName",deptName);
+        return  PREFIX +"/commonSelect.html";
     }
 
     /**

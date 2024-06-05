@@ -227,4 +227,10 @@
         from land_detail_info
         where dkbh = #{dkbh}
     </select>
+
+    <select id="getMaxPqbh" resultMap="LandInfoMap">
+        SELECT MAX(pqbh) as pqbh from (
+                                          select cast(substring_index(pqbh,'PQ',-1) as SIGNED ) as pqbh from land_detail_info
+                                      ) t
+    </select>
 </mapper>

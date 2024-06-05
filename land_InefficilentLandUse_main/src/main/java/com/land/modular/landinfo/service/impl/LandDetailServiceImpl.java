@@ -275,6 +275,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
         }
         if(StringUtils.isEmpty(landDetail.getId())){
             int nowYear = DateUtil.year(new Date());
+            //获取系统地块编号
             String landCode = "";
             //根据区县跟年份获取当前最大编号周期
             LandDetailInfo info = this.baseMapper.getByYearAndQx(nowYear,landDetail.getXdm());
@@ -289,6 +290,22 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             }else{
                 landCode = "SJZ" + nowYear + "001";
                 landDetail.setLandCode(landCode);
+            }
+            //如果地块编号为空 即赋值
+            if(StringUtils.isEmpty(landDetail.getDkbh())){
+                landDetail.setDkbh(landCode);
+            }
+            //获取片区编号
+            if(StringUtils.isEmpty(landDetail.getPqbh())){
+                LandDetailInfo maxpq = this.baseMapper.getMaxPqbh();
+                if(maxpq != null){
+                    int startIndex = maxpq.getPqbh().indexOf("PQ") + 2; // 获取PQ后的索引位置，并加上1来跳过PQ
+                    String result = maxpq.getPqbh().substring(startIndex);
+                    int pqNum = Integer.valueOf(result) +1;
+                    landDetail.setPqbh("PQ"+pqNum);
+                }else{
+                    landDetail.setPqbh("PQ1");
+                }
             }
             landDetail.setYear(nowYear);
             landDetail.setCreateUser(currentUser.getId());

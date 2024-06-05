@@ -100,13 +100,13 @@ public class SsoLoginController extends BaseController {
     public String ssoLogin(@RequestParam("token") String token, HttpServletResponse response, Model model) {
         GunsProperties properties = new GunsProperties();
         String url = properties.TOKENURL;
-
+        System.out.println(token);
         String result = HttpClient.doPost(url,"token="+token,token);
         System.out.println(result);
         //result = "{\"msg\":\"操作成功\", \"code\":200, \"data\":{\"userId\":128, \"userName\":\"桥西区\", \"userArea\":\"桥西区\"}}";
 
         JSONObject job = JSONObject.parseObject(result);
-        if(job.get("code").toString().equals("200")){
+        if(job.get("code") != null && job.get("code").toString().equals("200")){
             JSONObject data = (JSONObject) job.get("data");
             String userName = data.get("userName").toString();
             String userArea = data.get("userArea").toString();
@@ -166,6 +166,8 @@ public class SsoLoginController extends BaseController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             //登录并创建token
             String logtoken = authService.login(userName, passwordConfig.getValue());
+        }else{
+            return "/login.html";
         }
         //获取当前用户角色列表
         LoginUser user = LoginContextHolder.getContext().getUser();

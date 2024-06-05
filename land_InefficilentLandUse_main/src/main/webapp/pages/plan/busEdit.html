@@ -6,59 +6,206 @@
             <div class="layui-card-header">低效用地基本信息</div>
             <div class="layui-card-body">
                 <div class="layui-row">
-                    <div class="layui-col-md12">
-                        <div class="layui-card">
-                            <div style="padding-right: 0px;">
-                                <div class="layui-form toolbar">
-                                    <div class="layui-inline">
-                                        <select id="xdm" name="xdm" >
-                                            <option value="">请选择区县</option>
-                                            <option value="130102">长安区</option>
-                                            <option value="130104">桥西区</option>
-                                            <option value="130105">新华区</option>
-                                            <option value="130107">井陉矿区</option>
-                                            <option value="130108">裕华区</option>
-                                            <option value="130109">藁城区</option>
-                                            <option value="130110">鹿泉区</option>
-                                            <option value="130111">栾城区</option>
-                                            <option value="130121">井陉县</option>
-                                            <option value="130123">正定县</option>
-                                            <option value="130125">行唐县</option>
-                                            <option value="130126">灵寿县</option>
-                                            <option value="130127">高邑县</option>
-                                            <option value="130128">深泽县</option>
-                                            <option value="130129">赞皇县</option>
-                                            <option value="130130">无极县</option>
-                                            <option value="130131">平山县</option>
-                                            <option value="130132">元氏县</option>
-                                            <option value="130133">赵县</option>
-                                            <option value="130184">新乐市</option>
-                                            <option value="130183">晋州市</option>
-                                        </select>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <input id="xmmc" name="xmmc" class="layui-input" type="text" placeholder="项目名称"/>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <!--<input id="landStatus" name="landStatus" class="layui-input" type="text" placeholder="地块状态"/>-->
-                                        <select name="landStatus" id="landStatus" lay-filter="statusSelect">
-                                            <option value="">请选择处置类型</option>
-                                            <option value="1">收储再开发</option>
-                                            <option value="2">自主开发</option>
-                                            <option value="3">技术提升</option>
-                                            <option value="4">复垦耕地</option>
-                                            <option value="5">司法处置或转让</option>
-                                        </select>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <!--<button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>-->
-                                        <a id="btnSearch"  class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</a>
-                                    </div>
+                    <input id="id" name="id" type="hidden" value="${vo.id}" class="layui-input"/>
+                    <input id="planType" name="planType" type="hidden" value="${vo.planType}" class="layui-input"/>
+                    <input id="landCode" name="landCodeV" type="hidden" value="${vo.landCode}" class="layui-input"/>
+                    <input id="deptName" name="deptName" type="hidden" value="${deptName}"/>
+                    <input id="category" name="category" type="hidden" value="industries"/>
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">类型</label>
+                            <div class="layui-input-block">
+                                <select name="type" id="type" lay-filter="typeSelect">
+                                    <option value="1">关联已有地块</option>
+                                    <option value="2">新增地块</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6" id="readyDiv">
+                            <label class="layui-form-label">项目名称</label>
+                            <div class="layui-input-block">
+                                <input id="xmmcSelect" name="xmmcSelect" placeholder="请输入项目名称" value="${vo.xmmc}" type="text" class="layui-input" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div id="landDiv" style="display: none;">
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">项目名称<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="xmmc" name="xmmc" placeholder="请输入项目名称" type="text"
+                                           class="layui-input"/>
                                 </div>
-                                <table class="layui-table" id="addLandTable" lay-filter="addLandTable"></table>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">区县名称<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="xmc" name="xmc" type="hidden" type="text" class="layui-input"/>
+                                    <select name="xdm" id="xdm"  lay-filter="xdmSelect">
+                                        <option value="">请选择区县</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">地块面积（公顷）<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input id="dkmj" name="dkmj" placeholder="请输入地块面积（保留4位小数）" onkeyup="this.value = numLimit(this.value,4)" type="text"
+                                           class="layui-input"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-row" id="div2" style="display: none;">
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">大类名称</label>
+                                <input id="dlmc" name="dlmc" type="hidden" class="layui-input"/>
+                                <div class="layui-input-block">
+                                    <select name="dldm" id="dldm"  lay-filter="dldmSelect">
+                                        <option value="">请选择大类</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">小类名称</label>
+                                <input id="xlmc" name="xlmc" type="hidden" class="layui-input"/>
+                                <div class="layui-input-block">
+                                    <select name="xldm" id="xldm" lay-filter="xldmSelect">
+                                        <option value="">请选择小类</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">现状用途</label>
+                                <div class="layui-input-block">
+                                    <input id="xzyt" name="xzyt" placeholder="请输入现状用途" type="text"
+                                           class="layui-input"/>
+                                </div>
+                            </div>
+                            <div class="layui-inline layui-col-md6">
+                                <label class="layui-form-label">规划用途</label>
+                                <div class="layui-input-block">
+                                    <input id="ghyt" name="ghyt" placeholder="请输入规划用途" type="text"
+                                           class="layui-input"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="button" class="layui-btn" style="display: none" id="moreShow" value="更多信息" />
+                <div style="display: none" id="cyDiv">
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">不动产权证书号</label>
+                            <div class="layui-input-block">
+                                <input id="bdcqzsh" name="bdcqzsh" placeholder="请输入不动产权证书号" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">出让/划拨时间</label>
+                            <div class="layui-input-block">
+                                <input id="crsj" name="crsj" placeholder="请输入出让/划拨时间" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">合同容积率</label>
+                            <div class="layui-input-block">
+                                <input id="htrjl" name="htrjl" placeholder="请输入合同容积率" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">合同投资强度</label>
+                            <div class="layui-input-block">
+                                <input id="httzqd" name="httzqd" placeholder="请输入合同投资强度" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">合同亩均税收</label>
+                            <div class="layui-input-block">
+                                <input id="htmjss" name="htmjss" placeholder="请输入合同亩均税收" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">行业名称</label>
+                            <input id="hymc" name="hymc" type="hidden" class="layui-input"/>
+                            <div class="layui-input-block">
+                                <select name="hydm" id="hydm"  lay-filter="hydmSelect">
+                                    <option value="">请选择行业名称</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">行业容积率基数值</label>
+                            <div class="layui-input-block">
+                                <input id="rjljsz" name="rjljsz" placeholder="请输入行业容积率基数值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块容积率</label>
+                            <div class="layui-input-block">
+                                <input id="dkrjl" name="dkrjl" placeholder="请输入地块容积率" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块容积率分值</label>
+                            <div class="layui-input-block">
+                                <input id="rjlfz" name="rjlfz" placeholder="请输入地块容积率分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">投资强度基数值</label>
+                            <div class="layui-input-block">
+                                <input id="tzqdjs" name="tzqdjs" placeholder="请输入投资强度基数值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块投资强度</label>
+                            <div class="layui-input-block">
+                                <input id="dktzqd" name="dktzqd" placeholder="请输入地块投资强度" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块投资强度分值</label>
+                            <div class="layui-input-block">
+                                <input id="tzqdfz" name="tzqdfz" placeholder="请输入地块投资强度分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">土地税收产出率基数值</label>
+                            <div class="layui-input-block">
+                                <input id="ssccljs" name="ssccljs" placeholder="请输入土地税收产出率基数值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块土地税收产出率</label>
+                            <div class="layui-input-block">
+                                <input id="dkssccl" name="dkssccl" placeholder="请输入地块土地税收产出率" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">地块土地税收产出率分值</label>
+                            <div class="layui-input-block">
+                                <input id="dksscclfz" name="dksscclfz" placeholder="请输入地块土地税收产出率分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">部门因素分值</label>
+                            <div class="layui-input-block">
+                                <input id="bmysfz" name="bmysfz" placeholder="请输入部门因素分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">政府因素分值</label>
+                            <div class="layui-input-block">
+                                <input id="zfysfz" name="zfysfz" placeholder="请输入政府因素分值" type="text" class="layui-input"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">综合得分</label>
+                            <div class="layui-input-block">
+                                <input id="zhdf" name="zhdf" placeholder="请输入综合得分" type="text" class="layui-input"/>
                             </div>
                         </div>
                     </div>
@@ -69,127 +216,102 @@
             <div class="layui-card-header">低效企业信息</div>
             <div class="layui-card-body">
                 <div class="layui-form-item layui-row">
-                    <div class="layui-inline layui-col-md6">
+                   <!-- <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">计划名称</label>
                         <div class="layui-input-block">
                             <input id="planName" name="planName" value="${vo.planName}" placeholder="请输入计划名称" type="text" class="layui-input"/>
-                            <input id="id" name="id" type="hidden" value="${vo.id}" class="layui-input"/>
-                            <input id="planType" name="planType" type="hidden" value="${vo.planType}" class="layui-input"/>
-                            <input id="landCode" name="landCode" type="hidden" value="${vo.landCode}" class="layui-input"/>
+
+                        </div>
+                    </div>-->
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">企业名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="busName" name="busName" value="${vo.busName}" lay-verify="required" placeholder="请输入企业名称" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">企业名称</label>
+                        <label class="layui-form-label">开发区名称<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="busName" name="busName" value="${vo.busName}" placeholder="请输入企业名称" type="text" class="layui-input"/>
+                            <input name="zoneName" id="zoneName" value="${vo.zoneName}" lay-verify="required" placeholder="请输入开发区名称" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">开发区名称</label>
+                        <label class="layui-form-label">社会统一信用代码<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input name="zoneName" id="zoneName" value="${vo.zoneName}" placeholder="请输入开发区名称" type="text" class="layui-input"/>
+                            <input id="creditCode" name="creditCode" value="${vo.creditCode}" lay-verify="required" placeholder="请输入社会统一信用代码" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">社会统一信用代码</label>
+                        <label class="layui-form-label">占地面积（公顷）<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="creditCode" name="creditCode" value="${vo.creditCode}" placeholder="请输入社会统一信用代码" type="text" class="layui-input"/>
+                            <input id="occupyArea" name="occupyArea" value="${vo.occupyArea}" lay-verify="required" readonly placeholder="请输入占地面积" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">占地面积</label>
+                        <label class="layui-form-label">坐落<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="occupyArea" name="occupyArea" value="${vo.occupyArea}" placeholder="请输入占地面积" type="text" class="layui-input"/>
+                            <input id="located" name="located" value="${vo.located}" lay-verify="required" placeholder="请输入坐落" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">坐落</label>
+                        <label class="layui-form-label">上年度亩均税收<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="located" name="located" value="${vo.located}" placeholder="请输入坐落" type="text" class="layui-input"/>
+                            <input id="preYearTax" name="preYearTax" value="${vo.preYearTax}" lay-verify="required" placeholder="请输入上年度亩均税收" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">上上年度亩均税收<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="upYearTax" name="upYearTax" value="${vo.upYearTax}" lay-verify="required" placeholder="请输入上上年度亩均税收" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">是否规上企业<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="isPlanBus" name="isPlanBus" value="${vo.isPlanBus}" lay-verify="required" placeholder="请输入是否规上企业" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">经营状态<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="busStatus" name="busStatus" value="${vo.busStatus}" lay-verify="required" placeholder="请输入经营状态" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">计划开始时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="planStartTime" name="planStartTime" value="${vo.planStartTime}" lay-verify="required" placeholder="请输入计划开始时间" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">计划完成面积（公顷）<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="planArea" name="planArea" value="${vo.planArea}"  lay-verify="required" onkeyup="this.value = numLimit(this.value,4)" placeholder="请输入计划完成面积" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">当前已完成面积（公顷）<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="currentArea" name="currentArea" value="${vo.currentArea}" lay-verify="required" onkeyup="this.value = numLimit(this.value,4)" placeholder="请输入当前已完成面积" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">计划实施单位<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="planUnit" name="planUnit" value="${vo.planUnit}" lay-verify="required"  placeholder="请输入计划实施单位" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">当前状态<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="curStatus" name="curStatus" value="${vo.curStatus}" lay-verify="required"  placeholder="请输入当前状态" type="text" class="layui-input"/>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item layui-row">
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">上年度亩均税收</label>
-                        <div class="layui-input-block">
-                            <input id="preYearTax" name="preYearTax" value="${vo.preYearTax}" placeholder="请输入上年度亩均税收" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">上上年度亩均税收</label>
-                        <div class="layui-input-block">
-                            <input id="upYearTax" name="upYearTax" value="${vo.upYearTax}" placeholder="请输入上上年度亩均税收" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">是否规上企业</label>
-                        <div class="layui-input-block">
-                            <input id="isPlanBus" name="isPlanBus" value="${vo.isPlanBus}" placeholder="请输入是否规上企业" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">经营状态</label>
-                        <div class="layui-input-block">
-                            <input id="busStatus" name="busStatus" value="${vo.busStatus}" placeholder="请输入经营状态" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item layui-row">
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">计划开始时间</label>
-                        <div class="layui-input-block">
-                            <input id="planStartTime" name="planStartTime" value="${vo.planStartTime}" placeholder="请输入计划开始时间" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <!--<div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">计划完成时间</label>
-                        <div class="layui-input-block">
-                            <input id="planEndTime" name="planEndTime" value="${vo.planEndTime}" placeholder="请输入计划完成时间" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">实际开始时间</label>
-                        <div class="layui-input-block">
-                            <input id="actStartTime" name="actStartTime" value="${vo.actStartTime}" placeholder="请输入实际开始时间" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">实际完成时间</label>
-                        <div class="layui-input-block">
-                            <input id="actEndTime" name="actEndTime" value="${vo.actEndTime}" placeholder="请输入实际完成时间" type="text" class="layui-input"/>
-                        </div>
-                    </div>-->
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">计划完成面积</label>
-                        <div class="layui-input-block">
-                            <input id="planArea" name="planArea" value="${vo.planArea}"  placeholder="请输入计划完成面积" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">当前已完成面积</label>
-                        <div class="layui-input-block">
-                            <input id="currentArea" name="currentArea" value="${vo.currentArea}"  placeholder="请输入当前已完成面积" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">计划实施单位</label>
-                        <div class="layui-input-block">
-                            <input id="planUnit" name="planUnit" value="${vo.planUnit}"  placeholder="请输入计划实施单位" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <!--<div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">实际实施单位</label>
-                        <div class="layui-input-block">
-                            <input id="actUnit" name="actUnit" value="${vo.actUnit}"  placeholder="请输入实际实施单位" type="text" class="layui-input"/>
-                        </div>
-                    </div>-->
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">当前状态</label>
-                        <div class="layui-input-block">
-                            <input id="curStatus" name="curStatus" value="${vo.curStatus}"  placeholder="请输入当前状态" type="text" class="layui-input"/>
-                        </div>
-                    </div>
                     <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">当前进展情况</label>
                         <div class="layui-input-block">
@@ -201,11 +323,6 @@
                         <div class="layui-input-block">
                             <select id="reasonsType" name="reasonsType" >
                                 <option value="">请选择困难原因</option>
-                                <!--<option value="1">困难1</option>
-                                <option value="2">困难2</option>
-                                <option value="3">困难3</option>
-                                <option value="4">困难4</option>
-                                <option value="5">其他</option>-->
                             </select>
                             <input id="reasonsTypeV" name="reasonsTypeV" value="${vo.reasonsType}" type="hidden" class="layui-input"/>
                         </div>
@@ -217,7 +334,7 @@
                         </div>
                     </div>
 
-                    <div class="layui-inline layui-col-md12">
+                    <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-block">
                             <textarea name="remark" id="remark" placeholder="请输入备注" class="layui-textarea">${vo.remark}</textarea>

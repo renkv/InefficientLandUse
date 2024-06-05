@@ -30,7 +30,7 @@ layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload'], fun
             {field: 'planCode', hide:true,align: 'center',fixed: 'left', title: '计划编码'},
             {field: 'countyName',width:150,align: 'center',merge:true,fixed: 'left', title: '区县'},
             {field: 'xmmc',width:150,align: 'center',merge:true,fixed: 'left', title: '地块项目名称'},
-            {field: 'planName', sort: false, align: 'center',fixed: 'left',title: '计划名称'},
+            {field: 'planName',hide:true, sort: false, align: 'center',fixed: 'left',title: '计划名称'},
             {field: 'disYear', sort: false, align: 'center',fixed: 'left',title: '年份'},
             {field: 'busName', sort: false, align: 'center',fixed: 'left',title: '企业名称',templet:function (d){
                     var html = '<div><a rel="nofollow"  style="color:#1E9FFF" href="javascript:void(0);" lay-event="showDetail">' + d.busName+ '</a></div>';

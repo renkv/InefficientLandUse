@@ -120,6 +120,12 @@ public class LandPlanController extends BaseController {
         LandPlanInfoVo vo = landPlanInfoService.getDetailById(id);
         model.addAttribute("vo",vo);
         model.addAttribute("ctxPath", ConfigListener.getConf().get("contextPath"));
+        LoginUser currentUser = LoginContextHolder.getContext().getUser();
+        if(currentUser.getDeptName() != null){
+            model.addAttribute("deptName",currentUser.getDeptName());
+        }else{
+            model.addAttribute("deptName","");
+        }
         if(vo.getPlanType().equals("1")){
             return PREFIX + "/busEdit.html";
         }else if(vo.getPlanType().equals("2")){

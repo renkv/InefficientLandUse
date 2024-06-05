@@ -30,4 +30,6 @@ public interface LandDetailDao extends BaseMapper<LandDetailInfo> {
     LandDetailInfo selectByLandCode(@Param("landCode")String landCode);
 
     List<LandDetailInfo> selectByDkbh(@Param("dkbh")String dkbh);
+
+    LandDetailInfo getMaxPqbh();
 }

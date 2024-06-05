@@ -1,4 +1,39 @@
-
+var LandInfoDlg = {
+    data: {
+        landCode: "",
+        xmmc: "",
+        dkmj:""
+    }
+};
+function numLimit(data,num){
+    // 先把非数字的都替换掉(空)，除了数字和.
+    data = data.replace(/[^\d.]/g, "");
+    // 必须保证第一个为数字而不是.
+    data = data.replace(/^\./g, "");
+    // 保证只有出现一个.而没有多个.
+    data = data.replace(/\.{3,}/g, "");
+    // 保证.只出现一次，而不能出现两次以上
+    data =data
+        .replace(".", "$#$")
+        .replace(/\./g, "")
+        .replace("$#$", ".");
+    // 限制几位小数
+    let subscript = -1;
+    for (let i in data) {
+        if (data[i] === ".") {
+            subscript = i;
+        }
+        if (subscript !== -1) {
+            if (i - subscript > num) {
+                data = data.substring(0, data.length - 1);
+            }
+        }
+    }
+    if (data.indexOf(".") < 0 && num != "") {//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+        data = parseFloat(data);
+    }
+    return data;
+}
 layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], function () {
     var $ = layui.$;
     var table = layui.table;
@@ -10,81 +45,29 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
     var formSelects = layui.formSelects;
     var isFirst = 0;
 
-    /**
-     * 文件发送管理
-     */
-    var addLandTable = {
-        tableId: "addLandTable"
-    };
+    // 点击项目名称
+    $('#xmmcSelect').click(function () {
+        var deptName =$("#deptName").val();
+        layer.open({
+            type: 2,
+            title: '选择地块',
+            area: ['800px', '600px'],
+            content: Feng.ctxPath + '/landdetail/commonSelect?deptName=' + deptName,
+            end: function () {
+                $("#landCode").val(LandInfoDlg.data.landCode);
+                $("#xmmcSelect").val(LandInfoDlg.data.xmmc);
+                $("#dkmj").val(LandInfoDlg.data.dkmj);
+                $("#occupyArea").val(LandInfoDlg.data.dkmj);
+            }
+        });
+    });
 
-    /**
-     * 初始化表格的列
-     */
-    addLandTable.initColumn = function () {
-        return [[
-            {fixed: 'left',type: 'checkbox'},
-            {field: 'id', hide: true,align: 'center',title: 'ID'},
-            {field: 'landCode', hide: true, align: 'center', title: '编码'},
-            {field: 'xmc', sort: false,align: 'center', title: '县名称'},
-            {field: 'pqbh', hide: true, sort: false,align: 'center', title: '片区编号'},
-            {field: 'xmmc', sort: false,align: 'center', title: '项目名称'},
-            {field: 'dkbh', sort: false,align: 'center', title: '地块编号'},
-            {field: 'dkmj', sort: false,align: 'center', title: '地块面积'},
-            {field: 'dlmc', sort: false,align: 'center', title: '大类名称'},
-            {field: 'xlmc', sort: false, align: 'center',title: '小类名称'},
-            {field: 'xzyt', sort: false, align: 'center',title: '现状用途'},
-            {field: 'ghyt', hide: true, sort: false, align: 'center',title: '规划用途'},
-            {field: 'remark', sort: false, align: 'center',title: '备注'},
-            {field: 'createUserName', hide: true, sort: false,align: 'center', title: '创建人名字'},
-            {field: 'createTime',  hide: true,sort: false,align: 'center', title: '创建时间'},
-            {field: 'updateUserName',  hide: true,sort: false,align: 'center', title: '修改人名字'},
-            {field: 'updateTime',  hide: true,sort: false,align: 'center', title: '修改时间'}
-
-        ]];
-    };
     //渲染时间选择框
     laydate.render({
         elem: '#planStartTime',
         range: false,
         min: Feng.currentDate()
     });
-    var landCode = $("#landCode").val();
-    // 渲染表格
-    table.render({
-        id: addLandTable.tableId,
-        elem: '#' + addLandTable.tableId,
-        //url:Feng.ctxPath + '/landdetail/selectList?landCode='+landCode,
-        cellMinWidth: 100,
-        cols: addLandTable.initColumn(),
-        autoSort:false,
-        done: function (res, curr, count) {
-            // 设置所有的checkbox为选中状态
-            //$('[name="layTableCheckbox"][lay-filter="layTableAllChoose"]').prop('checked', true);
-            // 同步更新视图
-            //form.render('checkbox');
-            // 如果需要单独设置某些行的checkbox为选中状态，可以在done回调中通过行数据进行判断
-            // 例如，假设返回的数据中有一个字段isSelected表示是否选中
-              res.data.forEach(function(item){
-                if(item.landCode == landCode && isFirst == 0){ // 根据业务逻辑判断
-                  var index = res.data.indexOf(item); // 获取行索引
-                  //$('[name="layTableCheckbox"]').eq(index).prop('checked', true);
-                    $('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
-                    $('tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
-                 /* $(".layui-form-checkbox").eq(index).addClass("layui-form-checked");*/
-                }
-              });
-              form.render('checkbox');
-
-        }
-    });
-
-
-    var loadDefautData = function (){
-        table.reload(addLandTable.tableId, {url:Feng.ctxPath + '/landdetail/selectList?landCode='+landCode,
-            page: {curr: 1}
-        });
-    }
-    loadDefautData();
 
     var setDefaultValue = function (){
         var reasonsType = $("#reasonsTypeV").val();
@@ -137,54 +120,156 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         form.render();
     }
     setDefaultValue();
-    /**
-     * 点击查询按钮
-     */
-    addLandTable.search = function () {
-        var queryData = {};
-        queryData['timeLimit'] = $('#timeLimit').val();
-        queryData['landCode'] = '';
-        queryData['xmmc'] = $('#xmmc').val();
-        var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
-        var landStatus = $('select[name="landStatus"]').next().find('.layui-this').attr('lay-value');
-        if(value != undefined){
-            queryData['xdm'] = value;
-        }else{
-            queryData['xdm'] = "";
-        }
-        if(landStatus != undefined){
-            queryData['landStatus'] = landStatus;
-        }else{
-            queryData['landStatus'] = "";
-        }
-        isFirst = 1;
-        table.reload(addLandTable.tableId, {url:'/landdetail/selectList',
-            where: queryData, page: {curr: 1}
+
+
+    var activeDlSelect = function () {
+        var deptName = $("#deptName").val();
+        //初始化区县
+        $("#xdm").html('<option value="">请选择区县</option>');
+        var qxAjax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=sjzqx", function (data) {
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    if(deptName != "" ){
+                        if(deptName.indexOf(name) >= 0){
+                            $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                        }
+                    }else{
+                        $("#xdm").append('<option value="' + code + '">'  + name + '</option>');
+                    }
+                }
+            }
+        }, function (data) {
         });
-        $("#landCode").val("");
+        //初始化大类
+        $("#dldm").html('<option value="">请选择大类</option>');
+        var ajax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=LAND_TYPE", function (data) {
+            category = data.data;
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    $("#dldm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+        }, function (data) {
+        });
+
+        //初始化行业
+        $("#hydm").html('<option value="">请选择行业</option>');
+        var hyajax = new $ax(Feng.ctxPath + "/dict/listDictsByCode?dictTypeCode=INDUSTRY", function (data) {
+            for (var i = 0; i < data.data.length; i++) {
+                var name = data.data[i].name;
+                var code = data.data[i].code;
+                if(data.data[i].parentId === 0){
+                    $("#hydm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+        }, function (data) {
+        });
+        qxAjax.start();
+        ajax.start();
+        hyajax.start();
+        form.render();
     };
-    // 搜索按钮点击事件
-    $('#btnSearch').click(function () {
-        addLandTable.search();
+    activeDlSelect();
+
+    laydate.render({
+        elem: '#crsj',
+        range: false
     });
+
+    form.on('select(typeSelect)',function (data){
+        var value = data.value;
+        if(value  == '1'){
+            $("#readyDiv").css("display","block");
+            $("#landDiv").css("display","none");
+            $("#div2").css("display","none");
+            $("#moreShow").css("display","none");
+        }else {
+            $("#readyDiv").css("display","none");
+            $("#landDiv").css("display","block");
+            $("#div2").css("display","block");
+            $("#moreShow").css("display","block");
+        }
+        form.render();
+    });
+
+    var isShow = 0;
+    $('#moreShow').click(function () {
+        if(isShow == 0){
+            $("#cyDiv").css("display","block");
+            isShow =1;
+        }else{
+            $("#cyDiv").css("display","none");
+            isShow =0;
+        }
+    });
+
+    $('#dkmj').on('blur', function(){
+        // 在这里编写失去焦点时的逻辑
+        var dkmj = $("#dkmj").val();
+        $("#occupyArea").val(dkmj);
+    });
+
+    form.on('select(dldmSelect)',function (data){
+        var value = data.value;
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#dlmc").val(text);
+        $("#xldm").html('<option value="">请选择小类</option>');
+        if(value != "" && category.length >= 0){
+            for (var i = 0; i < category.length; i++) {
+                var name = category[i].name;
+                var code = category[i].code;
+                if(code != value && code.includes(value)){
+                    $("#xldm").append('<option value="' + code + '">'  + name + '</option>');
+                }
+            }
+        }
+        form.render();
+    });
+    form.on('select(xldmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#xlmc").val(text);
+    });
+    form.on('select(hydmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#hymc").val(text);
+    });
+    form.on('select(xdmSelect)',function (data){
+        var e = data.elem;
+        var text = e[e.selectedIndex].text;
+        $("#xmc").val(text);
+    });
+
+
 
     // 表单提交事件
     form.on('submit(btnSubmit)', function (data) {
+        var dkmj = $("#dkmj").val();
+        $("#occupyArea").val(dkmj);
+        var type = $('select[name="type"]').next().find('.layui-this').attr('lay-value');
         var landCode = $("#landCode").val();
-        if(landCode == ""){
-            var checkStatus = table.checkStatus(addLandTable.tableId);
-            var ids = [];
-            $(checkStatus.data).each(function (i, o) {//o即为表格中一行的数据
-                ids.push(o.landCode);
-            });
-            if (ids.length != 1) {
-                layer.msg('请选择一条数据');
+        if(type == "1"){
+            if(landCode == ""){
+                layer.msg('请填写关联项目名称');
                 return false;
             }
-            //landCode = ids[0];
-            $("#landCode").val(ids[0]);
+        }else{
+            landCode = "";
+            var xmc = $("#xmc").val();
+            var xmmc = $("#xmmc").val();
+            var dkmj = $("#dkmj").val();
+            if(xmc == "" || xmmc== "" || dkmj == ""){
+                layer.msg('必填项不能为空!!!');
+                return false;
+            }
         }
-        var ajax = new $ax(Feng.ctxPath + "/plan/savePlan", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/plan/savePlan?landCode="+landCode, function (data) {
             Feng.success("保存成功！");
             //传给上个页面，刷新table用
             admin.putTempData('formOk', true);

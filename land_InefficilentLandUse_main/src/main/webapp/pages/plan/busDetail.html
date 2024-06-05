@@ -6,53 +6,22 @@
             <div class="layui-card-header">低效用地基本信息</div>
             <div class="layui-card-body">
                 <div class="layui-row">
-                    <div class="layui-col-md12">
-                        <div class="layui-card">
-                            <div style="padding-right: 0px;">
-                                <!--<div class="layui-form toolbar">
-                                    <div class="layui-inline">
-                                        <select id="xdm" name="xdm" >
-                                            <option value="">请选择区县</option>
-                                            <option value="130102">长安区</option>
-                                            <option value="130104">桥西区</option>
-                                            <option value="130105">新华区</option>
-                                            <option value="130107">井陉矿区</option>
-                                            <option value="130108">裕华区</option>
-                                            <option value="130109">藁城区</option>
-                                            <option value="130110">鹿泉区</option>
-                                            <option value="130111">栾城区</option>
-                                            <option value="130121">井陉县</option>
-                                            <option value="130123">正定县</option>
-                                            <option value="130125">行唐县</option>
-                                            <option value="130126">灵寿县</option>
-                                            <option value="130127">高邑县</option>
-                                            <option value="130128">深泽县</option>
-                                            <option value="130129">赞皇县</option>
-                                            <option value="130130">无极县</option>
-                                            <option value="130131">平山县</option>
-                                            <option value="130132">元氏县</option>
-                                            <option value="130133">赵县</option>
-                                            <option value="130184">新乐市</option>
-                                            <option value="130183">晋州市</option>
-                                        </select>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <input id="xmmc" name="xmmc" class="layui-input" type="text" placeholder="项目名称"/>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <input id="landStatus" name="landStatus" class="layui-input" type="text" placeholder="地块状态"/>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
-                                    </div>
-                                    <div class="layui-inline">
-                                        &lt;!&ndash;<button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>&ndash;&gt;
-                                        <a id="btnSearch"  class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</a>
-                                    </div>
-                                </div>-->
-                                <table class="layui-table" id="addLandTable" lay-filter="addLandTable"></table>
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">项目名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="xmmc" name="xmmc" value="${vo.xmmc}" readonly type="text"
+                                       class="layui-input"/>
                             </div>
                         </div>
+                        <div class="layui-inline layui-col-md6">
+                            <label class="layui-form-label">区县名称<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input id="countyName" name="countyName" value="${vo.countyName}" readonly type="text" class="layui-input"/>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

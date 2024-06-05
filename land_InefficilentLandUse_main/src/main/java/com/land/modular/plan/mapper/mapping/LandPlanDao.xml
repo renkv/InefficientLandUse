@@ -114,8 +114,10 @@
 
     <select id="getDetailById" resultType="com.land.modular.plan.vo.LandPlanInfoVo">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>,
+        <include refid="Left_Column_List"/>
         from land_plan_info t
+        left join land_detail_info d on t.land_code=d.land_code
         where t.id = #{id}
     </select>
 

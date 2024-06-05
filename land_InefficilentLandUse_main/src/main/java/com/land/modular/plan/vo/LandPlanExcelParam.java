@@ -19,13 +19,13 @@ public class LandPlanExcelParam implements Serializable {
     @Excel(name = "企业名称")
     private String busName;
     @Excel(name = "占地面积（亩）")
-    private String occupyArea;
+    private Double occupyArea;
     @Excel(name = "坐落")
     private String located;
     @Excel(name = "上年度亩均税收")
-    private String preYearTax;
+    private Double preYearTax;
     @Excel(name = "上上年度亩均税收")
-    private String upYearTax;
+    private Double upYearTax;
     @Excel(name = "是否规上企业")
     private String isPlanBus;
     @Excel(name = "目前进展")

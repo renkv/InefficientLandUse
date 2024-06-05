@@ -54,7 +54,7 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
     public Page<Map<String, Object>> selectList(LandPlanInfoVo vo, String beginTime, String endTime) {
         Page page = LayuiPageFactory.defaultPage();
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
-        if(currentUser.getDeptName() != null){
+        if(currentUser.getDeptName() != null && !(currentUser.getDeptName().equals("石家庄市自然资源与规划局"))){
             vo.setCountyName(currentUser.getDeptName());
         }
         //vo.setDeptId(currentUser.getDeptId());
@@ -75,6 +75,7 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
         }
         LandDetailInfo en;
         if(StringUtils.isEmpty(vo.getLandCode())){
+            landDetail.setId(null);
              en = landDetailService.saveLandDetail(landDetail);
             vo.setLandCode(en.getLandCode());
         }else{
@@ -91,7 +92,12 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
             //3位随机数
             String randomNumeric = RandomStringUtils.randomNumeric(3);
             String planCode = "P"+localDate + randomNumeric;
-            BeanUtils.copyProperties(vo,entity);
+            BeanCopyUtils.copyNotNullProperties(vo,entity);
+            if(!(StringUtils.isEmpty(entity.getPlanType())) && entity.getPlanType().equals("1")){
+                entity.setPlanName(entity.getBusName());
+            }
+            int nowYear = DateUtil.year(new Date());
+            entity.setYear(nowYear+"");
             entity.setPlanCode(planCode);
             entity.setCreateUser(currentUser.getId());
             entity.setCreateUserName(user.getName());
