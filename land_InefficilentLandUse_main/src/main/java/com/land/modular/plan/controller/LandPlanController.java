@@ -21,6 +21,7 @@ import com.land.sys.modular.system.warpper.UserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -227,6 +228,17 @@ public class LandPlanController extends BaseController {
     }
 
     /**
+     * 根据id及更改的字段保存实施计划信息
+     * @return
+     */
+    @BussinessLog(value = "保存实施计划信息", key = "simpleName", dict = DeptDict.class)
+    @RequestMapping(value = "/savePlanById")
+    @ResponseBody
+    public ResponseData savePlanById(@RequestParam(required = true) Long id,@RequestParam(required = true) String field,@RequestParam(required = true) String value) {
+        return landPlanInfoService.savePlanById(id,field,value);
+    }
+
+    /**
      * 根据id删除计划信息
      * @param ids
      * @return
@@ -266,8 +278,11 @@ public class LandPlanController extends BaseController {
                     return ResponseData.error("单次最多上传1000条");
                 }*/
                 String retMsg = landPlanInfoService.uploadExcel(result,planType);
-
-                return ResponseData.success(0, "上传成功",retMsg);
+                if(StringUtils.isEmpty(retMsg)){
+                    return ResponseData.success(0, "上传成功",retMsg);
+                }else{
+                    return ResponseData.error(retMsg);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 return ResponseData.error(e.getMessage());

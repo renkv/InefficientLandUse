@@ -140,4 +140,11 @@
         ) t
         group by year,reasonsType
     </select>
+
+    <select id="selectByName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from land_plan_info t
+        where t.bus_name = ${busName}
+    </select>
 </mapper>

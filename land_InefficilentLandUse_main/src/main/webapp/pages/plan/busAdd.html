@@ -248,30 +248,30 @@
                     </div>
 
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">上年度亩均税收<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">上年度亩均税收(万元)<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="preYearTax" name="preYearTax" placeholder="请输入上年度亩均税收" lay-verify="required" type="text" class="layui-input"/>
+                            <input id="preYearTax" name="preYearTax" placeholder="请输入上年度亩均税收" lay-verify="required" onkeyup="this.value = numLimit(this.value,6)"  type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">上上年度亩均税收<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">上上年度亩均税收(万元)<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="upYearTax" name="upYearTax" placeholder="请输入上上年度亩均税收" lay-verify="required" type="text" class="layui-input"/>
+                            <input id="upYearTax" name="upYearTax" placeholder="请输入上上年度亩均税收(万元)" lay-verify="required" onkeyup="this.value = numLimit(this.value,6)"  type="text" class="layui-input"/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md6">
+                   <!-- <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">是否规上企业<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="isPlanBus" name="isPlanBus" placeholder="请输入是否规上企业"  lay-verify="required" type="text" class="layui-input"/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">经营状态<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="busStatus" name="busStatus" placeholder="请输入经营状态" lay-verify="required" type="text" class="layui-input"/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md6">
+                    <!--<div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">计划开始时间<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
                             <input id="planStartTime" name="planStartTime" placeholder="请输入计划开始时间" lay-verify="required" type="text" class="layui-input"/>
@@ -283,11 +283,11 @@
                         <div class="layui-input-block">
                             <input id="planArea" name="planArea" placeholder="请输入计划完成面积（保留4位小数）" onkeyup="this.value = numLimit(this.value,4)"  lay-verify="required" type="text" class="layui-input"/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">当前已完成面积(公顷)<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">处置面积(公顷)<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="currentArea" name="currentArea" placeholder="请输入当前已完成面积（保留4位小数）" onkeyup="this.value = numLimit(this.value,4)"  lay-verify="required" type="text" class="layui-input"/>
+                            <input id="currentArea" name="currentArea" placeholder="请输入处置面积（保留4位小数）" onkeyup="this.value = numLimit(this.value,4)"  lay-verify="required" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
@@ -305,16 +305,16 @@
                 </div>
                 <div class="layui-form-item layui-row">
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">当前进展情况</label>
+                        <label class="layui-form-label">详细进展</label>
                         <div class="layui-input-block">
-                            <textarea name="curProgress" id="curProgress" placeholder="请输入当前进展情况" class="layui-textarea"></textarea>
+                            <textarea name="curProgress" id="curProgress" placeholder="请输入详细进展" class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">困难原因</label>
+                        <label class="layui-form-label">问题类型</label>
                         <div class="layui-input-block">
                             <select id="reasonsType" name="reasonsType" >
-                                <option value="">请选择困难原因</option>
+                                <option value="">请选择问题类型</option>
                                 <option value="1">困难1</option>
                                 <option value="2">困难2</option>
                                 <option value="3">困难3</option>
@@ -324,9 +324,9 @@
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">困难具体描述</label>
+                        <label class="layui-form-label">问题详细描述</label>
                         <div class="layui-input-block">
-                            <textarea name="reasons" id="reasons" placeholder="请输入困难具体描述" class="layui-textarea"></textarea>
+                            <textarea name="reasons" id="reasons" placeholder="请输入问题详细描述" class="layui-textarea"></textarea>
                         </div>
                     </div>
 

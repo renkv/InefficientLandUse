@@ -21,4 +21,6 @@ public interface LandPlanInfoService {
     String uploadExcel(List result,String planType);
 
     Page<Map<String, Object>> diffStaList(LandStaVo vo, String beginTime, String endTime);
+
+    ResponseData savePlanById(Long id, String field, String value);
 }

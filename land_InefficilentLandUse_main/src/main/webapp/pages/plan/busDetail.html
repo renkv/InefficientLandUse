@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">占地面积</label>
+                        <label class="layui-form-label">占地面积（公顷）</label>
                         <div class="layui-input-block">
                             <input id="occupyArea" name="occupyArea" value="${vo.occupyArea}" readonly placeholder="请输入占地面积" type="text" class="layui-input"/>
                         </div>
@@ -72,37 +72,36 @@
                 </div>
                 <div class="layui-form-item layui-row">
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">上年度亩均税收</label>
+                        <label class="layui-form-label">上年度亩均税收(万元)</label>
                         <div class="layui-input-block">
                             <input id="preYearTax" name="preYearTax" value="${vo.preYearTax}" readonly placeholder="请输入上年度亩均税收" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">上上年度亩均税收</label>
+                        <label class="layui-form-label">上上年度亩均税收(万元)</label>
                         <div class="layui-input-block">
                             <input id="upYearTax" name="upYearTax" value="${vo.upYearTax}" readonly placeholder="请输入上上年度亩均税收" type="text" class="layui-input"/>
                         </div>
                     </div>
-                    <div class="layui-inline layui-col-md6">
+                    <!--<div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">是否规上企业</label>
                         <div class="layui-input-block">
                             <input id="isPlanBus" name="isPlanBus" value="${vo.isPlanBus}" readonly placeholder="请输入是否规上企业" type="text" class="layui-input"/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">经营状态</label>
                         <div class="layui-input-block">
                             <input id="busStatus" name="busStatus" value="${vo.busStatus}" readonly placeholder="请输入经营状态" type="text" class="layui-input"/>
                         </div>
                     </div>
-                </div>
-                <div class="layui-form-item layui-row">
-                    <div class="layui-inline layui-col-md6">
+
+                    <!--<div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">计划开始时间</label>
                         <div class="layui-input-block">
                             <input id="planStartTime" name="planStartTime" value="${vo.planStartTime}" readonly placeholder="请输入计划开始时间" type="text" class="layui-input"/>
                         </div>
-                    </div>
+                    </div>-->
                     <!--<div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">计划完成时间</label>
                         <div class="layui-input-block">
@@ -121,16 +120,16 @@
                             <input id="actEndTime" name="actEndTime" value="${vo.actEndTime}" readonly placeholder="请输入实际完成时间" type="text" class="layui-input"/>
                         </div>
                     </div>-->
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">计划完成面积</label>
+                   <!-- <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">处置面积(公顷)</label>
                         <div class="layui-input-block">
                             <input id="planArea" name="planArea" value="${vo.planArea}" readonly  placeholder="请输入计划完成面积" type="text" class="layui-input"/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">当前已完成面积</label>
+                        <label class="layui-form-label">处置面积(公顷)</label>
                         <div class="layui-input-block">
-                            <input id="currentArea" name="currentArea" value="${vo.currentArea}" readonly placeholder="请输入当前已完成面积" type="text" class="layui-input"/>
+                            <input id="currentArea" name="currentArea" value="${vo.currentArea}" readonly placeholder="请输入处置面积(公顷)" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
@@ -151,26 +150,28 @@
                             <input id="curStatus" name="curStatus" value="${vo.curStatus}"  readonly placeholder="请输入当前状态" type="text" class="layui-input"/>
                         </div>
                     </div>
+                </div>
+                <div class="layui-form-item layui-row">
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">当前进展情况</label>
+                        <label class="layui-form-label">详细进展</label>
                         <div class="layui-input-block">
-                            <textarea name="curProgress" id="curProgress" readonly placeholder="请输入当前进展情况" class="layui-textarea">${vo.curProgress}</textarea>
+                            <textarea name="curProgress" id="curProgress" readonly placeholder="请输入详细进展" class="layui-textarea">${vo.curProgress}</textarea>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">困难原因</label>
+                        <label class="layui-form-label">问题类型</label>
                         <div class="layui-input-block">
-                            <input id="reasonsType" name="curStatus" value="${vo.curStatus}"  readonly placeholder="请输入困难原因" type="text" class="layui-input"/>
+                            <input id="reasonsType" name="curStatus" value="${vo.curStatus}"  readonly placeholder="请输入问题类型" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">困难具体描述</label>
+                        <label class="layui-form-label">问题详细描述</label>
                         <div class="layui-input-block">
-                            <textarea name="reasons" id="reasons" placeholder="请输入困难具体描述" readonly class="layui-textarea">${vo.reasons}</textarea>
+                            <textarea name="reasons" id="reasons" placeholder="请输入问题详细描述" readonly class="layui-textarea">${vo.reasons}</textarea>
                         </div>
                     </div>
 
-                    <div class="layui-inline layui-col-md12">
+                    <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-block">
                             <textarea name="remark" id="remark" placeholder="请输入备注" readonly class="layui-textarea">${vo.remark}</textarea>

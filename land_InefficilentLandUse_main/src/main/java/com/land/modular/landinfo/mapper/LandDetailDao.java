@@ -32,4 +32,6 @@ public interface LandDetailDao extends BaseMapper<LandDetailInfo> {
     List<LandDetailInfo> selectByDkbh(@Param("dkbh")String dkbh);
 
     LandDetailInfo getMaxPqbh();
+
+    List<LandDetailInfo> checkExist(@Param("field")String field, @Param("value")String value);
 }

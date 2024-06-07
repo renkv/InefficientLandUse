@@ -233,4 +233,11 @@
                                           select cast(substring_index(pqbh,'PQ',-1) as SIGNED ) as pqbh from land_detail_info
                                       ) t
     </select>
+
+    <select id="checkExist" resultMap="LandInfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from land_detail_info
+        where #{field} = #{value}
+    </select>
 </mapper>

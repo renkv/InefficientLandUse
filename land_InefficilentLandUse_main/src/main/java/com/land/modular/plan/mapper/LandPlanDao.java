@@ -8,6 +8,7 @@ import com.land.modular.policy.vo.SysPolicyInfoVo;
 import com.land.modular.statistics.vo.LandStaVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 public interface LandPlanDao extends BaseMapper<LandPlanInfoEntity> {
@@ -16,4 +17,6 @@ public interface LandPlanDao extends BaseMapper<LandPlanInfoEntity> {
     LandPlanInfoVo getDetailById(@Param("id")Long id);
 
     Page<Map<String, Object>> diffStaList(@Param("page")Page page, @Param("vo")LandStaVo vo, @Param("beginTime")String beginTime, @Param("endTime")String endTime);
+
+    List<LandPlanInfoEntity> selectByName(@Param("busName")String busName);
 }

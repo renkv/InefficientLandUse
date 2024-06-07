@@ -2,7 +2,7 @@ layui.config({
 }).extend({
     tableMerge: 'tableMerge'
 });
-layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload'], function () {
+layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload', 'util'], function () {
     var $ = layui.$;
     var table = layui.table;
     var $ax = layui.ax;
@@ -10,6 +10,7 @@ layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload'], fun
     var func = layui.func;
     var laydate = layui.laydate;
     var upload = layui.upload;
+    var util = layui.util;
     var tableMerge = layui.tableMerge;
 
     /**
@@ -29,7 +30,7 @@ layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload'], fun
             {field: 'landCode', hide:true,align: 'center',fixed: 'left', title: '地块编码'},
             {field: 'planCode', hide:true,align: 'center',fixed: 'left', title: '计划编码'},
             {field: 'countyName',width:150,align: 'center',merge:true,fixed: 'left', title: '区县'},
-            {field: 'xmmc',width:150,align: 'center',merge:true,fixed: 'left', title: '地块项目名称'},
+            /*{field: 'xmmc',width:150,align: 'center',merge:true,fixed: 'left', title: '地块项目名称'},*/
             {field: 'planName',hide:true, sort: false, align: 'center',fixed: 'left',title: '计划名称'},
             {field: 'disYear', sort: false, align: 'center',fixed: 'left',title: '年份'},
             {field: 'busName', sort: false, align: 'center',fixed: 'left',title: '企业名称',templet:function (d){
@@ -37,31 +38,32 @@ layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload'], fun
                     return html;
                 }
                 },
-            {field: 'zoneName', sort: false, align: 'center',title: '开发区名称'},
-            {field: 'creditCode',width:150, sort: false, align: 'center',title: '社会统一信用代码'},
-            {field: 'occupyArea', sort: false, align: 'center',title: '占地面积'},
-            {field: 'located', sort: false, align: 'center',title: '坐落'},
-            {field: 'preYearTax',width:120, sort: false, align: 'center',title: '上年度亩均税收'},
-            {field: 'upYearTax',width:150, sort: false, align: 'center',title: '上上年度亩均税收'},
-            {field: 'isPlanBus', width:120,sort: false, align: 'center',title: '是否规上企业'},
-            {field: 'busStatus', sort: false, align: 'center',title: '经营状态'},
-            {field: 'useStatus', sort: false, align: 'center',title: '现状用途'},
-            {field: 'disType', sort: false, align: 'center',title: '处置类型'},
-            {field: 'conStandard', sort: false, align: 'center',title: '认定标准'},
-            {field: 'disStandard', sort: false, align: 'center',title: '处置标准'},
-            {field: 'planStartTime',width:120, sort: false, align: 'center',title: '计划开始时间'},
+            {field: 'zoneName', sort: false, align: 'center',title: '开发区名称',edit: 'text'},
+            {field: 'creditCode',width:150, sort: false, align: 'center',title: '社会统一信用代码',edit: 'text'},
+            {field: 'occupyArea', sort: false, align: 'center',title: '占地面积',edit: 'text'},
+            {field: 'located', sort: false, align: 'center',title: '坐落',edit: 'text'},
+            {field: 'preYearTax',width:120, sort: false, align: 'center',title: '上年度亩均税收',edit: 'text'},
+            {field: 'upYearTax',width:150, sort: false, align: 'center',title: '上上年度亩均税收',edit: 'text'},
+            /*{field: 'isPlanBus', width:120,sort: false, align: 'center',title: '是否规上企业'},*/
+            {field: 'busStatus', sort: false, align: 'center',title: '经营状态',edit: 'text'},
+            {field: 'useStatus', sort: false, align: 'center',title: '现状用途',edit: 'text'},
+            /*{field: 'disType', sort: false, align: 'center',title: '处置类型'},*/
+            {field: 'conStandard', sort: false, align: 'center',title: '低效类型',edit: 'text'},
+            {field: 'disStandard', sort: false, align: 'center',title: '处置方式',edit: 'text'},
+            {field: 'curStatus', sort: false, align: 'center',title: '当前状态',edit: 'text'},
+            {field: 'curProgress', sort: false, align: 'center',title: '详细进展',edit: 'text'},
+            /*{field: 'planStartTime',width:120, sort: false, align: 'center',title: '计划开始时间'},
             {field: 'planEndTime', sort: false,hide:true, align: 'center',title: '计划完成时间'},
             {field: 'actStartTime', sort: false,hide:true, align: 'center',title: '实际开始时间'},
             {field: 'actEndTime', sort: false,hide:true, align: 'center',title: '实际完成时间'},
-            {field: 'planArea',width:120, sort: false, align: 'center',title: '计划完成面积'},
-            {field: 'currentArea', width:120,sort: false, align: 'center',title: '当前已完成面积'},
+            {field: 'planArea',width:120, sort: false, align: 'center',title: '计划完成面积'},*/
+            {field: 'currentArea', width:120,sort: false, align: 'center',title: '处置面积',edit: 'text'},
             {field: 'remArea', sort: false, align: 'center',title: '剩余面积'},
-            {field: 'planUnit',width:120, sort: false, align: 'center',title: '计划实施单位'},
-            {field: 'actUnit', sort: false,hide:true, align: 'center',title: '实际实施单位'},
-            {field: 'curStatus', sort: false, align: 'center',title: '当前状态'},
-            {field: 'curProgress', sort: false, align: 'center',title: '当前进展'},
-            {field: 'reasonsType', sort: false, align: 'center',title: '困难原因'},
-            {field: 'remark', sort: false, align: 'center',title: '备注'}
+            {field: 'planUnit',width:120, sort: false, align: 'center',title: '计划实施单位',edit: 'text'},
+            /*{field: 'actUnit', sort: false,hide:true, align: 'center',title: '实际实施单位'},*/
+            {field: 'reasonsType', sort: false, align: 'center',title: '问题类型'},
+            {field: 'reasons', sort: false, align: 'center',title: '问题详细描述',edit: 'text'},
+            {field: 'remark', sort: false, align: 'center',title: '备注',edit: 'text'}
         ]];
     };
 
@@ -97,6 +99,70 @@ layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload'], fun
         range: true,
         max: Feng.currentDate()
     });
+    //监听单元格编辑
+    table.on('edit(busMainTable)', function(obj){
+        var value = obj.value //得到修改后的值
+            ,data = obj.data //得到所在行所有键值
+            ,field = obj.field; //得到字段
+        if(value.replace(/\s/g,'' ) === ''){
+            layer.msg('修改值不能为空！');
+            return obj.reedit();
+        }
+        if(field == "occupyArea" || field == "currentArea"){
+            value = numLimit(value,4);
+            obj.value = value;
+            if(field == "occupyArea"){
+                var currentArea = obj.currentArea;
+                if(parseFloat(value) < parseFloat(currentArea)){
+                    layer.msg('占地面积小于处置面积，请重新修改！');
+                    return obj.reedit();
+                }
+            }else{
+                var occupyArea = obj.occupyArea;
+                if(parseFloat(value) < parseFloat(occupyArea)){
+                    layer.msg('占地面积小于处置面积，请重新修改！');
+                    return obj.reedit();
+                }
+            }
+        }
+        if(field == "preYearTax" || field == "upYearTax"){
+            value = numLimit(value,6);
+            obj.value = value;
+        }
+        // 编辑后续操作，如提交更新请求，以完成真实的数据更新
+        var index = top.layer.msg('正在将新数据写入数据库，请稍候...', {icon: 16, time: false, shade: 0.8});
+        var msg;
+        setTimeout(function () {
+            $.ajax({
+                type: "POST",
+                url: Feng.ctxPath + "/plan/savePlanById",
+                data: {
+                    id: data.id, // 获取当前修改数据的id
+                    field: field,// 得到修改的字段
+                    value: value,// 得到修改后的值
+                },
+                success: function (d) {
+                    if (d.code == 200) {
+                        msg = d.message;
+                    } else {
+                        msg = d.message;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    layer.msg("获取数据失败！");
+                }
+            }).done(function () {
+                top.layer.close(index);
+                top.layer.msg(msg);
+                layer.closeAll("iframe");
+                setTimeout(function () {
+                    parent.location.reload();
+                }, 1000);
+            });
+        }, 2000);
+        //layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改值为：'+ util.escape(value));
+    });
+
     /**
      * 点击查询按钮
      */
@@ -259,3 +325,33 @@ layui.use(['table', 'admin','tableMerge',  'laydate','ax', 'func','upload'], fun
     });
 
 });
+
+function numLimit(data,num){
+    // 先把非数字的都替换掉(空)，除了数字和.
+    data = data.replace(/[^\d.]/g, "");
+    // 必须保证第一个为数字而不是.
+    data = data.replace(/^\./g, "");
+    // 保证只有出现一个.而没有多个.
+    data = data.replace(/\.{3,}/g, "");
+    // 保证.只出现一次，而不能出现两次以上
+    data =data
+        .replace(".", "$#$")
+        .replace(/\./g, "")
+        .replace("$#$", ".");
+    // 限制几位小数
+    let subscript = -1;
+    for (let i in data) {
+        if (data[i] === ".") {
+            subscript = i;
+        }
+        if (subscript !== -1) {
+            if (i - subscript > num) {
+                data = data.substring(0, data.length - 1);
+            }
+        }
+    }
+    if (data.indexOf(".") < 0 && num != "") {//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+        data = parseFloat(data);
+    }
+    return data;
+}

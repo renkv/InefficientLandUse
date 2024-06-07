@@ -103,6 +103,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
         }
         int nowYear = DateUtil.year(new Date());
         Map<String,Object> map = new HashMap<>();
+        List<String> xmmcList = new ArrayList<>();
         int code = 0;
         String landCodeStr = "";
         List<LandDetailInfo> inertList = new ArrayList<>();
@@ -114,13 +115,17 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             }else if(!StringUtils.isEmpty(xmc) && !xmc.contains(param.getXmc())){
                 stringBuffer.append("第" +errNum+"行，县名称超出当前权限范围");
             }else{
-                //判断地块编码是否已存在
-                if(!StringUtils.isEmpty(param.getDkbh())){
-                    List<LandDetailInfo> existList = this.baseMapper.selectByDkbh(param.getDkbh());
-                    if(existList.size() > 0){
-                        stringBuffer.append("第" +errNum+"行，地块编号已存在");
-                    }
+                //判断项目名称是否已存在
+                /*List<LandDetailInfo> existList = this.baseMapper.checkExist("xmmc",param.getXmmc());
+                if(xmmcList.contains(param.getXmmc())){
+                    stringBuffer.append("第" +errNum+"行，项目名称已存在");
+                    continue;
                 }
+                if(existList.size() > 0){
+                    stringBuffer.append("第" +errNum+"行，项目名称已存在");
+                    continue;
+                }*/
+
                 LandDetailInfo main = new LandDetailInfo();
                 BeanCopyUtils.copyNotNullProperties(param,main);
                 String landCode = "";
@@ -135,26 +140,27 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
                         String cuXdm = "";
                         if(dict != null){
                             cuXdm = dict.getCode();
+                            info = this.baseMapper.getByYearAndQx(nowYear,cuXdm);
+                        }else{
+                            stringBuffer.append("第" +errNum+"行，县名称："+param.getXmc() + "不存在");
                         }
-                        info = this.baseMapper.getByYearAndQx(nowYear,cuXdm);
                     }else{
                         info = this.baseMapper.getByYearAndQx(nowYear,xdm);
                     }
-                    if(info != null){
+                    landCodeStr = PinyinUtil.getPinYinHeadChar(main.getXmc());
+                    Object obj = map.get(landCodeStr);
+                    if(obj != null){
+                        code = (int) obj;
+                    }else if(info != null){
                         String numStr = info.getLandCode().substring(info.getLandCode().length() - 3);
                         code = Integer.valueOf(numStr) + 1;
-                        landCodeStr = PinyinUtil.getPinYinHeadChar(main.getXmc());
-                    }else if(!StringUtils.isEmpty(main.getXmc())){
-                        code = 1;
-                        landCodeStr = PinyinUtil.getPinYinHeadChar(main.getXmc());
                     }else{
                         code = 1;
-                        landCodeStr = "SJZ";
                     }
                 }
                 landCode = landCodeStr + nowYear +String.format("%03d",code);
-
                 main.setLandCode(landCode);
+                main.setDkbh(landCode);
                 main.setCategory(category);
                 code ++;
                 map.put(landCodeStr,code);
@@ -166,6 +172,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
                 if(category.equals("industries")){
                     main.setQymc(main.getCategory());
                 }
+                xmmcList.add(main.getXmmc());
                 inertList.add(main);
             }
         }
