@@ -88,6 +88,9 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
         }else{
             en = landDetailService.selectByLandCode(vo.getLandCode());
         }
+        if(en == null){
+            return ResponseData.error("低效用地项目不存在！");
+        }
         vo.setCountyName(en.getXmc());
         vo.setCountyCode(en.getXdm());
         User user = userService.getById(currentUser.getId());

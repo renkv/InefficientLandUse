@@ -56,6 +56,7 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
             end: function () {
                 $("#landCode").val(LandInfoDlg.data.landCode);
                 $("#xmmcSelect").val(LandInfoDlg.data.xmmc);
+                $("#busName").val(LandInfoDlg.data.xmmc);
                 $("#dkmj").val(LandInfoDlg.data.dkmj);
                 $("#occupyArea").val(LandInfoDlg.data.dkmj);
             }
@@ -68,58 +69,6 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
         range: false,
         min: Feng.currentDate()
     });
-
-    var setDefaultValue = function (){
-        var reasonsType = $("#reasonsTypeV").val();
-        formSelects.value("reasonsTypeV", reasonsType);
-        if(reasonsType != null && reasonsType != ""){
-            if("1" === reasonsType){
-                $("#reasonsType").append('<option value="1" selected="selected">困难原因1</option>');
-                $("#reasonsType").append('<option value="2">困难原因2</option>');
-                $("#reasonsType").append('<option value="3">困难原因3</option>');
-                $("#reasonsType").append('<option value="4">困难原因4</option>');
-                $("#reasonsType").append('<option value="5">其他</option>');
-            }else if ("2" === reasonsType){
-                $("#reasonsType").append('<option value="1">困难原因1</option>');
-                $("#reasonsType").append('<option value="2" selected="selected">困难原因2</option>');
-                $("#reasonsType").append('<option value="3">困难原因3</option>');
-                $("#reasonsType").append('<option value="4">困难原因4</option>');
-                $("#reasonsType").append('<option value="5">其他</option>');
-            }else if ("3" === reasonsType){
-                $("#reasonsType").append('<option value="1">困难原因1</option>');
-                $("#reasonsType").append('<option value="2">困难原因2</option>');
-                $("#reasonsType").append('<option value="3" selected="selected">困难原因3</option>');
-                $("#reasonsType").append('<option value="4">困难原因4</option>');
-                $("#reasonsType").append('<option value="5">其他</option>');
-            }else if ("4" === reasonsType){
-                $("#reasonsType").append('<option value="1">困难原因1</option>');
-                $("#reasonsType").append('<option value="2">困难原因2</option>');
-                $("#reasonsType").append('<option value="3">困难原因3</option>');
-                $("#reasonsType").append('<option value="4" selected="selected">困难原因4</option>');
-                $("#reasonsType").append('<option value="5">其他</option>');
-            }else if ("5" === reasonsType){
-                $("#reasonsType").append('<option value="1">困难原因1</option>');
-                $("#reasonsType").append('<option value="2">困难原因2</option>');
-                $("#reasonsType").append('<option value="3">困难原因3</option>');
-                $("#reasonsType").append('<option value="4" >困难原因4</option>');
-                $("#reasonsType").append('<option value="5" selected="selected">其他</option>');
-            }else{
-                $("#reasonsType").append('<option value="1">困难原因1</option>');
-                $("#reasonsType").append('<option value="2">困难原因2</option>');
-                $("#reasonsType").append('<option value="3">困难原因3</option>');
-                $("#reasonsType").append('<option value="4">困难原因4</option>');
-                $("#reasonsType").append('<option value="5">其他</option>');
-            }
-        }else{
-            $("#reasonsType").append('<option value="1">困难原因1</option>');
-            $("#reasonsType").append('<option value="2">困难原因2</option>');
-            $("#reasonsType").append('<option value="3">困难原因3</option>');
-            $("#reasonsType").append('<option value="4">困难原因4</option>');
-            $("#reasonsType").append('<option value="5">其他</option>');
-        }
-        form.render();
-    }
-    setDefaultValue();
 
 
     var activeDlSelect = function () {
@@ -250,10 +199,12 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
 
     // 表单提交事件
     form.on('submit(btnSubmit)', function (data) {
+        debugger;
         var dkmj = $("#dkmj").val();
         $("#occupyArea").val(dkmj);
         var type = $('select[name="type"]').next().find('.layui-this').attr('lay-value');
         var landCode = $("#landCode").val();
+        debugger;
         if(type == "1"){
             if(landCode == ""){
                 layer.msg('请填写关联项目名称');

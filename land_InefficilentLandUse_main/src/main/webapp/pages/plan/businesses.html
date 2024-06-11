@@ -2,9 +2,57 @@
 <div class="layui-body-header">
     <span class="layui-body-header-title">低效企业</span>
 </div>
+<!--<style>
+    /* 防止下拉框的下拉列表被隐藏-&#45;&#45;必须设置-&#45;&#45; */
+    .layui-table-cell {
+        overflow: visible;
+    }
+    .layui-table-box {
+        overflow: visible;
+    }
+    .layui-table-body {
+        overflow: visible;
+    }
+    /* 设置下拉框的高度与表格单元相同 */
+    td .layui-form-select {
+        margin-top: -10px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+</style>-->
+<style>
+    /* 防止下拉框的下拉列表被隐藏*/
+    .layui-table-cell {
+        overflow: visible !important;
+    }
+
+    .layui-table-box {
+        overflow: visible;
+    }
+
+    .layui-table-body {
+        overflow: auto;
+    }
+
+    /* 使得下拉框与单元格刚好合适 */
+    td .layui-form-select {
+        margin-top: -10px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    td .inputdiv>input {
+        margin-left: -15px;
+    }
+
+    .layui-form-selected .layui-anim {
+        bottom: auto;
+    }
+</style>
 
 <div id="myContiner" style="height: 100%">
-
+    <input id="dictList" type="hidden" value='${dictJson}'/>
+    <input id="lowTypes" type="hidden" value='${lowTypesJson}'/>
+    <input id="disTypes" type="hidden" value='${disTypesJson}'/>
     <div class="ui-layout-center">
         <div class="layui-fluid">
             <div class="layui-row">
@@ -35,7 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="layui-table" id="busMainTable" lay-filter="busMainTable"></table>
+                            <table class="layui-table" id="busMainTable" name="busMainTable" lay-filter="busMainTable"></table>
                         </div>
                     </div>
                 </div>
@@ -43,6 +91,42 @@
         </div>
     </div>
 </div>
+<script type="text/html" id="selectTpl">
+    <div class="inputdiv">
+        <input class="layui-input" readonly name="reasonsType" z-filter="input" data-tableName="busMainTable" style="position:absolute;z-index:2;width:calc(100% - 30px);" />
+        <select id="reasonsTypeSelect" name="reasonsType" lay-filter="select111" data-tableName="busMainTable" class="layui-border">
+            @if(tool.isNotEmpty(dicts)){
+            @for(item in dicts){
+            <option value="${item.code}">${item.name}</option>
+            @}
+            @}
+        </select>
+    </div>
+</script>
 
+<script type="text/html" id="selectLowType">
+    <div class="inputdiv">
+        <input class="layui-input" readonly name="conStandard" z-filter="input" data-tableName="busMainTable" style="position:absolute;z-index:2;width:calc(100% - 30px);" />
+        <select id="lowTypeSelect" name="conStandard" lay-filter="lowTypeFil" data-tableName="busMainTable" class="layui-border">
+            @if(tool.isNotEmpty(lowTypes)){
+            @for(item in lowTypes){
+            <option value="${item.code}">${item.name}</option>
+            @}
+            @}
+        </select>
+    </div>
+</script>
+<script type="text/html" id="selectDisSta">
+    <div class="inputdiv">
+        <input class="layui-input" readonly name="disStandard" z-filter="input" data-tableName="busMainTable" style="position:absolute;z-index:2;width:calc(100% - 30px);" />
+        <select id="disStaSelect" name="disStandard" lay-filter="disStandardFil" data-tableName="busMainTable" class="layui-border">
+            @if(tool.isNotEmpty(disTypes)){
+            @for(item in disTypes){
+            <option value="${item.code}">${item.name}</option>
+            @}
+            @}
+        </select>
+    </div>
+</script>
 
 @}

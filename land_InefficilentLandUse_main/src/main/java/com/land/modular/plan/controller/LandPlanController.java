@@ -5,6 +5,7 @@ import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.auth.context.LoginContextHolder;
 import com.land.auth.model.LoginUser;
@@ -17,6 +18,8 @@ import com.land.modular.plan.vo.LandPlanExcelParam;
 import com.land.modular.plan.vo.LandPlanInfoVo;
 import com.land.sys.core.constant.dictmap.DeptDict;
 import com.land.sys.core.listener.ConfigListener;
+import com.land.sys.modular.system.entity.Dict;
+import com.land.sys.modular.system.service.DictService;
 import com.land.sys.modular.system.warpper.UserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +47,8 @@ public class LandPlanController extends BaseController {
     private String PREFIX = "/plan";
     @Autowired
     private LandPlanInfoService landPlanInfoService;
+    @Autowired
+    private DictService dictService;
     /**
      * 总实施计划
      * @param model
@@ -51,6 +56,7 @@ public class LandPlanController extends BaseController {
      */
     @RequestMapping("/main")
     public String main( Model model) {
+
         return PREFIX + "/main.html";
     }
 
@@ -60,6 +66,15 @@ public class LandPlanController extends BaseController {
     @RequestMapping("/gotoPageByType")
     public String gotoPageByType(String planType, Model model) {
         if(planType.equals("1")){
+            List<Dict> dicts = dictService.listDictsByCode("REASONTYPE");
+            List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
+            List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
+            model.addAttribute("dicts",dicts);
+            model.addAttribute("disTypes",disTypes);
+            model.addAttribute("lowTypes",lowTypes);
+            model.addAttribute("dictJson", JSON.toJSONString(dicts));
+            model.addAttribute("lowTypesJson", JSON.toJSONString(lowTypes));
+            model.addAttribute("disTypesJson", JSON.toJSONString(disTypes));
             //低效企业
             return PREFIX + "/businesses.html";
         }else if(planType.equals("2")){
@@ -90,11 +105,24 @@ public class LandPlanController extends BaseController {
         model.addAttribute("planType",planType);
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
         if(currentUser.getDeptName() != null){
-            model.addAttribute("deptName",currentUser.getDeptName());
+            if(currentUser.getRoleNames().contains("超级管理员")){
+                model.addAttribute("deptName","");
+            }else{
+                model.addAttribute("deptName",currentUser.getDeptName());
+            }
         }else{
             model.addAttribute("deptName","");
         }
         if(planType.equals("1")){
+            List<Dict> dicts = dictService.listDictsByCode("REASONTYPE");
+            List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
+            List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
+            model.addAttribute("dictJson", JSON.toJSONString(dicts));
+            model.addAttribute("lowTypesJson", JSON.toJSONString(lowTypes));
+            model.addAttribute("disTypesJson", JSON.toJSONString(disTypes));
+            model.addAttribute("dicts",dicts);
+            model.addAttribute("disTypes",disTypes);
+            model.addAttribute("lowTypes",lowTypes);
             //低效企业
             return PREFIX + "/busAdd.html";
         }else if(planType.equals("2")){
@@ -123,11 +151,24 @@ public class LandPlanController extends BaseController {
         model.addAttribute("ctxPath", ConfigListener.getConf().get("contextPath"));
         LoginUser currentUser = LoginContextHolder.getContext().getUser();
         if(currentUser.getDeptName() != null){
-            model.addAttribute("deptName",currentUser.getDeptName());
+            if(currentUser.getRoleNames().contains("超级管理员")){
+                model.addAttribute("deptName","");
+            }else{
+                model.addAttribute("deptName",currentUser.getDeptName());
+            }
         }else{
             model.addAttribute("deptName","");
         }
         if(vo.getPlanType().equals("1")){
+            List<Dict> dicts = dictService.listDictsByCode("REASONTYPE");
+            List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
+            List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
+            model.addAttribute("dictJson", JSON.toJSONString(dicts));
+            model.addAttribute("lowTypesJson", JSON.toJSONString(lowTypes));
+            model.addAttribute("disTypesJson", JSON.toJSONString(disTypes));
+            model.addAttribute("dicts",dicts);
+            model.addAttribute("disTypes",disTypes);
+            model.addAttribute("lowTypes",lowTypes);
             return PREFIX + "/busEdit.html";
         }else if(vo.getPlanType().equals("2")){
             //城中村改造
@@ -154,6 +195,15 @@ public class LandPlanController extends BaseController {
         model.addAttribute("vo",vo);
         model.addAttribute("ctxPath",ConfigListener.getConf().get("contextPath"));
         if(vo.getPlanType().equals("1")){
+            List<Dict> dicts = dictService.listDictsByCode("REASONTYPE");
+            List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
+            List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
+            model.addAttribute("dictJson", JSON.toJSONString(dicts));
+            model.addAttribute("lowTypesJson", JSON.toJSONString(lowTypes));
+            model.addAttribute("disTypesJson", JSON.toJSONString(disTypes));
+            model.addAttribute("dicts",dicts);
+            model.addAttribute("disTypes",disTypes);
+            model.addAttribute("lowTypes",lowTypes);
             return PREFIX + "/busDetail.html";
         }else if(vo.getPlanType().equals("villages"))
         {

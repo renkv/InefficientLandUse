@@ -58,6 +58,7 @@ layui.use(['table','layer', 'form', 'admin', 'laydate', 'ax', 'formSelects'], fu
             end: function () {
                 $("#landCode").val(LandInfoDlg.data.landCode);
                 $("#xmmcSelect").val(LandInfoDlg.data.xmmc);
+                $("#busName").val(LandInfoDlg.data.xmmc);
                 $("#dkmj").val(LandInfoDlg.data.dkmj);
                 $("#occupyArea").val(LandInfoDlg.data.dkmj);
             }

@@ -246,17 +246,55 @@
                             <input id="located" name="located" placeholder="请输入坐落" lay-verify="required" type="text" class="layui-input"/>
                         </div>
                     </div>
-
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">上年度亩均税收(万元)<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">现状用途<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="preYearTax" name="preYearTax" placeholder="请输入上年度亩均税收" lay-verify="required" onkeyup="this.value = numLimit(this.value,6)"  type="text" class="layui-input"/>
+                            <input id="useStatus" name="useStatus" placeholder="请输入现状用途" lay-verify="required" type="text" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">上上年度亩均税收(万元)<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">低效类型<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
-                            <input id="upYearTax" name="upYearTax" placeholder="请输入上上年度亩均税收(万元)" lay-verify="required" onkeyup="this.value = numLimit(this.value,6)"  type="text" class="layui-input"/>
+                            <select id="conStandard" name="conStandard" lay-verify="required" >
+                                <option value="">请选择低效类型</option>
+                                @if(tool.isNotEmpty(lowTypes)){
+                                @for(item in lowTypes){
+                                <option value="${item.code}">${item.name}</option>
+                                @}
+                                @}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">处置方式<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <select id="disStandard" name="disStandard" lay-verify="required" >
+                                <option value="">请选择处置方式</option>
+                                @if(tool.isNotEmpty(disTypes)){
+                                @for(item in disTypes){
+                                <option value="${item.code}">${item.name}</option>
+                                @}
+                                @}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">当前状态<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input id="curStatus" name="curStatus" placeholder="请输入当前状态" lay-verify="required" type="text" class="layui-input"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">上年度亩均税收(万元)</label>
+                        <div class="layui-input-block">
+                            <input id="preYearTax" name="preYearTax" placeholder="请输入上年度亩均税收"  onkeyup="this.value = numLimit(this.value,6)"  type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">上上年度亩均税收(万元)</label>
+                        <div class="layui-input-block">
+                            <input id="upYearTax" name="upYearTax" placeholder="请输入上上年度亩均税收(万元)"  onkeyup="this.value = numLimit(this.value,6)"  type="text" class="layui-input"/>
                         </div>
                     </div>
                    <!-- <div class="layui-inline layui-col-md6">
@@ -266,9 +304,9 @@
                         </div>
                     </div>-->
                     <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">经营状态<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">经营状态</label>
                         <div class="layui-input-block">
-                            <input id="busStatus" name="busStatus" placeholder="请输入经营状态" lay-verify="required" type="text" class="layui-input"/>
+                            <input id="busStatus" name="busStatus" placeholder="请输入经营状态"  type="text" class="layui-input"/>
                         </div>
                     </div>
                     <!--<div class="layui-inline layui-col-md6">
@@ -284,26 +322,22 @@
                             <input id="planArea" name="planArea" placeholder="请输入计划完成面积（保留4位小数）" onkeyup="this.value = numLimit(this.value,4)"  lay-verify="required" type="text" class="layui-input"/>
                         </div>
                     </div>-->
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">处置面积(公顷)<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="currentArea" name="currentArea" placeholder="请输入处置面积（保留4位小数）" onkeyup="this.value = numLimit(this.value,4)"  lay-verify="required" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">计划实施单位<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="planUnit" name="planUnit" placeholder="请输入计划实施单位" lay-verify="required" type="text" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline layui-col-md6">
-                        <label class="layui-form-label">当前状态<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input id="curStatus" name="curStatus" placeholder="请输入当前状态" lay-verify="required" type="text" class="layui-input"/>
-                        </div>
-                    </div>
                 </div>
                 <div class="layui-form-item layui-row">
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">处置面积(公顷)</label>
+                        <div class="layui-input-block">
+                            <input id="currentArea" name="currentArea" placeholder="请输入处置面积（保留4位小数）" onkeyup="this.value = numLimit(this.value,4)"  type="text" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md6">
+                        <label class="layui-form-label">计划实施单位</label>
+                        <div class="layui-input-block">
+                            <input id="planUnit" name="planUnit" placeholder="请输入计划实施单位"  type="text" class="layui-input"/>
+                        </div>
+                    </div>
+
+
                     <div class="layui-inline layui-col-md6">
                         <label class="layui-form-label">详细进展</label>
                         <div class="layui-input-block">
@@ -315,11 +349,11 @@
                         <div class="layui-input-block">
                             <select id="reasonsType" name="reasonsType" >
                                 <option value="">请选择问题类型</option>
-                                <option value="1">困难1</option>
-                                <option value="2">困难2</option>
-                                <option value="3">困难3</option>
-                                <option value="4">困难4</option>
-                                <option value="5">其他</option>
+                                @if(tool.isNotEmpty(dicts)){
+                                @for(item in dicts){
+                                <option value="${item.code}">${item.name}</option>
+                                @}
+                                @}
                             </select>
                         </div>
                     </div>
