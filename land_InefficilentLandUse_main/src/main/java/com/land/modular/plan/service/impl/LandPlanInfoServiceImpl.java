@@ -172,18 +172,7 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
             LandPlanExcelParam param = (LandPlanExcelParam) result.get(i);
             int coNum = i + 1;
             LandPlanInfoEntity main = new LandPlanInfoEntity();
-            //判断企业是否已经存在
-            List<LandPlanInfoEntity> existList = this.baseMapper.selectByName(param.getBusName());
-            Dict deptDict = dictService.getOneByNameAndCode(param.getCountyName(),"sjzqx");
-            if(deptDict != null){
-                main.setCountyCode(deptDict.getCode());
-            }else{
-                stringBuffer.append("第" + coNum +"行，县名称:"+param.getCountyName()+"不存在！");
-            }
-            if(existList != null && existList.size() > 0){
-                stringBuffer.append("第" + coNum +"行，"+param.getBusName()+"已存在！");
-            }
-
+            stringBuffer = varifyData(stringBuffer,param,coNum,main);
             //时间（精确到毫秒）
             DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
             String localDate = LocalDateTime.now().format(ofPattern);
@@ -209,6 +198,65 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
         return msg;
     }
 
+    /**
+     * 验证数据正确性
+     */
+    public StringBuffer varifyData(StringBuffer stringBuffer,LandPlanExcelParam param,int coNum,LandPlanInfoEntity main){
+//判断企业是否已经存在
+        List<LandPlanInfoEntity> existList = this.baseMapper.selectByName(param.getBusName());
+        Dict deptDict = dictService.getOneByNameAndCode(param.getCountyName(),"sjzqx");
+        if(deptDict != null){
+            main.setCountyCode(deptDict.getCode());
+        }else{
+            stringBuffer.append("第" + coNum +"行，县名称:"+param.getCountyName()+"不存在！");
+        }
+        if(existList != null && existList.size() > 0){
+            stringBuffer.append("第" + coNum +"行，企业名称："+param.getBusName()+"已存在！");
+        }
+        //验证低效类型
+        if(!StringUtils.isEmpty(param.getConStandard())){
+            Dict lowType = dictService.getOneByNameAndCode(param.getConStandard(),"LOW_TYPE");
+            if(lowType != null){
+                main.setConStandard(lowType.getCode());
+            }else{
+                stringBuffer.append("第" + coNum +"行，低效类型:"+param.getConStandard()+"数据错误，请选择正确数据！");
+            }
+        }else{
+            stringBuffer.append("第" + coNum +"行，低效类型不能为空");
+        }
+        //验证处置方式
+        if(!StringUtils.isEmpty(param.getDisStandard())){
+            Dict dict = dictService.getOneByNameAndCode(param.getDisStandard(),"LOW_DIS_STA");
+            if(dict != null){
+                main.setDisStandard(dict.getCode());
+            }else{
+                stringBuffer.append("第" + coNum +"行，处置方式:"+param.getDisStandard()+"数据错误，请选择正确数据！");
+            }
+        }else{
+            stringBuffer.append("第" + coNum +"行处置方式不能为空");
+        }
+        //验证当前状态
+        if(!StringUtils.isEmpty(param.getCurStatus())){
+            Dict dict = dictService.getOneByNameAndCode(param.getCurStatus(),"BUS_STATUS");
+            if(dict != null){
+                main.setCurStatus(dict.getCode());
+            }else{
+                stringBuffer.append("第" + coNum +"行，处置方式:"+param.getCurStatus()+"数据错误，请选择正确数据！");
+            }
+        }else{
+            stringBuffer.append("第" + coNum +"当前状态不能为空");
+        }
+        //验证问题类型
+        if(!StringUtils.isEmpty(param.getReasonsType())){
+            Dict dict = dictService.getOneByNameAndCode(param.getReasonsType(),"REASONTYPE");
+            if(dict != null){
+                main.setReasonsType(dict.getCode());
+            }else{
+                stringBuffer.append("第" + coNum +"行，处置方式:"+param.getReasonsType()+"数据错误，请选择正确数据！");
+            }
+        }
+        return stringBuffer;
+    }
     /**
      * 统计
      * @param vo

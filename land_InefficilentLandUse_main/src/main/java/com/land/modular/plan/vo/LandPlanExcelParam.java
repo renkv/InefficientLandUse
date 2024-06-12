@@ -32,17 +32,15 @@ public class LandPlanExcelParam implements Serializable {
     @NotEmpty(message = "坐落不能为空")
     private String located;
     @Excel(name = "上年度亩均税收")
-    @NotEmpty(message = "上年度亩均税收不能为空")
     private Double preYearTax;
     @Excel(name = "上上年度亩均税收")
-    @NotEmpty(message = "上上年度亩均税收不能为空")
     private Double upYearTax;
 /*    @Excel(name = "是否规上企业")
     private String isPlanBus;*/
 
-    @Excel(name = "企业经营状态")
+/*    @Excel(name = "企业经营状态")
     @NotEmpty(message = "企业经营状态不能为空")
-    private String busStatus;
+    private String busStatus;*/
     @Excel(name = "现状用途")
     @NotEmpty(message = "现状用途不能为空")
     private String useStatus;
@@ -64,6 +62,8 @@ public class LandPlanExcelParam implements Serializable {
     private Double currentArea;
     @Excel(name = "计划实施单位")
     private String planUnit;
+    @Excel(name = "问题类型")
+    private String reasonsType;
     @Excel(name = "问题详细描述")
     private String reasons;
     @Excel(name = "备注")
