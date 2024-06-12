@@ -69,12 +69,15 @@ public class LandPlanController extends BaseController {
             List<Dict> dicts = dictService.listDictsByCode("REASONTYPE");
             List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
             List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
+            List<Dict> busStatus = dictService.listDictsByCode("BUS_STATUS");
             model.addAttribute("dicts",dicts);
             model.addAttribute("disTypes",disTypes);
             model.addAttribute("lowTypes",lowTypes);
+            model.addAttribute("busStatus",busStatus);
             model.addAttribute("dictJson", JSON.toJSONString(dicts));
             model.addAttribute("lowTypesJson", JSON.toJSONString(lowTypes));
             model.addAttribute("disTypesJson", JSON.toJSONString(disTypes));
+            model.addAttribute("busStatusJson", JSON.toJSONString(busStatus));
             //低效企业
             return PREFIX + "/businesses.html";
         }else if(planType.equals("2")){
@@ -117,12 +120,15 @@ public class LandPlanController extends BaseController {
             List<Dict> dicts = dictService.listDictsByCode("REASONTYPE");
             List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
             List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
+            List<Dict> busStatus = dictService.listDictsByCode("BUS_STATUS");
             model.addAttribute("dictJson", JSON.toJSONString(dicts));
             model.addAttribute("lowTypesJson", JSON.toJSONString(lowTypes));
             model.addAttribute("disTypesJson", JSON.toJSONString(disTypes));
+            model.addAttribute("busStatusJson", JSON.toJSONString(busStatus));
             model.addAttribute("dicts",dicts);
             model.addAttribute("disTypes",disTypes);
             model.addAttribute("lowTypes",lowTypes);
+            model.addAttribute("busStatus",busStatus);
             //低效企业
             return PREFIX + "/busAdd.html";
         }else if(planType.equals("2")){
@@ -163,10 +169,13 @@ public class LandPlanController extends BaseController {
             List<Dict> dicts = dictService.listDictsByCode("REASONTYPE");
             List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
             List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
+            List<Dict> busStatus = dictService.listDictsByCode("BUS_STATUS");
             model.addAttribute("dictJson", JSON.toJSONString(dicts));
             model.addAttribute("lowTypesJson", JSON.toJSONString(lowTypes));
             model.addAttribute("disTypesJson", JSON.toJSONString(disTypes));
+            model.addAttribute("busStatusJson", JSON.toJSONString(busStatus));
             model.addAttribute("dicts",dicts);
+            model.addAttribute("busStatus",busStatus);
             model.addAttribute("disTypes",disTypes);
             model.addAttribute("lowTypes",lowTypes);
             return PREFIX + "/busEdit.html";
@@ -198,12 +207,15 @@ public class LandPlanController extends BaseController {
             List<Dict> dicts = dictService.listDictsByCode("REASONTYPE");
             List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
             List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
+            List<Dict> busStatus = dictService.listDictsByCode("BUS_STATUS");
             model.addAttribute("dictJson", JSON.toJSONString(dicts));
+            model.addAttribute("busStatusJson", JSON.toJSONString(busStatus));
             model.addAttribute("lowTypesJson", JSON.toJSONString(lowTypes));
             model.addAttribute("disTypesJson", JSON.toJSONString(disTypes));
             model.addAttribute("dicts",dicts);
             model.addAttribute("disTypes",disTypes);
             model.addAttribute("lowTypes",lowTypes);
+            model.addAttribute("busStatus",busStatus);
             return PREFIX + "/busDetail.html";
         }else if(vo.getPlanType().equals("villages"))
         {

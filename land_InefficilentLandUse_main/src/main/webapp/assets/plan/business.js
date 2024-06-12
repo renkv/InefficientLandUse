@@ -25,6 +25,7 @@ layui.use(['table', 'admin','tableMerge',  'form','laydate','ax', 'func','upload
     var reasonsType = JSON.parse($('#dictList').val());
     var lowTypes = JSON.parse($('#lowTypes').val());
     var disTypes = JSON.parse($('#disTypes').val());
+    var busStatus = JSON.parse($('#busStatus').val());
 
     /**
      * 初始化表格的列
@@ -82,7 +83,20 @@ layui.use(['table', 'admin','tableMerge',  'form','laydate','ax', 'func','upload
                     }
                     return temp[0].outerHTML;
                 }},
-            {field: 'curStatus',width:350, sort: false, align: 'center',title: '当前状态',edit: 'text'},
+            {field: 'curStatus',width:350, sort: false, align: 'center',title: '当前状态',templet:function (d) {
+                    var temp = $($("#selectBusSta").html());
+                    if(d.curStatus != ""){
+                        for (var i = 0; i < busStatus.length; i++) {
+                            var name = busStatus[i].name;
+                            var code = busStatus[i].code;
+                            if(code == d.curStatus){
+                                temp.find("select").attr("data-value", code)//给下拉框赋值
+                                temp.find("input").attr("value",name);//给输入框赋值
+                            }
+                        }
+                    }
+                    return temp[0].outerHTML;
+                }},
             {field: 'curProgress',width:350, sort: false, align: 'center',title: '详细进展',edit: 'text'},
             /*{field: 'planStartTime',width:120, sort: false, align: 'center',title: '计划开始时间'},
             {field: 'planEndTime', sort: false,hide:true, align: 'center',title: '计划完成时间'},
@@ -211,6 +225,19 @@ layui.use(['table', 'admin','tableMerge',  'form','laydate','ax', 'func','upload
         tableData[trElem.data('index')][elem.attr('name')] = obj.value;
         //console.log(table.cache);
     });
+    //选择下拉框
+    form.on("select(curStatusFil)", function (obj) {
+        var value = obj.value;
+        var e = obj.elem;
+        var text = e[e.selectedIndex].text;
+        var elem = $(obj.elem);
+        var trElem = elem.parents('tr');
+        var tableName = elem.attr("data-tableName");
+        var tableData = table.cache[tableName];
+        $(elem.prev("input")).val(text);
+        tableData[trElem.data('index')][elem.attr('name')] = obj.value;
+        //console.log(table.cache);
+    });
 
     //通过事件冒泡监听z-filter元素的change事件
     document.onchange = function (e) {
@@ -223,7 +250,7 @@ layui.use(['table', 'admin','tableMerge',  'form','laydate','ax', 'func','upload
         var id = tableData[trElem.data('index')]["id"];
         var fieldName = e.target.getAttribute("name")
         if (e.target.getAttribute("z-filter") == null) {
-            var index = top.layer.msg('正在将新数据写入数据库，请稍候...', {icon: 16, time: false, shade: 0.8});
+            /*var index = top.layer.msg('正在将新数据写入数据库，请稍候...', {icon: 16, time: false, shade: 0.8});
             var msg;
             setTimeout(function () {
                 $.ajax({
@@ -248,11 +275,37 @@ layui.use(['table', 'admin','tableMerge',  'form','laydate','ax', 'func','upload
                     top.layer.close(index);
                     top.layer.msg(msg);
                     layer.closeAll("iframe");
-                    setTimeout(function () {
+                   /!* setTimeout(function () {
                         parent.location.reload();
-                    }, 1000);
+                    }, 1000);*!/
                 });
-            }, 2000);
+            }, 2000);*/
+            $.ajax({
+                type: "POST",
+                url: Feng.ctxPath + "/plan/savePlanById",
+                data: {
+                    id: id, // 获取当前修改数据的id
+                    field: fieldName,// 得到修改的字段
+                    value: value,// 得到修改后的值
+                },
+                success: function (d) {
+                    if (d.code == 200) {
+
+                    } else {
+                        layer.msg(d.message);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    layer.msg("获取数据失败！");
+                }
+            }).done(function () {
+                /*top.layer.close(index);
+                top.layer.msg(msg);
+                layer.closeAll("iframe");*/
+                /* setTimeout(function () {
+                     parent.location.reload();
+                 }, 1000);*/
+            });
             return;
         }
         tableData[trElem.data('index')][elem.attr('name')] = elem.val();//使用触发元素的name属性判断字段
@@ -314,36 +367,36 @@ layui.use(['table', 'admin','tableMerge',  'form','laydate','ax', 'func','upload
             obj.value = value;
         }
         // 编辑后续操作，如提交更新请求，以完成真实的数据更新
-        var index = top.layer.msg('正在将新数据写入数据库，请稍候...', {icon: 16, time: false, shade: 0.8});
-        var msg;
-        setTimeout(function () {
-            $.ajax({
-                type: "POST",
-                url: Feng.ctxPath + "/plan/savePlanById",
-                data: {
-                    id: data.id, // 获取当前修改数据的id
-                    field: field,// 得到修改的字段
-                    value: value,// 得到修改后的值
-                },
-                success: function (d) {
-                    if (d.code == 200) {
-                        msg = d.message;
-                    } else {
-                        msg = d.message;
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    layer.msg("获取数据失败！");
+        $.ajax({
+            type: "POST",
+            url: Feng.ctxPath + "/plan/savePlanById",
+            data: {
+                id: data.id, // 获取当前修改数据的id
+                field: field,// 得到修改的字段
+                value: value,// 得到修改后的值
+            },
+            success: function (d) {
+                if (d.code == 200) {
+                } else {
+                    layer.msg(d.message);
                 }
-            }).done(function () {
-                top.layer.close(index);
-                top.layer.msg(msg);
-                layer.closeAll("iframe");
-                setTimeout(function () {
-                    parent.location.reload();
-                }, 1000);
-            });
-        }, 2000);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                layer.msg("获取数据失败！");
+            }
+        }).done(function () {
+            /*top.layer.close(index);
+            top.layer.msg(msg);
+            layer.closeAll("iframe");
+            setTimeout(function () {
+                parent.location.reload();
+            }, 1000);*/
+        });
+        /*var index = top.layer.msg('正在将新数据写入数据库，请稍候...', {icon: 16, time: false, shade: 0.8});
+        var msg;*/
+        /*setTimeout(function () {
+
+        }, 2000);*/
         //layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改值为：'+ util.escape(value));
     });
 
