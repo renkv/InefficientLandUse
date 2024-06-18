@@ -115,6 +115,19 @@ public class HttpClient {
                     sbf.append("\r\n");
                 }
                 result = sbf.toString();
+            }else{
+                is = connection.getInputStream();
+                // 对输入流对象进行包装:charset根据工作项目组的要求来设置
+                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+                StringBuffer sbf = new StringBuffer();
+                String temp = null;
+                // 循环遍历一行一行读取数据
+                while ((temp = br.readLine()) != null) {
+                    sbf.append(temp);
+                    sbf.append("\r\n");
+                }
+                result = sbf.toString();
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

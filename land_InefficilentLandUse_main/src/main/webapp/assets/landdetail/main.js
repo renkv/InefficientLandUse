@@ -14,6 +14,18 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
     var tips;
 
 
+    var demo1 = xmSelect.render({
+        el: '#planDiv',
+        language: 'zn',
+        data: [
+            {name: '低效企业', value: 1},
+            {name: '城中村改造', value: 2},
+            {name: '城市更新', value: 3},
+            {name: '开发区低效处置', value: 4},
+            {name: '其他处置', value: 5},
+        ]
+    })
+
     /**
      * 文件发送管理
      */
@@ -228,6 +240,10 @@ layui.use(['table', 'admin','laydate','tableMerge', 'ax', 'func','upload'], func
         }else{
             queryData['landType'] = "";
         }
+        var selectArr = demo1.getValue();
+
+        var planType = JSON.stringify(selectArr, null, 2);
+        queryData['planType'] = planType;
 
         table.reload(detailMainTable.tableId, {
             where: queryData, page: {curr: 1}

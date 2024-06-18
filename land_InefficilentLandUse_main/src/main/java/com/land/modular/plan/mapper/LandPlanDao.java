@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.modular.plan.entity.LandPlanInfoEntity;
 import com.land.modular.plan.vo.LandPlanInfoVo;
 import com.land.modular.policy.vo.SysPolicyInfoVo;
+import com.land.modular.statistics.vo.InBusinessVo;
 import com.land.modular.statistics.vo.LandStaVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +20,8 @@ public interface LandPlanDao extends BaseMapper<LandPlanInfoEntity> {
     Page<Map<String, Object>> diffStaList(@Param("page")Page page, @Param("vo")LandStaVo vo, @Param("beginTime")String beginTime, @Param("endTime")String endTime);
 
     List<LandPlanInfoEntity> selectByName(@Param("busName")String busName);
+
+    Page<Map<String, Object>> inbusList(@Param("page")Page page, @Param("vo")InBusinessVo vo, @Param("beginTime")String beginTime,@Param("endTime") String endTime);
+
+    List<InBusinessVo> inbusListExport( @Param("vo")InBusinessVo vo, @Param("beginTime")String beginTime,@Param("endTime") String endTime);
 }

@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{js:["/assets/landdetail/main.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+@layout("/common/_container.html",{js:["/assets/landdetail/main.js","/assets/common/xm-select/xm-select.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
 <div class="layui-body-header">
     <span class="layui-body-header-title">低效用地</span>
 </div>
@@ -52,6 +52,17 @@
                                             <option value="villages">村庄用地</option>
                                         </select>
                                     </div>
+                                    <div class="layui-inline" style="width: 545px;" id="planDiv">
+                                        <!-- <input id="landStatus" name="landStatus" class="layui-input" type="text" placeholder="地块状态"/>-->
+                                        <!--<select id="planType" name="landType" lay-verify="required" multiple>
+                                            <option value="">请选择计划类型</option>
+                                            <option value="1">低效企业</option>
+                                            <option value="2">城中村改造</option>
+                                            <option value="3">城市更新</option>
+                                            <option value="4">开发区低效处置</option>
+                                            <option value="5">其他处置</option>
+                                        </select>-->
+                                    </div>
                                     <!--<div class="layui-inline">
                                         <input id="createUserName" class="layui-input" type="text" placeholder="创建人"/>
                                         <input id="category" type="hidden" class="layui-input" value="${category}"/>
@@ -88,5 +99,14 @@
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="location">查看位置</a>
     &lt;!&ndash;<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="excel">导出详情</a>&ndash;&gt;
 </script>-->
+<script>
+
+
+   /* document.getElementById('demo1-getValue').onclick = function(){
+        //获取当前多选选中的值
+        var selectArr = demo1.getValue();
+        document.getElementById('demo1-value').innerHTML = JSON.stringify(selectArr, null, 2);
+    }*/
+</script>
 
 @}

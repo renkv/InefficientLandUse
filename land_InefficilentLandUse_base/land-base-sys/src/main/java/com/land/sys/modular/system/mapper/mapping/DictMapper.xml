@@ -91,7 +91,8 @@
         select t.code AS code, t.name AS name
         from sys_dict t
         left join  sys_dict_type d on t.dict_type_id=d.dict_type_id
-        where 1=1 and d.code=#{typeCode} and #{deptName} like  '%' || t.name || '%'
+        where 1=1 and d.code=#{typeCode}
+          and find_in_set(t.name,#{deptName}) > 0
         limit 1
     </select>
 </mapper>

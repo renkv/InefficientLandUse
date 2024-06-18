@@ -125,6 +125,13 @@
         <if test="vo.landCode != null and vo.landCode != ''">
             and land_code = #{vo.landCode}
         </if>
+        <if test="vo.planTypeList != null and vo.planTypeList.size() > 0">
+            and land_code IN (select land_code from land_plan_info where plan_type in
+            <foreach item="itemId" collection="vo.planTypeList" open="(" separator="," close=")">
+                #{itemId}
+            </foreach>
+            )
+        </if>
         order by xdm,pqbh, create_time desc
     </select>
     <select id="selectByList" resultType="com.land.modular.landinfo.entity.LandDetailInfo">

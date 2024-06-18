@@ -5,6 +5,7 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.auth.context.LoginContextHolder;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -217,7 +219,7 @@ public class LandDetailInfoController extends BaseController{
      */
     @RequestMapping("/selectList")
     @ResponseBody
-    public Object selectList(@RequestParam(required = false) String createUserName,@RequestParam(required = false) String landCode, @RequestParam(required = false) String landType,
+    public Object selectList(LandDetailInfoVo vo ,@RequestParam(required = false)String planType,@RequestParam(required = false) String createUserName,@RequestParam(required = false) String landCode, @RequestParam(required = false) String landType,
                              @RequestParam(required = false) String category,@RequestParam(required = false) String xdm,@RequestParam(required = false) String xmmc,
                              @RequestParam(required = false) String landStatus,@RequestParam(required = false) String timeLimit) {
 
@@ -230,13 +232,29 @@ public class LandDetailInfoController extends BaseController{
             beginTime = split[0];
             endTime = split[1];
         }
-        LandDetailInfoVo vo = new LandDetailInfoVo();
-        vo.setXmmc(xmmc);
+        //LandDetailInfoVo vo = new LandDetailInfoVo();
+        if(ToolUtil.isNotEmpty(planType)){
+            List<String> planTypeList = new ArrayList<>();
+            JSONArray objectList = JSONObject.parseArray(planType);
+            List<Map<String, String>> listObjectFir = (List<Map<String, String>>) JSONArray.parse(planType);
+            // 利用JSONArray中的parse方法来解析json数组字符串
+            for (Map<String, String> mapList : listObjectFir) {
+                for (Map.Entry entry : mapList.entrySet()) {
+                    if(entry.getKey().equals("value")){
+                        planTypeList.add(entry.getValue().toString());
+                    }
+                    System.out.printf("计划类型", entry.getKey(), entry.getValue());
+                }
+            }
+            vo.setPlanTypeList(planTypeList);
+        }
+
+       /* vo.setXmmc(xmmc);
         vo.setXdm(xdm);
         vo.setLandStatus(landStatus);
         vo.setCategory(category);
         vo.setCreateUserName(createUserName);
-        vo.setLandCode(landCode);
+        vo.setLandCode(landCode);*/
         if(!StringUtils.isEmpty(landType)){
             vo.setCategory(landType);
         }

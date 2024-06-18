@@ -106,7 +106,7 @@ public class SsoLoginController extends BaseController {
         //result = "{\"msg\":\"操作成功\", \"code\":200, \"data\":{\"userId\":128, \"userName\":\"桥西区\", \"userArea\":\"桥西区\"}}";
 
         JSONObject job = JSONObject.parseObject(result);
-        if(job.get("code") != null && job.get("code").toString().equals("200")){
+        if(job!= null && job.get("code") != null && job.get("code").toString().equals("200")){
             JSONObject data = (JSONObject) job.get("data");
             String userName = data.get("userName").toString();
             String userArea = data.get("userArea").toString();

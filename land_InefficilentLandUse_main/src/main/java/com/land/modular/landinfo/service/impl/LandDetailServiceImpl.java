@@ -115,6 +115,14 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
             }else if(!StringUtils.isEmpty(xmc) && !xmc.contains(param.getXmc())){
                 stringBuffer.append("第" +errNum+"行，县名称超出当前权限范围");
             }else{
+                String curXdm = "";
+                Dict dict = dictService.getOneByNameAndCode(param.getXmc(),"sjzqx");
+                if(dict != null){
+                    curXdm = dict.getCode();
+                }else{
+                    stringBuffer.append("第" + errNum +"行，县名称:"+param.getXmc()+"不存在！");
+                    continue;
+                }
                 //判断项目名称是否已存在
                 /*List<LandDetailInfo> existList = this.baseMapper.checkExist("xmmc",param.getXmmc());
                 if(xmmcList.contains(param.getXmmc())){
@@ -128,6 +136,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
 
                 LandDetailInfo main = new LandDetailInfo();
                 BeanCopyUtils.copyNotNullProperties(param,main);
+                main.setXdm(curXdm);
                 String landCode = "";
                 landCodeStr = PinyinUtil.getPinYinHeadChar(main.getXmc());
                 if(map.get(landCodeStr) != null){
@@ -136,14 +145,7 @@ public class LandDetailServiceImpl  extends ServiceImpl<LandDetailDao, LandDetai
                     LandDetailInfo info = null;
                     //根据区县跟年份获取当前最大编号周期
                     if(StringUtils.isEmpty(xdm)){
-                        Dict dict = dictService.getOneByNameAndCode(param.getXmc(),"sjzqx");
-                        String cuXdm = "";
-                        if(dict != null){
-                            cuXdm = dict.getCode();
-                            info = this.baseMapper.getByYearAndQx(nowYear,cuXdm);
-                        }else{
-                            stringBuffer.append("第" +errNum+"行，县名称："+param.getXmc() + "不存在");
-                        }
+                        info = this.baseMapper.getByYearAndQx(nowYear,curXdm);
                     }else{
                         info = this.baseMapper.getByYearAndQx(nowYear,xdm);
                     }

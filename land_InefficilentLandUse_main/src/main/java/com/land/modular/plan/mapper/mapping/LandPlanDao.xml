@@ -106,8 +106,11 @@
         <if test="vo.busName != null and vo.xmmc != ''">
             and d.XMMC like CONCAT('%',#{vo.xmmc},'%')
         </if>
+        <if test="vo.countyCode != null and vo.countyCode != ''">
+            and t.county_code = #{vo.countyCode}
+        </if>
         <if test="vo.countyName != null and vo.countyName != ''">
-            and #{vo.countyName} like CONCAT('%',t.county_name,'%')
+            and find_in_set(t.county_name,#{vo.countyName}) > 0
         </if>
         order by t.create_time desc
     </select>
@@ -135,7 +138,7 @@
             and t.create_time &lt;=CONCAT(#{endTime},' 23:59:59')
         </if>
         <if test="vo.xdm != null and vo.xdm != ''">
-            and b.xdm = #{xdm}
+            and b.xdm = #{vo.xdm}
         </if>
         ) t
         group by year,reasonsType
@@ -145,6 +148,41 @@
         select
         <include refid="Base_Column_List"/>
         from land_plan_info t
-        where t.bus_name = ${busName}
+        where t.bus_name = #{busName}
+    </select>
+
+    <select id="inbusList" resultType="java.util.Map">
+        select county_name as xmc, year,totalArea,finishArea,(finishArea/totalArea) * 100 as comratio from (
+            select county_name, year,sum(COALESCE(CAST(occupy_area AS DECIMAL(20, 4)), 0)) as totalArea,sum(COALESCE(CAST(current_area AS DECIMAL(20, 4)), 0)) as finishArea
+        from land_plan_info t
+        where t.plan_type = '1'
+            <if test="beginTime != null and beginTime != ''">
+                and t.create_time >= CONCAT(#{beginTime},' 00:00:00')
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and t.create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+            </if>
+            <if test="vo.xdm != null and vo.xdm != ''">
+                and t.county_code = #{vo.xdm}
+            </if>
+            group by t.county_name, t.year
+            ) t
+    </select>
+
+    <select id="inbusListExport" resultType="com.land.modular.statistics.vo.InBusinessVo">
+        select county_name as xmc, year,totalArea,finishArea,(finishArea/totalArea) * 100 as comratio from (
+        select county_name, year,sum(COALESCE(occupy_area, 0)) as totalArea,sum(COALESCE(current_area, 0)) as finishArea from land_plan_info t
+        where plan_type = '1'
+        <if test="beginTime != null and beginTime != ''">
+            and t.create_time >= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and t.create_time &lt;=CONCAT(#{endTime},' 23:59:59')
+        </if>
+        <if test="vo.xdm != null and vo.xdm != ''">
+            and t.county_code = #{vo.xdm}
+        </if>
+        group by county_name, year
+        ) t
     </select>
 </mapper>

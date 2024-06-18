@@ -3,19 +3,23 @@ package com.land.modular.statistics.controller;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.base.pojo.page.LayuiPageFactory;
+import com.land.modular.landinfo.entity.LandInfo;
 import com.land.modular.landinfo.service.LandDetailService;
 import com.land.modular.landinfo.vo.LandDetailInfoVo;
 import com.land.modular.plan.service.LandPlanInfoService;
+import com.land.modular.statistics.vo.InBusinessVo;
 import com.land.modular.statistics.vo.LandStaVo;
 import com.land.sys.modular.system.warpper.UserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -58,6 +62,38 @@ public class LandStatisticsController {
     @RequestMapping("/diffSta")
     public String diffSta(Model model) {
         return PREFIX + "/diffSta.html";
+    }
+    /**
+     * 低效企业进展统计
+     */
+    @RequestMapping("/inbusiness")
+    public String inbusiness(Model model) {
+        return PREFIX + "/inbusiness.html";
+    }
+
+    /**
+     * 低效企业查询
+     * @param xdm
+     * @param timeLimit
+     * @return
+     */
+    @RequestMapping("/inbusList")
+    @ResponseBody
+    public Object inbusList(@RequestParam(required = false) String xdm,@RequestParam(required = false) String timeLimit) {
+        //拼接查询条件
+        String beginTime = "";
+        String endTime = "";
+
+        if (ToolUtil.isNotEmpty(timeLimit)) {
+            String[] split = timeLimit.split(" - ");
+            beginTime = split[0];
+            endTime = split[1];
+        }
+        InBusinessVo vo = new InBusinessVo();
+        vo.setXdm(xdm);
+        Page<Map<String, Object>> list = landPlanInfoService.inbusList(vo, beginTime, endTime);
+        Page wrapped = new UserWrapper(list).wrap();
+        return LayuiPageFactory.createPageInfo(wrapped);
     }
 
     /**
@@ -130,6 +166,29 @@ public class LandStatisticsController {
         Page<Map<String, Object>> list = landPlanInfoService.diffStaList(vo, beginTime, endTime);
         Page wrapped = new UserWrapper(list).wrap();
         return LayuiPageFactory.createPageInfo(wrapped);
+    }
+
+    /**
+     * 低效企业数据导出
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/exportToBusExcel")
+    @ResponseBody
+    public String exportToBusExcel(HttpServletResponse response,@RequestParam(required = false) String xdm,@RequestParam(required = false) String timeLimit)throws Exception {
+        //拼接查询条件
+        String beginTime = "";
+        String endTime = "";
+
+        if (ToolUtil.isNotEmpty(timeLimit)) {
+            String[] split = timeLimit.split(" - ");
+            beginTime = split[0];
+            endTime = split[1];
+        }
+        InBusinessVo vo = new InBusinessVo();
+        vo.setXdm(xdm);
+        return landPlanInfoService.exportToBusExcel(response,vo,beginTime, endTime);
     }
 
 }

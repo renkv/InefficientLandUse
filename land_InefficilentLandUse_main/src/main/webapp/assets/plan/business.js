@@ -408,10 +408,14 @@ layui.use(['table', 'admin','tableMerge',  'form','laydate','ax', 'func','upload
 
         /*queryData['policyType'] = $('select[name="policyType"]').next().find('.layui-this').attr('lay-value');*/
         queryData['xmmc'] = $('#xmmc').val();
-        queryData['planName'] = $('#planName').val();
         queryData['busName'] = $('#busName').val();
         queryData['timeLimit'] = $('#timeLimit').val();
-
+        var value = $('select[name="xdm"]').next().find('.layui-this').attr('lay-value');
+        if(value != undefined){
+            queryData['xdm'] = value;
+        }else{
+            queryData['xdm'] = "";
+        }
         table.reload(busMainTable.tableId, {
             where: queryData, page: {curr: 1}
         });

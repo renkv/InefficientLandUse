@@ -254,4 +254,12 @@ public class LandDetailInfoVo {
      * 文件信息
      */
     private List<FileInfo> fileInfoList;
+    /**
+     * 计划类型
+     */
+    private List<String> planTypeList;
+    /**
+     * 计划类型
+     */
+    private String planType;
 }

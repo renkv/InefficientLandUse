@@ -63,10 +63,17 @@
                             <div class="layui-form toolbar">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <input id="xmmc" class="layui-input" type="text" placeholder="地块项目名称"/>
+                                        <select name="xdm" id="xdm"  lay-filter="xdmSelect">
+                                            <option value="">请选择区县</option>
+                                            @if(tool.isNotEmpty(qxList)){
+                                            @for(item in qxList){
+                                            <option value="${item.code}">${item.name}</option>
+                                            @}
+                                            @}
+                                        </select>
                                     </div>
                                     <div class="layui-inline">
-                                        <input id="planName" class="layui-input" type="text" placeholder="计划名称"/>
+                                        <input id="xmmc" class="layui-input" type="text" placeholder="地块项目名称"/>
                                     </div>
                                     <div class="layui-inline">
                                         <input id="busName" class="layui-input" type="text" placeholder="企业名称"/>

@@ -70,7 +70,9 @@ public class LandPlanController extends BaseController {
             List<Dict> lowTypes = dictService.listDictsByCode("LOW_TYPE");
             List<Dict> disTypes = dictService.listDictsByCode("LOW_DIS_STA");
             List<Dict> busStatus = dictService.listDictsByCode("BUS_STATUS");
+            List<Dict> qxList = dictService.listDictsByCode("sjzqx");
             model.addAttribute("dicts",dicts);
+            model.addAttribute("qxList",qxList);
             model.addAttribute("disTypes",disTypes);
             model.addAttribute("lowTypes",lowTypes);
             model.addAttribute("busStatus",busStatus);
@@ -251,6 +253,7 @@ public class LandPlanController extends BaseController {
                              @RequestParam(required = false) String renewalName,
                              @RequestParam(required = false) String zoneName,
                              @RequestParam(required = false) String xmmc,
+                             @RequestParam(required = false) String xdm,
                              @RequestParam(required = false) String timeLimit) {
 
         //拼接查询条件
@@ -270,6 +273,7 @@ public class LandPlanController extends BaseController {
         vo.setVillageName(villageName);
         vo.setZoneName(zoneName);
         vo.setRenewalName(renewalName);
+        vo.setCountyCode(xdm);
         //main.setDeptName(deptName);
         Page<Map<String, Object>> list = landPlanInfoService.selectList(vo, beginTime, endTime);
         Page wrapped = new UserWrapper(list).wrap();

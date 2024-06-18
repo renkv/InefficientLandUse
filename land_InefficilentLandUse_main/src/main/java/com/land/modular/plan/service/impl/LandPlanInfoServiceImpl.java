@@ -1,5 +1,7 @@
 package com.land.modular.plan.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.hutool.core.date.DateUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.exception.enums.CoreExceptionEnum;
@@ -9,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.land.auth.context.LoginContextHolder;
 import com.land.auth.model.LoginUser;
+import com.land.base.consts.ConstantsContext;
 import com.land.base.pojo.page.LayuiPageFactory;
 import com.land.modular.landinfo.entity.LandDetailInfo;
 import com.land.modular.landinfo.service.LandDetailService;
@@ -19,6 +22,7 @@ import com.land.modular.plan.service.LandPlanInfoService;
 import com.land.modular.plan.vo.LandPlanExcelParam;
 import com.land.modular.plan.vo.LandPlanInfoVo;
 
+import com.land.modular.statistics.vo.InBusinessVo;
 import com.land.modular.statistics.vo.LandStaVo;
 import com.land.sys.modular.system.entity.Dict;
 import com.land.sys.modular.system.entity.User;
@@ -28,19 +32,22 @@ import com.land.utils.BeanCopyUtils;
 import com.land.utils.GetAndSetField;
 import com.land.utils.PinyinUtil;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.lang.reflect.Field;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("landPlanInfoService")
 public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanInfoEntity> implements LandPlanInfoService {
@@ -214,7 +221,7 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
             stringBuffer.append("第" + coNum +"行，企业名称："+param.getBusName()+"已存在！");
         }
         //验证低效类型
-        if(!StringUtils.isEmpty(param.getConStandard())){
+        /*if(!StringUtils.isEmpty(param.getConStandard())){
             Dict lowType = dictService.getOneByNameAndCode(param.getConStandard(),"LOW_TYPE");
             if(lowType != null){
                 main.setConStandard(lowType.getCode());
@@ -245,7 +252,7 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
             }
         }else{
             stringBuffer.append("第" + coNum +"当前状态不能为空");
-        }
+        }*/
         //验证问题类型
         if(!StringUtils.isEmpty(param.getReasonsType())){
             Dict dict = dictService.getOneByNameAndCode(param.getReasonsType(),"REASONTYPE");
@@ -331,5 +338,100 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
             }
         }
         return ResponseData.error("请求数据不存在");
+    }
+
+    /**
+     * 低效企业完成情况统计
+     * @param vo
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public Page<Map<String, Object>> inbusList(InBusinessVo vo, String beginTime, String endTime) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.inbusList(page, vo, beginTime, endTime);
+    }
+
+    /**
+     * 低效企业数据导出
+     * @param response
+     * @param vo
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public String exportToBusExcel(HttpServletResponse response, InBusinessVo vo, String beginTime, String endTime) {
+        List<InBusinessVo> list = this.baseMapper.inbusListExport(vo,beginTime, endTime);
+        //region 模板
+        String exportExcelTemplate = (String) ConstantsContext.getExportExcelTemplate();
+        File resource = null; //这种方法在linux下无法工作
+        try {
+            resource = ResourceUtils.getFile(exportExcelTemplate + "excel_business.xlsx");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        TemplateExportParams params = new TemplateExportParams(resource.getPath());
+        Map<String, Object> map = new HashMap<String, Object>();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (list != null && list.size() > 0) {
+            /*for(LandInfo detail : list){
+
+            }*/
+        }else {
+            InBusinessVo resp = null;
+            try {
+                resp = InBusinessVo.class.newInstance();
+                list.add(resp);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }
+        map.put("list", list);
+        /*if (!StringUtils.isEmpty(main.getDeptName())) {
+            map.put("deptName", main.getDeptName());
+        }*/
+
+        // map.put("createDate", sf.format(main.getCreateTime()));
+        //map.put("mainRemark", main.getRemark());
+
+        Workbook workbook = ExcelExportUtil.exportExcel(params, map);
+        // 判断数据
+        if (workbook == null) {
+            return "导出失败";
+        }
+        // 设置excel的文件名称
+        // 重置响应对象
+        response.reset();
+        String fileName = null;
+        try {
+            fileName = URLEncoder.encode("低效企业进展统计表","UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setHeader("Content-Disposition", "attachment;filename="+ fileName + ".xls");
+        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        // 写出数据输出流到页面
+        try {
+            OutputStream output = response.getOutputStream();
+            BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
+            workbook.write(bufferedOutPut);
+            bufferedOutPut.flush();
+            bufferedOutPut.close();
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //endregion
+
+        return "导出成功";
     }
 }

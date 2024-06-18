@@ -25,7 +25,7 @@ public class LandPlanExcelParam implements Serializable {
     @NotEmpty(message = "社会统一信用代码不能为空")
     private String creditCode;
 
-    @Excel(name = "占地面积（公顷）")
+    @Excel(name = "占地面积（亩）")
     @NotEmpty(message = "占地面积不能为空")
     private Double occupyArea;
     @Excel(name = "坐落")

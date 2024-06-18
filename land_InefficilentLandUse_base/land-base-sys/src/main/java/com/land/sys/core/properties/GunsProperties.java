@@ -28,7 +28,7 @@ public class GunsProperties {
 
     public static final String PREFIX = "guns";
     //public static final String TOKENURL = "http://8.130.36.218:8084/api/checkToken";
-    public static final String TOKENURL = "http://13.16.7.45:81/api/checkToken";
+    public static final String TOKENURL = "http://13.16.7.45:8082/api/checkToken";
 
     private Boolean springSessionOpen = false;
 
