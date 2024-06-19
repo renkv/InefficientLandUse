@@ -43,7 +43,9 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -350,6 +352,7 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
     @Override
     public Page<Map<String, Object>> inbusList(InBusinessVo vo, String beginTime, String endTime) {
         Page page = LayuiPageFactory.defaultPage();
+
         return this.baseMapper.inbusList(page, vo, beginTime, endTime);
     }
 
@@ -364,11 +367,53 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
     @Override
     public String exportToBusExcel(HttpServletResponse response, InBusinessVo vo, String beginTime, String endTime) {
         List<InBusinessVo> list = this.baseMapper.inbusListExport(vo,beginTime, endTime);
+        //亩取整
+        if(list != null && list.size() > 0 && (vo.getFlag() == null || vo.getFlag() == 1)){
+            DecimalFormat df = new DecimalFormat("#");
+            DecimalFormat df2 = new DecimalFormat("#.00");
+            for(InBusinessVo bus : list){
+                String totalAreaStr = df.format(bus.getTotalArea());
+                Double totalArea = Double.valueOf(totalAreaStr);
+                bus.setTotalArea(totalArea);
+                String finishAreaStr = df.format(bus.getFinishArea());
+                Double finishArea = Double.valueOf(finishAreaStr);
+                bus.setFinishArea(finishArea);
+                BigDecimal value = BigDecimal.valueOf(totalArea);
+                if(value.compareTo(BigDecimal.ZERO) != 0){
+                    Double com = (finishArea/totalArea)*100;
+                    String str = df2.format(com);
+                    bus.setComratio(Double.valueOf(str));
+                }
+            }
+        }
+        //公顷保留两位小数
+        if(list != null && list.size() > 0 && vo.getFlag() != null && vo.getFlag() == 2){
+            DecimalFormat df = new DecimalFormat("#.00");
+            for(InBusinessVo bus : list){
+                String totalAreaStr = df.format(bus.getTotalArea()/15);
+                Double totalArea = Double.valueOf(totalAreaStr);
+                bus.setTotalArea(totalArea);
+                String finishAreaStr = df.format(bus.getFinishArea()/15);
+                Double finishArea = Double.valueOf(finishAreaStr);
+                bus.setFinishArea(finishArea);
+                BigDecimal value = BigDecimal.valueOf(totalArea);
+                if(value.compareTo(BigDecimal.ZERO) != 0){
+                    Double com = (finishArea/totalArea)*100;
+                    String str = df.format(com);
+                    bus.setComratio(Double.valueOf(str));
+                }
+            }
+        }
         //region 模板
         String exportExcelTemplate = (String) ConstantsContext.getExportExcelTemplate();
         File resource = null; //这种方法在linux下无法工作
         try {
-            resource = ResourceUtils.getFile(exportExcelTemplate + "excel_business.xlsx");
+            if(vo.getFlag() == null || vo.getFlag() == 1){
+                resource = ResourceUtils.getFile(exportExcelTemplate + "excel_business.xlsx");
+            }else{
+                resource = ResourceUtils.getFile(exportExcelTemplate + "excel_business_gq.xlsx");
+            }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -433,5 +478,20 @@ public class LandPlanInfoServiceImpl extends ServiceImpl<LandPlanDao, LandPlanIn
         //endregion
 
         return "导出成功";
+    }
+
+    /**
+     * 获取年份
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> getDistinctYear() {
+        return this.baseMapper.getDistinctYear();
+    }
+
+    @Override
+    public List<InBusinessVo> inbusListNoPage(InBusinessVo vo, String beginTime, String endTime) {
+        List<InBusinessVo> list = this.baseMapper.inbusListExport(vo,beginTime, endTime);
+        return list;
     }
 }

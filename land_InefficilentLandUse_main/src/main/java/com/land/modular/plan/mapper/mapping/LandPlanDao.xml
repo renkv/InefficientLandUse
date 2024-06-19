@@ -171,8 +171,9 @@
 
     <select id="inbusListExport" resultType="com.land.modular.statistics.vo.InBusinessVo">
         select county_name as xmc, year,totalArea,finishArea,(finishArea/totalArea) * 100 as comratio from (
-        select county_name, year,sum(COALESCE(occupy_area, 0)) as totalArea,sum(COALESCE(current_area, 0)) as finishArea from land_plan_info t
-        where plan_type = '1'
+        select county_name, year,sum(COALESCE(CAST(occupy_area AS DECIMAL(20, 4)), 0)) as totalArea,sum(COALESCE(CAST(current_area AS DECIMAL(20, 4)), 0)) as finishArea
+        from land_plan_info t
+        where t.plan_type = '1'
         <if test="beginTime != null and beginTime != ''">
             and t.create_time >= CONCAT(#{beginTime},' 00:00:00')
         </if>
@@ -182,7 +183,22 @@
         <if test="vo.xdm != null and vo.xdm != ''">
             and t.county_code = #{vo.xdm}
         </if>
-        group by county_name, year
+  <!--      <if test="vo.year != null and vo.year != ''">
+            and find_in_set(t.year, #{vo.xdm}) > 0
+        </if>-->
+        <if test="vo.yearList != null and vo.yearList.size() > 0">
+            and year IN
+            <foreach item="itemId" collection="vo.yearList" open="(" separator="," close=")">
+                #{itemId}
+            </foreach>
+        </if>
+        group by t.county_name, t.year
         ) t
+    </select>
+
+    <select id="getDistinctYear" resultType="java.util.Map">
+        select year from(
+            select distinct cast(year as SIGNED)  year from land_plan_info
+            ) t order by year desc
     </select>
 </mapper>

@@ -24,4 +24,6 @@ public interface LandPlanDao extends BaseMapper<LandPlanInfoEntity> {
     Page<Map<String, Object>> inbusList(@Param("page")Page page, @Param("vo")InBusinessVo vo, @Param("beginTime")String beginTime,@Param("endTime") String endTime);
 
     List<InBusinessVo> inbusListExport( @Param("vo")InBusinessVo vo, @Param("beginTime")String beginTime,@Param("endTime") String endTime);
+
+    List<Map<String, Object>> getDistinctYear();
 }

@@ -29,4 +29,8 @@ public interface LandPlanInfoService {
     Page<Map<String, Object>> inbusList(InBusinessVo vo, String beginTime, String endTime);
 
     String exportToBusExcel(HttpServletResponse response, InBusinessVo vo, String beginTime, String endTime);
+
+    List<Map<String, Object>> getDistinctYear();
+
+    List<InBusinessVo> inbusListNoPage(InBusinessVo vo, String beginTime, String endTime);
 }

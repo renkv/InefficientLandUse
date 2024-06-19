@@ -1,6 +1,10 @@
 package com.land.modular.statistics.controller;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
+import cn.stylefeng.roses.kernel.model.response.SuccessResponseData;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.land.base.pojo.page.LayuiPageFactory;
 import com.land.modular.landinfo.entity.LandInfo;
@@ -9,6 +13,9 @@ import com.land.modular.landinfo.vo.LandDetailInfoVo;
 import com.land.modular.plan.service.LandPlanInfoService;
 import com.land.modular.statistics.vo.InBusinessVo;
 import com.land.modular.statistics.vo.LandStaVo;
+import com.land.modular.statistics.vo.XmSelectVo;
+import com.land.sys.modular.system.entity.Dict;
+import com.land.sys.modular.system.service.DictService;
 import com.land.sys.modular.system.warpper.UserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +44,8 @@ public class LandStatisticsController {
     private LandDetailService landDetailService;
     @Autowired
     private LandPlanInfoService landPlanInfoService;
+    @Autowired
+    private DictService dictService;
 
     /**
      * 低效用地基础数据统计
@@ -68,6 +81,22 @@ public class LandStatisticsController {
      */
     @RequestMapping("/inbusiness")
     public String inbusiness(Model model) {
+        List<Dict> qxList = dictService.listDictsByCode("sjzqx");
+        List<Map<String,Object>> yearList = landPlanInfoService.getDistinctYear();
+        List<XmSelectVo> list = new ArrayList<>();
+        if(yearList != null && yearList.size() > 0){
+            for  (Map<String, Object> m : yearList){
+                for  (String k : m.keySet()){
+                    System.out.println(k +  " : "  + m.get(k));
+                    XmSelectVo vo = new XmSelectVo();
+                    vo.setName(m.get(k).toString());
+                    vo.setValue(m.get(k).toString());
+                    list.add(vo);
+                }
+            }
+        }
+        model.addAttribute("qxList",qxList);
+        model.addAttribute("yearJson", JSON.toJSONString(list));
         return PREFIX + "/inbusiness.html";
     }
 
@@ -79,7 +108,7 @@ public class LandStatisticsController {
      */
     @RequestMapping("/inbusList")
     @ResponseBody
-    public Object inbusList(@RequestParam(required = false) String xdm,@RequestParam(required = false) String timeLimit) {
+    public Object inbusList(InBusinessVo vo,@RequestParam(required = false) String timeLimit) {
         //拼接查询条件
         String beginTime = "";
         String endTime = "";
@@ -89,11 +118,61 @@ public class LandStatisticsController {
             beginTime = split[0];
             endTime = split[1];
         }
-        InBusinessVo vo = new InBusinessVo();
-        vo.setXdm(xdm);
-        Page<Map<String, Object>> list = landPlanInfoService.inbusList(vo, beginTime, endTime);
-        Page wrapped = new UserWrapper(list).wrap();
-        return LayuiPageFactory.createPageInfo(wrapped);
+
+        if(ToolUtil.isNotEmpty(vo.getYear())){
+            List<String> yearList = new ArrayList<>();
+            List<Map<String, String>> listObjectFir = (List<Map<String, String>>) JSONArray.parse(vo.getYear());
+            // 利用JSONArray中的parse方法来解析json数组字符串
+            for (Map<String, String> mapList : listObjectFir) {
+                for (Map.Entry entry : mapList.entrySet()) {
+                    if(entry.getKey().equals("value")){
+                        yearList.add(entry.getValue().toString());
+                    }
+                    System.out.printf("年份", entry.getKey(), entry.getValue());
+                }
+            }
+            vo.setYearList(yearList);
+        }
+
+        List<InBusinessVo> list = landPlanInfoService.inbusListNoPage(vo, beginTime, endTime);
+        //亩取整
+        if(list != null && list.size() > 0 && (vo.getFlag() == null || vo.getFlag() == 1)){
+            DecimalFormat df = new DecimalFormat("#");
+            DecimalFormat df2 = new DecimalFormat("#.00");
+            for(InBusinessVo bus : list){
+                String totalAreaStr = df.format(bus.getTotalArea());
+                Double totalArea = Double.valueOf(totalAreaStr);
+                bus.setTotalArea(totalArea);
+                String finishAreaStr = df.format(bus.getFinishArea());
+                Double finishArea = Double.valueOf(finishAreaStr);
+                bus.setFinishArea(finishArea);
+                BigDecimal value = BigDecimal.valueOf(totalArea);
+                if(value.compareTo(BigDecimal.ZERO) != 0){
+                    Double com = (finishArea/totalArea)*100;
+                    String str = df2.format(com);
+                    bus.setComratio(Double.valueOf(str));
+                }
+            }
+        }
+        //公顷保留两位小数
+        if(list != null && list.size() > 0 && vo.getFlag() != null && vo.getFlag() == 2){
+            DecimalFormat df = new DecimalFormat("#.00");
+            for(InBusinessVo bus : list){
+                String totalAreaStr = df.format(bus.getTotalArea()/15);
+                Double totalArea = Double.valueOf(totalAreaStr);
+                bus.setTotalArea(totalArea);
+                String finishAreaStr = df.format(bus.getFinishArea()/15);
+                Double finishArea = Double.valueOf(finishAreaStr);
+                bus.setFinishArea(finishArea);
+                BigDecimal value = BigDecimal.valueOf(totalArea);
+                if(value.compareTo(BigDecimal.ZERO) != 0){
+                    Double com = (finishArea/totalArea)*100;
+                    String str = df.format(com);
+                    bus.setComratio(Double.valueOf(str));
+                }
+            }
+        }
+        return new SuccessResponseData(0,"请求成功",list);
     }
 
     /**
@@ -176,7 +255,7 @@ public class LandStatisticsController {
      */
     @PostMapping("/exportToBusExcel")
     @ResponseBody
-    public String exportToBusExcel(HttpServletResponse response,@RequestParam(required = false) String xdm,@RequestParam(required = false) String timeLimit)throws Exception {
+    public String exportToBusExcel(HttpServletResponse response,InBusinessVo vo,@RequestParam(required = false) String timeLimit)throws Exception {
         //拼接查询条件
         String beginTime = "";
         String endTime = "";
@@ -186,8 +265,20 @@ public class LandStatisticsController {
             beginTime = split[0];
             endTime = split[1];
         }
-        InBusinessVo vo = new InBusinessVo();
-        vo.setXdm(xdm);
+        if(ToolUtil.isNotEmpty(vo.getYear())){
+            List<String> yearList = new ArrayList<>();
+            List<Map<String, String>> listObjectFir = (List<Map<String, String>>) JSONArray.parse(vo.getYear());
+            // 利用JSONArray中的parse方法来解析json数组字符串
+            for (Map<String, String> mapList : listObjectFir) {
+                for (Map.Entry entry : mapList.entrySet()) {
+                    if(entry.getKey().equals("value")){
+                        yearList.add(entry.getValue().toString());
+                    }
+                    System.out.printf("年份", entry.getKey(), entry.getValue());
+                }
+            }
+            vo.setYearList(yearList);
+        }
         return landPlanInfoService.exportToBusExcel(response,vo,beginTime, endTime);
     }
 
