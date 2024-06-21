@@ -84,6 +84,8 @@ public class LandStatisticsController {
         List<Dict> qxList = dictService.listDictsByCode("sjzqx");
         List<Map<String,Object>> yearList = landPlanInfoService.getDistinctYear();
         List<XmSelectVo> list = new ArrayList<>();
+        String year = "";
+        int num = 0;
         if(yearList != null && yearList.size() > 0){
             for  (Map<String, Object> m : yearList){
                 for  (String k : m.keySet()){
@@ -91,11 +93,17 @@ public class LandStatisticsController {
                     XmSelectVo vo = new XmSelectVo();
                     vo.setName(m.get(k).toString());
                     vo.setValue(m.get(k).toString());
+                    if(num == 0){
+                        vo.setSelected(true);
+                    }
+                    num++;
                     list.add(vo);
                 }
             }
+            year = list.get(0).getValue();
         }
         model.addAttribute("qxList",qxList);
+        model.addAttribute("year",year);
         model.addAttribute("yearJson", JSON.toJSONString(list));
         return PREFIX + "/inbusiness.html";
     }
@@ -133,12 +141,18 @@ public class LandStatisticsController {
             }
             vo.setYearList(yearList);
         }
+        List<InBusinessVo> listResult = new ArrayList<>();
 
         List<InBusinessVo> list = landPlanInfoService.inbusListNoPage(vo, beginTime, endTime);
+        Double allTotalArea = 0d;
+        Double allFinishArea = 0d;
+        InBusinessVo totalVo = new InBusinessVo();
+        totalVo.setXmc("合计");
         //亩取整
         if(list != null && list.size() > 0 && (vo.getFlag() == null || vo.getFlag() == 1)){
             DecimalFormat df = new DecimalFormat("#");
             DecimalFormat df2 = new DecimalFormat("#.00");
+
             for(InBusinessVo bus : list){
                 String totalAreaStr = df.format(bus.getTotalArea());
                 Double totalArea = Double.valueOf(totalAreaStr);
@@ -152,7 +166,18 @@ public class LandStatisticsController {
                     String str = df2.format(com);
                     bus.setComratio(Double.valueOf(str));
                 }
+                allTotalArea += totalArea;
+                allFinishArea += finishArea;
             }
+            totalVo.setTotalArea(allTotalArea);
+            totalVo.setFinishArea(allFinishArea);
+            BigDecimal vaTal = BigDecimal.valueOf(allTotalArea);
+            if(vaTal.compareTo(BigDecimal.ZERO) != 0){
+                Double com = (allFinishArea/allTotalArea)*100;
+                String str = df2.format(com);
+                totalVo.setComratio(Double.valueOf(str));
+            }
+
         }
         //公顷保留两位小数
         if(list != null && list.size() > 0 && vo.getFlag() != null && vo.getFlag() == 2){
@@ -170,9 +195,22 @@ public class LandStatisticsController {
                     String str = df.format(com);
                     bus.setComratio(Double.valueOf(str));
                 }
+                allTotalArea += totalArea;
+                allFinishArea += finishArea;
+            }
+            totalVo.setTotalArea(allTotalArea);
+            totalVo.setFinishArea(allFinishArea);
+            BigDecimal vaTal = BigDecimal.valueOf(allTotalArea);
+            if(vaTal.compareTo(BigDecimal.ZERO) != 0){
+                Double com = (allFinishArea/allTotalArea)*100;
+                String str = df.format(com);
+                totalVo.setComratio(Double.valueOf(str));
             }
         }
-        return new SuccessResponseData(0,"请求成功",list);
+
+        listResult.add(totalVo);
+        listResult.addAll(list);
+        return new SuccessResponseData(0,"请求成功",listResult);
     }
 
     /**

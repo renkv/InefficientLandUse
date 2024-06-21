@@ -153,7 +153,8 @@
 
     <select id="inbusList" resultType="java.util.Map">
         select county_name as xmc, year,totalArea,finishArea,(finishArea/totalArea) * 100 as comratio from (
-            select county_name, year,sum(COALESCE(CAST(occupy_area AS DECIMAL(20, 4)), 0)) as totalArea,sum(COALESCE(CAST(current_area AS DECIMAL(20, 4)), 0)) as finishArea
+            select county_name, year,sum(COALESCE(CAST(occupy_area AS DECIMAL(20, 4)), 0)) as totalArea,sum(COALESCE(CAST(case when cur_status='3' then current_area
+        else 0 end AS DECIMAL(20, 4)), 0)) as finishArea
         from land_plan_info t
         where t.plan_type = '1'
             <if test="beginTime != null and beginTime != ''">
@@ -171,7 +172,8 @@
 
     <select id="inbusListExport" resultType="com.land.modular.statistics.vo.InBusinessVo">
         select county_name as xmc, year,totalArea,finishArea,(finishArea/totalArea) * 100 as comratio from (
-        select county_name, year,sum(COALESCE(CAST(occupy_area AS DECIMAL(20, 4)), 0)) as totalArea,sum(COALESCE(CAST(current_area AS DECIMAL(20, 4)), 0)) as finishArea
+        select county_name, year,sum(COALESCE(CAST(occupy_area AS DECIMAL(20, 4)), 0)) as totalArea,sum(COALESCE(CAST(case when cur_status='3' then current_area
+        else 0 end AS DECIMAL(20, 4)), 0)) as finishArea
         from land_plan_info t
         where t.plan_type = '1'
         <if test="beginTime != null and beginTime != ''">

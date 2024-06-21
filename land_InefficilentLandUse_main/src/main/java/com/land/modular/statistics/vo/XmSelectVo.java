@@ -6,4 +6,5 @@ import lombok.Data;
 public class XmSelectVo {
     private  String name;
     private String value;
+    private Boolean selected;
 }

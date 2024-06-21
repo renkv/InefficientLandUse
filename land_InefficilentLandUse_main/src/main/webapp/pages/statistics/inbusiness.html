@@ -1,53 +1,62 @@
-@layout("/common/_container.html",{js:["/assets/statistics/inbus.js","/assets/common/xm-select/xm-select.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+@layout("/common/_container.html",{js:["/assets/common/xm-select/xm-select.js","/assets/statistics/inbus.js"]}){
+<style>
+    .layui-btn{
+        font-size: 18px;
+    }
+    .layui-table td, .layui-table th{
+        font-size: 20px;
+    }
+    .layui-table-cell{
+        height:50px;
+        line-height: 50px;
+    }
+</style>
 <div class="layui-body-header">
     <span class="layui-body-header-title">低效企业进展统计</span>
 </div>
-
-<div id="myContiner" style="height: 100%">
-    <input id="yearList" type="hidden" value='${yearJson}'/>
-    <div class="ui-layout-center">
-        <div class="layui-fluid">
-            <div class="layui-row">
-                <div class="layui-col-md12">
-                    <div class="layui-card">
-                        <div class="layui-card-body">
-                            <div class="layui-form toolbar">
-                                <div class="layui-form-item">
-                                    <div class="layui-inline">
-                                        <select id="xdm" name="xdm" lay-verify="required">
-                                            <option value="">请选择区县</option>
-                                            @if(tool.isNotEmpty(qxList)){
-                                            @for(item in qxList){
-                                            <option value="${item.code}">${item.name}</option>
-                                            @}
-                                            @}
-                                        </select>
-                                    </div>
-                                    <div class="layui-inline" style="width: 200px;" id="yearDiv">
-                                    </div>
-                                    <div class="layui-inline">
-                                        <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <div class="layui-btn-group">
-                                            <button type="button" id="btnMu" class="layui-btn layui-btn-radius layui-btn-normal">亩</button>
-                                            <button type="button" id="btnGq" class="layui-btn layui-btn-radius layui-btn-primary">公顷</button>
-                                        </div>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                        <button id="btnOut" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
-                                    </div>
+<input id="yearList" type="hidden" value='${yearJson}'/>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <select id="xdm" name="xdm" lay-verify="required">
+                                    <option value="">请选择区县</option>
+                                    @if(tool.isNotEmpty(qxList)){
+                                    @for(item in qxList){
+                                    <option value="${item.code}">${item.name}</option>
+                                    @}
+                                    @}
+                                </select>
+                            </div>
+                            <div class="layui-inline" style="width: 200px;" id="yearDiv">
+                            </div>
+                            <div class="layui-inline">
+                                <input id="timeLimit" class="layui-input" type="text" placeholder="创建时间"/>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="layui-btn-group">
+                                    <button type="button" id="btnMu" class="layui-btn layui-btn-radius layui-btn-normal">亩</button>
+                                    <button type="button" id="btnGq" class="layui-btn layui-btn-radius layui-btn-primary">公顷</button>
                                 </div>
                             </div>
-                            <table class="layui-table" id="detailMainTable" lay-filter="detailMainTable"></table>
+                            <div class="layui-inline">
+                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                <button id="btnOut" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导出</button>
+                            </div>
                         </div>
                     </div>
+                    <table class="layui-table" id="detailMainTable" lay-filter="detailMainTable"></table>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script type="text/html" id="tableBar">
 
+</script>
 @}
