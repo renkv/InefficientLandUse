@@ -27,9 +27,19 @@
       <option name="url" value="https://repo.osgeo.org/repository/snapshot/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="com.e-iceblue" />
+      <option name="name" value="com.e-iceblue" />
+      <option name="url" value="http://repo.e-iceblue.cn/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="osgeo" />
       <option name="name" value="OSGeo Release Repository" />
       <option name="url" value="https://repo.osgeo.org/repository/release/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="com.e-iceblue" />
+      <option name="name" value="e-iceblue" />
+      <option name="url" value="https://repo.e-iceblue.cn/repository/maven-public/" />
     </remote-repository>
   </component>
 </project>

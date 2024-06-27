@@ -68,11 +68,6 @@
             <version>5.5.13</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-asian -->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext-asian</artifactId>
-            <version>5.2.0</version>
-        </dependency>
 
         <!--excel导入导出-->
         <dependency>
@@ -199,10 +194,22 @@
         <!--word转PDF-->
         <dependency>
             <groupId>e-iceblue</groupId>
-            <artifactId>spire.doc.free</artifactId>
-            <version>5.2.0</version>
+            <artifactId>spire.doc</artifactId>
+            <version>12.6.2</version>
         </dependency>
         <!--word转PDF结束-->
+        <!--excel转PDF-->
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.xls</artifactId>
+            <version>14.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.pdf</artifactId>
+            <version>10.6.2</version>
+        </dependency>
+        <!--excel转PDF结束-->
     </dependencies>
     <repositories>
         <repository>
@@ -222,7 +229,7 @@
         <repository>
             <id>com.e-iceblue</id>
             <name>e-iceblue</name>
-            <url>https://repo.e-iceblue.com/nexus/content/groups/public/</url>
+            <url>https://repo.e-iceblue.cn/repository/maven-public/</url>
         </repository>
     </repositories>
 

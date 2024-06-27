@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.land.modular.busnessfile.mapper.BusinessFileDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.land.modular.busnessfile.entity.BusinessFileInfoEntity">
+        <id column="file_id" property="id" />
+        <result column="file_name" property="fileName" />
+        <result column="file_suffix" property="fileSuffix" />
+        <result column="file_size_kb" property="fileSizeKb" />
+        <result column="final_name" property="finalName" />
+        <result column="file_path" property="filePath" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+        <result column="county_code" property="countyCode" />
+        <result column="county_name" property="countyName" />
+        <result column="file_year" property="fileYear" />
+        <result column="create_user_name" property="createUserName" />
+        <result column="update_user_name" property="updateUserName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, file_name AS "fileName", file_suffix AS "fileSuffix",update_user_name as updateUserName,
+        file_size_kb AS fileSizeKb, final_name AS "finalName", file_path AS "filePath", create_time AS "createTime",create_user_name as createUserName,
+        update_time AS "updateTime", create_user AS "createUser", update_user AS "updateUser",county_code as countyCode,county_name as countyName,file_year as fileYear
+    </sql>
+
+    <select id="selectListByPage" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from business_file_info
+        where 1=1
+        <if test="vo.countyName != null and vo.countyName != ''">
+            and find_in_set(county_name,#{vo.countyName}) > 0
+        </if>
+        <if test="vo.fileYear != null and vo.fileYear != ''">
+            and file_year = #{vo.fileYear}
+        </if>
+        order by file_year desc
+    </select>
+
+    <select id="getDistinctYear" resultType="java.util.Map">
+        select fileYear  from(
+            select distinct cast(file_year as SIGNED)  fileYear from business_file_info
+            where file_year is not null
+            ) t order by fileYear desc
+    </select>
+</mapper>

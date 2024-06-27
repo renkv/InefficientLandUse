@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="${ctxPath}/assets/common/excel/css/main-css.css">
+    <title>${entity.fileName}</title>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            overflow: auto;
+            width: 100%;
+            height: 100%;
+            align-content: center;
+        }
+    </style>
+    <script src="${ctxPath}/assets/common/excel/Xlsx.js"></script>
+</head>
+<body>
+<input type="hidden" id="filePath" value="${url}">
+<div class="container" id="container">
+
+</div>
+<script>
+    var nContainer = document.getElementById('container');
+    var xlsx = new Plus.Xlsx(nContainer);
+    var filePath = document.getElementById('filePath').value;
+    xlsx.readFile(filePath);
+</script>
+</body>
+</html>

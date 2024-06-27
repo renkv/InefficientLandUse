@@ -1,0 +1,43 @@
+@layout("/common/_container.html",{js:["/assets/busfile/main.js"],css:["/assets/expand/module/formSelects/formSelects-v4.css"]}){
+<div class="layui-body-header">
+    <span class="layui-body-header-title">低效企业工作资料管理</span>
+</div>
+<div id="myContiner" style="height: 100%">
+
+    <div class="ui-layout-center">
+        <div class="layui-fluid">
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <div class="layui-form toolbar">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <div class="layui-btn-group">
+                                            @if(tool.isNotEmpty(yearList)){
+                                            @for(item in yearList){
+                                            <input type="button" id="btnYear" name="btnYear" class="layui-btn layui-btn-radius layui-btn-primary" value="${item.fileYear}" />
+                                            @}
+                                            @}
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-inline">
+                                        @if(shiro.hasPermission("/busfile/add")){
+                                        <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                                        <button id="btnDel" class="layui-btn icon-btn"><i class="layui-icon">&#xe67e;</i>删除</button>
+                                        @}
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="layui-table" id="busFileMainTable" lay-filter="busFileMainTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@}
